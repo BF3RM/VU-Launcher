@@ -1,0 +1,63 @@
+﻿<common:BaseControl x:Class="VULauncher.Views.Controls.Settings.ClientPresetsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VULauncher.Views.Controls"
+             xmlns:common="clr-namespace:VULauncher.Views.Common"
+             xmlns:components="clr-namespace:VULauncher.Views.Components"
+                    xmlns:viewmodels="clr-namespace:VULauncher.ViewModels"
+                    mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="White" x:Name="ClientPresetsControlInstance">
+
+    <!--<common:BaseControl.DataContext>
+        <viewmodels:ClientPresetsViewModel/>
+    </common:BaseControl.DataContext>-->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <components:PresetEditingComponent Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" 
+                                           ComboBoxItemsSource="{Binding Presets, UpdateSourceTrigger=PropertyChanged}" 
+                                           ComboBoxSelectedItem="{Binding SelectedPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                           CreatePresetCommand="{Binding CreatePresetCommand}"
+                                           DeletePresetCommand="{Binding DeletePresetCommand}"/>
+        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding Source={StaticResource FrequencyTypes}}"
+                                             ComboBoxSelectedItem="{Binding SelectedPreset.FrequencyType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             DescriptionText="Frequency:"
+                                             ShowChangeTabButton="False"
+                                             Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                             Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
+        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding ClientParamsPresets}"
+                                             ComboBoxSelectedItem="{Binding SelectedPreset.ClientParamsPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             DescriptionText="VU Client Params Preset:"
+                                             ShowChangeTabButton="True"
+                                             ChangeTabCommand ="{Binding ChangeTabCommand}"
+                                             ChangeTabCommandParameter="2"
+                                             Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                             Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
+        <!--<CheckBox Visibility="{Binding HasClientPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"-->
+        <CheckBox IsChecked="{Binding SelectedPreset.SendRuntimeErrorDumps}"
+                  Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  Content="Send runtime error dumps automatically to VU Devs" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <CheckBox IsChecked="{Binding SelectedPreset.OpenConsole}"
+                  Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  Content="Open console in this program (new tab)" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+    </Grid>
+</common:BaseControl>

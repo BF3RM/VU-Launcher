@@ -1,0 +1,104 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Icons\ApplicationBehaviorSettings_16x.png" />
+    <None Remove="Views\Icons\Cancel_16x.png" />
+    <None Remove="Views\Icons\Console.ico" />
+    <None Remove="Views\Icons\Logo-v3.ico" />
+    <None Remove="Views\Icons\Restart_16x.png" />
+    <None Remove="Views\Icons\Run.ico" />
+    <None Remove="Views\Icons\Save.ico" />
+    <None Remove="Views\Icons\SaveAll.ico" />
+    <None Remove="Views\Icons\Settings.ico" />
+    <None Remove="Views\Icons\SketchflowNewNavScreen_16x.png" />
+    <None Remove="Views\Icons\Stop.ico" />
+    <None Remove="Views\Icons\Undo_grey.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.7.0" />
+    <PackageReference Include="Syncfusion.Licensing" Version="17.4.0.40" />
+    <PackageReference Include="Syncfusion.SfSkinManager.WPF" Version="17.4.0.40" />
+    <PackageReference Include="Syncfusion.Themes.Office2016DarkGray.WPF" Version="17.4.0.40" />
+    <PackageReference Include="Syncfusion.Themes.Office2016White.WPF" Version="17.4.0.40" />
+    <PackageReference Include="Syncfusion.Tools.WPF" Version="17.4.0.40" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Icons\ApplicationBehaviorSettings_16x.png" />
+    <Resource Include="Views\Icons\Cancel_16x.png" />
+    <Resource Include="Views\Icons\Console.ico" />
+    <Resource Include="Views\Icons\Logo-v3.ico" />
+    <Resource Include="Views\Icons\Restart_16x.png" />
+    <Resource Include="Views\Icons\Run.ico" />
+    <Resource Include="Views\Icons\Save.ico" />
+    <Resource Include="Views\Icons\SaveAll.ico" />
+    <Resource Include="Views\Icons\Settings.ico" />
+    <Resource Include="Views\Icons\SketchflowNewNavScreen_16x.png" />
+    <Resource Include="Views\Icons\Stop.ico" />
+    <Resource Include="Views\Icons\Undo_grey.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Components\PresetSelectionComponent.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Settings\BanListsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Settings\StartupsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Settings\ServerParamsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Settings\ClientParamsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Settings\MapListsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Settings\ServerPresetsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Components\PresetSelectionComponent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\BanListsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\StartupsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\ServerParamsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\ClientParamsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\MapListsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\ServerPresetsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Entities\Extensions\" />
+  </ItemGroup>
+
+</Project>

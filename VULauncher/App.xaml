@@ -1,0 +1,39 @@
+﻿<Application x:Class="VULauncher.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:VULauncher"
+             xmlns:converters="clr-namespace:VULauncher.Views.Converters"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:enums="clr-namespace:VULauncher.ViewModels.Enums"
+             xmlns:consoles="clr-namespace:VULauncher.Views.Controls.Consoles"
+             xmlns:consolesViewModels="clr-namespace:VULauncher.ViewModels.ConsoleViewModels"
+             StartupUri="MainWindow.xaml" DispatcherUnhandledException="App_OnDispatcherUnhandledException">
+    <Application.Resources>
+        <converters:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
+        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:EnumDescriptionTypeConverter x:Key="EnumDescriptionTypeConverter"/>
+
+        <DataTemplate DataType="{x:Type consolesViewModels:VuConsoleViewModel}">
+            <consoles:VuConsoleControl/>
+        </DataTemplate>
+        <!--<Style x:Key="WatermarkComboBoxStyle" TargetType="{x:Type xctk:WatermarkComboBox}">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="2,2,0,0"/>
+        </Style>-->
+        <ObjectDataProvider x:Key="FrequencyTypesWithNames" MethodName="GetValuesAndNames"
+                            ObjectType="enums:EnumUtility">
+            <ObjectDataProvider.MethodParameters>
+                <x:TypeExtension TypeName="enums:FrequencyType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}"
+                            x:Key="FrequencyTypes">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:FrequencyType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Application.Resources>
+</Application>

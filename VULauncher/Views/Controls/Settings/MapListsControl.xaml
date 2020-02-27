@@ -1,0 +1,42 @@
+﻿<common:BaseControl x:Class="VULauncher.Views.Controls.Settings.MapListsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VULauncher.Views.Controls"
+             xmlns:common="clr-namespace:VULauncher.Views.Common"
+             xmlns:components="clr-namespace:VULauncher.Views.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <components:PresetEditingComponent Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" 
+                                           ComboBoxItemsSource="{Binding Presets, UpdateSourceTrigger=PropertyChanged}" 
+                                           ComboBoxSelectedItem="{Binding SelectedPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                           CreatePresetCommand="{Binding CreatePresetCommand}"
+                                           DeletePresetCommand="{Binding DeletePresetCommand}"/>
+
+        <DataGrid ItemsSource="{Binding SelectedPreset.MapList}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#"/>
+                <DataGridTextColumn Header="Map Name"/>
+                <DataGridTextColumn Header="Dice Name"/>
+                <DataGridTextColumn Header="Game Mode"/>
+                <DataGridTextColumn Header="Repeats"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</common:BaseControl>

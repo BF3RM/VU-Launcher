@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ShowAllFiles>false</ShowAllFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\Components\LaunchComponent.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Components\PresetEditingComponent.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Consoles\VuConsoleControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\Settings\ClientPresetsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\ConsolesControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\SettingsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\CreatePresetDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\DockingAdapter\DockingAdapter.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Components\LaunchComponent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Components\PresetSelectionComponent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Components\PresetEditingComponent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Consoles\VuConsoleControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\BanListsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\ConsolesControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\SettingsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\StartupsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\ServerParamsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\ClientParamsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\MapListsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\ServerPresetsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Controls\Settings\ClientPresetsControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\CreatePresetDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\ExceptionViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DockingAdapter\DockingAdapter.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

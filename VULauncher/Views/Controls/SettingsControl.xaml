@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="VULauncher.Views.Controls.SettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VULauncher.Views.Controls"
+             xmlns:viewModels="clr-namespace:VULauncher.ViewModels"
+             xmlns:settings1="clr-namespace:VULauncher.Views.Controls.Settings"
+             xmlns:settings="clr-namespace:VULauncher.ViewModels.SettingsViewModels"
+             mc:Ignorable="d" MinWidth="1000" MinHeight="600">
+
+    <UserControl.DataContext>
+        <viewModels:SettingsViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <!--<DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
+            <local:SettingsControl/>
+        </DataTemplate>-->
+        <DataTemplate DataType="{x:Type settings:ClientPresetsViewModel}">
+            <settings1:ClientPresetsControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type settings:ServerPresetsViewModel}">
+            <settings1:ServerPresetsControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type settings:ClientParamsViewModel}">
+            <settings1:ClientParamsControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type settings:ServerParamsViewModel}">
+            <settings1:ServerParamsControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type settings:MapListsViewModel}">
+            <settings1:MapListsControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type settings:StartupsViewModel}">
+            <settings1:StartupsControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type settings:BanListsViewModel}">
+            <settings1:BanListsControl />
+        </DataTemplate>
+
+        <Style x:Key="TabItemTextBlockStyle" TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsDirty}" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsDirty}" Value="False">
+                    <Setter Property="FontWeight" Value="Normal"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid >
+        <TabControl ItemsSource="{Binding TabViewModels, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding TabIndex, UpdateSourceTrigger=PropertyChanged}">
+            <TabControl.Resources>
+                <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding TabHeaderName}" Style="{StaticResource TabItemTextBlockStyle}"/>
+                                    <Label Content="*" FontWeight="Bold" Height="20" Padding="-5" Visibility="{Binding IsDirty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+        </TabControl>
+    </Grid>
+</UserControl>
