@@ -15,11 +15,6 @@ namespace VULauncher
     /// </summary>
     public partial class App : Application
     {
-        public App()
-        {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTkwOTc1QDMxMzcyZTM0MmUzMEZ3QmlpUC85aW5XZXNTdFcrWmNRR3dVQVBOaGdWT3lmbjRjSTRpK0M5aUE9");
-        }
-
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
 #if DEBUG

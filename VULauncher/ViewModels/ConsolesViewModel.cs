@@ -9,7 +9,7 @@ namespace VULauncher.ViewModels
 {
     public class ConsolesViewModel : ViewModel
     {
-        public ObservableCollection<DockingViewModel> DockingViewModels { get; set; } = new ObservableCollection<DockingViewModel>();
+        public ObservableCollection<DockableDocumentViewModel> DockingViewModels { get; set; } = new ObservableCollection<DockableDocumentViewModel>();
 
         private VuConsoleViewModel _activeConsoleViewModel;
 
@@ -21,13 +21,13 @@ namespace VULauncher.ViewModels
 
         public ConsolesViewModel()
         {
-            //var consoleViewModel = new VuConsoleViewModel("VU Client 1");
-            //var consoleViewModel2 = new VuConsoleViewModel("VU Client 2");
+            var consoleViewModel = new VuConsoleViewModel("VU Client 1");
+            var consoleViewModel2 = new VuConsoleViewModel("VU Client 2");
             //var consoleViewModel3 = new VuConsoleViewModel("VU Client 3");
             //var consoleViewModel4 = new VuConsoleViewModel("VU Client 4");
 
-            //DockingViewModels.Add(consoleViewModel);
-            //DockingViewModels.Add(consoleViewModel2);
+            DockingViewModels.Add(consoleViewModel);
+            DockingViewModels.Add(consoleViewModel2);
             //DockingViewModels.Add(consoleViewModel3);
             //DockingViewModels.Add(consoleViewModel4);
         }
@@ -36,7 +36,6 @@ namespace VULauncher.ViewModels
         {
             var consoleViewModel = new VuConsoleViewModel($"VU Client - {presetName}");
             DockingViewModels.Add(consoleViewModel);
-
         }
     }
 }

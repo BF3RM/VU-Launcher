@@ -30,9 +30,6 @@
     <Compile Update="Views\Dialogs\CreatePresetDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\DockingAdapter\DockingAdapter.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
@@ -81,9 +78,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\ExceptionViewer.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\DockingAdapter\DockingAdapter.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

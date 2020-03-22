@@ -1,14 +1,12 @@
 ﻿using VULauncher.ViewModels.Common;
-using VULauncher.Views.DockingAdapter;
 
 namespace VULauncher.ViewModels.ConsoleViewModels
 {
-    public class VuConsoleViewModel : DockingViewModel
+    public class VuConsoleViewModel : DockableDocumentViewModel
     {
         public VuConsoleViewModel(string consoleName)
         {
-            Header = consoleName;
-            State = DockState.Document;
+            Title = consoleName;
         }
     }
 }
