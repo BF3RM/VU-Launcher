@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using VULauncher.Models.Repositories.Common;
 using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories.Presets
+namespace VULauncher.Models.PresetProviders
 {
-    public class ModListPresetsRepository : FileRepository
+    public class ModListPresetsProvider : FileRepository
     {
-        private static readonly Lazy<ModListPresetsRepository> _lazy = new Lazy<ModListPresetsRepository>(() => new ModListPresetsRepository());
-        public static ModListPresetsRepository Instance => _lazy.Value;
+        private static readonly Lazy<ModListPresetsProvider> _lazy = new Lazy<ModListPresetsProvider>(() => new ModListPresetsProvider());
+        public static ModListPresetsProvider Instance => _lazy.Value;
 
         public List<ModListPresetItem> ModListPresets = new List<ModListPresetItem>();
 
-        private ModListPresetsRepository()
+        private ModListPresetsProvider()
         {
             base.Initialize();
         }

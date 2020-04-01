@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using VULauncher.Models.PresetProviders;
 using VULauncher.Models.Repositories;
 using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Common;
@@ -10,13 +11,14 @@ namespace VULauncher.ViewModels.SettingsViewModels
     public class ClientPresetsViewModel : PresetTabViewModel<ClientPresetItem>
     {
         public override string TabHeaderName { get; } = "Client Presets";
-        public WpfObservableRangeCollection<ClientParamsPresetItem> ClientParamsPresets { get; set; } = new WpfObservableRangeCollection<ClientParamsPresetItem>();
+        public ClientParamsViewModel ClientParamsViewModel { get; set; }
 
-        public ClientPresetsViewModel()
+        public ClientPresetsViewModel(ClientParamsViewModel clientParamsViewModel)
         {
-            Presets.AddRange(ClientPresetsRepository.Instance.ClientPresets);
+            ClientParamsViewModel = clientParamsViewModel;
+
+            Presets.AddRange(ClientPresetsProvider.Instance.ClientPresets);
             SelectedPreset = Presets.FirstOrDefault();
-            ClientParamsPresets.AddRange(ClientParamsPresetsRepository.Instance.ClientParamsPresets);
         }
     }
 }

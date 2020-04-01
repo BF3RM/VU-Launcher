@@ -1,19 +1,18 @@
 ﻿using System.Linq;
-using VULauncher.Models.Repositories;
+using VULauncher.Models.Entities;
+using VULauncher.Models.PresetProviders;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Items;
 
 namespace VULauncher.ViewModels.SettingsViewModels
 {
-    public class BanListsViewModel : PresetTabViewModel<BanListPresetItem>
+    public class BanListsViewModel : PresetTabViewModel<BanListPresetItem, BanListPresetsProvider>
     {
         public override string TabHeaderName { get; } = "BanLists";
 
         public BanListsViewModel()
+            : base(BanListPresetsProvider.Instance)
         {
-            Presets.AddRange(BanListPresetsRepository.Instance.BanListPresets);
-            SelectedPreset = Presets.FirstOrDefault();
-
             RegisterChildItemCollection(Presets);
         }
     }

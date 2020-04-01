@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using VULauncher.Models.Repositories.Common;
+using VULauncher.Models.Repositories.Static;
 using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories
+namespace VULauncher.Models.PresetProviders
 {
-    public class ServerParamsPresetsRepository : FileRepository
+    public class ServerParamsPresetsProvider : FileRepository
     {
-        private static readonly Lazy<ServerParamsPresetsRepository> _lazy = new Lazy<ServerParamsPresetsRepository>(() => new ServerParamsPresetsRepository());
-        public static ServerParamsPresetsRepository Instance => _lazy.Value;
+        private static readonly Lazy<ServerParamsPresetsProvider> _lazy = new Lazy<ServerParamsPresetsProvider>(() => new ServerParamsPresetsProvider());
+        public static ServerParamsPresetsProvider Instance => _lazy.Value;
 
         public List<ServerParamsPresetItem> ServerParamsPresets = new List<ServerParamsPresetItem>();
 
-        private ServerParamsPresetsRepository()
+        private ServerParamsPresetsProvider()
         {
             base.Initialize();
         }

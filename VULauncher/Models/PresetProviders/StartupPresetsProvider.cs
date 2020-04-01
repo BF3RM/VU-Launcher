@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using VULauncher.Models.Repositories.Common;
-using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories
+namespace VULauncher.Models.PresetProviders
 {
-    public class StartupPresetsRepository : FileRepository
+    public class StartupPresetsProvider : FileRepository
     {
-        private static readonly Lazy<StartupPresetsRepository> _lazy = new Lazy<StartupPresetsRepository>(() => new StartupPresetsRepository());
-        public static StartupPresetsRepository Instance => _lazy.Value;
+        private static readonly Lazy<StartupPresetsProvider> _lazy = new Lazy<StartupPresetsProvider>(() => new StartupPresetsProvider());
+        public static StartupPresetsProvider Instance => _lazy.Value;
 
         public List<StartupPresetItem> StartupPresets = new List<StartupPresetItem>();
 
-        private StartupPresetsRepository()
+        private StartupPresetsProvider()
         {
             base.Initialize();
         }

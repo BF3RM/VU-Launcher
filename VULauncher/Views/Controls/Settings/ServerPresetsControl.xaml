@@ -67,7 +67,7 @@
                                              ShowChangeTabButton="False"
                                              Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                                              Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
-        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding ServerParamsPresets}"
+        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding ServerParamsViewModel.Presets}"
                                              ComboBoxSelectedItem="{Binding SelectedPreset.ServerParamsPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                              DescriptionText="VU Server Params Preset:"
                                              ShowChangeTabButton="True"
@@ -75,7 +75,7 @@
                                              ChangeTabCommandParameter="3"
                                              Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                                              Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
-        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding MapListPresets}"
+        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding MapListsViewModel.Presets}"
                                              ComboBoxSelectedItem="{Binding SelectedPreset.MapListPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                              DescriptionText="MapList Preset:"
                                              ShowChangeTabButton="True"
@@ -83,7 +83,7 @@
                                              ChangeTabCommandParameter="4"
                                              Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                                              Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
-        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding StartupPresets}"
+        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding StartupsViewModel.Presets}"
                                              ComboBoxSelectedItem="{Binding SelectedPreset.StartupPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                              DescriptionText="Startup Preset:"
                                              ShowChangeTabButton="True"
@@ -91,7 +91,7 @@
                                              ChangeTabCommandParameter="5"
                                              Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                                              Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
-        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding BanListPresets}"
+        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding BanListsViewModel.Presets}"
                                              ComboBoxSelectedItem="{Binding SelectedPreset.BanListPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                              DescriptionText="BanList Preset:"
                                              ShowChangeTabButton="True"

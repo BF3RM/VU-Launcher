@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using VULauncher.Models.Entities;
+using VULauncher.Models.Entities.Extensions;
+using VULauncher.Models.PresetProviders.Common;
 using VULauncher.Models.Repositories.Common;
+using VULauncher.Models.Repositories.Static;
 using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories
+namespace VULauncher.Models.PresetProviders
 {
-    public class ClientParamsPresetsRepository : FileRepository
+    public class ClientParamsPresetsProvider : PresetsProvider<ClientParamsPreset, ClientParamsPresetItem>
     {
-        private static readonly Lazy<ClientParamsPresetsRepository> _lazy = new Lazy<ClientParamsPresetsRepository>(() => new ClientParamsPresetsRepository());
-        public static ClientParamsPresetsRepository Instance => _lazy.Value;
+        private static readonly Lazy<ClientParamsPresetsProvider> _lazy = new Lazy<ClientParamsPresetsProvider>(() => new ClientParamsPresetsProvider());
+        public static ClientParamsPresetsProvider Instance => _lazy.Value;
 
-        public List<ClientParamsPresetItem> ClientParamsPresets = new List<ClientParamsPresetItem>();
+        protected override string SubDirectory => "BanLists";
+        public override List<ClientParamsPresetItem> PresetItems => PresetEntities.ToItemList();
 
-        private ClientParamsPresetsRepository()
+        public ClientParamsPresetsProvider()
         {
-            base.Initialize();
+            LoadDummyData();
         }
 
-        public override void Load() // TODO: DUMMY
+        private void LoadDummyData() // TODO: DUMMY
         {
             var clientParamsPreset = new ClientParamsPresetItem()
             {
@@ -54,9 +59,9 @@ namespace VULauncher.Models.Repositories
             };
 
             clientParamsPreset.Parameters.AddRange(clientParameterItems);
-            clientParamsPreset.IsDirty = false;
+            //clientParamsPreset.IsDirty = false; // treat it like user input
 
-            ClientParamsPresets.Add(clientParamsPreset);
+            PresetItems.Add(clientParamsPreset);
         }
     }
 }

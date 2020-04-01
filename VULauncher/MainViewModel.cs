@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VULauncher.Commands;
+using VULauncher.Models.PresetProviders;
 using VULauncher.Models.Repositories;
 using VULauncher.ViewModels;
 using VULauncher.ViewModels.Collections;
@@ -23,6 +24,8 @@ namespace VULauncher
         public SettingsViewModel SettingsViewModel { get; set; }
 
         public RelayCommand StartClientPresetCommand { get; }
+        public RelayCommand SaveTabCommand { get; }
+        public RelayCommand SaveAllTabsCommand { get; }
 
         public ObservableItemCollection<ClientPresetItem> ClientPresets { get; set; } = new ObservableItemCollection<ClientPresetItem>();
         public ClientPresetItem SelectedClientPreset
@@ -45,10 +48,13 @@ namespace VULauncher
 
             StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
 
-            ClientPresets.AddRange(ClientPresetsRepository.Instance.ClientPresets);
+            SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
+            SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveTab);
+
+            ClientPresets.AddRange(ClientPresetsProvider.Instance.ClientPresets);
             SelectedClientPreset = ClientPresets.FirstOrDefault();
 
-            ServerPresets.AddRange(ServerPresetsRepository.Instance.ServerPresets);
+            ServerPresets.AddRange(ServerPresetsProvider.Instance.ServerPresets);
             SelectedServerPreset = ServerPresets.FirstOrDefault();
 
             ActiveViewType = ActiveViewType.Console;
@@ -58,6 +64,18 @@ namespace VULauncher
         {
             //ConsolesViewModel?.StartClientPreset();
         }
+
+        private void SaveTab()
+        {
+            SettingsViewModel.SaveTab();
+        }
+
+        private void SaveAllTabs()
+        {
+            SettingsViewModel.SaveAllTabs();
+        }
+
+        private bool CanSaveTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
 
         private bool CanStartClientPreset => ConsolesViewModel != null;
 

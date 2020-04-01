@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Items.Common;
@@ -7,19 +8,22 @@ using VULauncher.ViewModels.SettingsViewModels;
 
 namespace VULauncher.ViewModels
 {
-    public class SettingsViewModel : ViewModel
+    public class SettingsViewModel : ItemsParentViewModel
     {
+        // TODO: having bound the changing of tabs to a tabindex and using the ITabViewModel interface for that is kinda ugly since it lows too little control over the active VM
+
         private int _tabIndex;
 
-        public ClientPresetsViewModel ClientPresetsViewModel { get; set; } = new ClientPresetsViewModel();
-        public ServerPresetsViewModel ServerPresetsViewModel { get; set; } = new ServerPresetsViewModel();
-        public ClientParamsViewModel ClientParamsViewModel { get; set; } = new ClientParamsViewModel();
-        public ServerParamsViewModel ServerParamsViewModel { get; set; } = new ServerParamsViewModel();
-        public MapListsViewModel MapListsViewModel { get; set; } = new MapListsViewModel();
-        public StartupsViewModel StartupsViewModel { get; set; } = new StartupsViewModel();
-        public BanListsViewModel BanListsViewModel { get; set; } = new BanListsViewModel();
+        public ClientParamsViewModel ClientParamsViewModel { get; set; }
+        public ClientPresetsViewModel ClientPresetsViewModel { get; set; }
 
-        public List<ITabViewModel> TabViewModels { get; }
+        public ServerParamsViewModel ServerParamsViewModel { get; set; }
+        public MapListsViewModel MapListsViewModel { get; set; }
+        public StartupsViewModel StartupsViewModel { get; set; }
+        public BanListsViewModel BanListsViewModel { get; set; }
+        public ServerPresetsViewModel ServerPresetsViewModel { get; set; }
+
+        public List<IPresetTabViewModel> TabViewModels { get; }
 
         public int TabIndex
         {
@@ -29,7 +33,24 @@ namespace VULauncher.ViewModels
 
         public SettingsViewModel()
         {
-            TabViewModels = new List<ITabViewModel>()
+            ClientParamsViewModel = new ClientParamsViewModel();
+            ClientPresetsViewModel = new ClientPresetsViewModel(ClientParamsViewModel);
+
+            ServerParamsViewModel = new ServerParamsViewModel();
+            MapListsViewModel = new MapListsViewModel();
+            StartupsViewModel = new StartupsViewModel();
+            BanListsViewModel = new BanListsViewModel();
+            ServerPresetsViewModel = new ServerPresetsViewModel(ServerParamsViewModel, MapListsViewModel, StartupsViewModel, BanListsViewModel);
+
+            RegisterChildItem(ClientParamsViewModel);
+            RegisterChildItem(ClientPresetsViewModel);
+            RegisterChildItem(ServerParamsViewModel);
+            RegisterChildItem(MapListsViewModel);
+            RegisterChildItem(StartupsViewModel);
+            RegisterChildItem(BanListsViewModel);
+            RegisterChildItem(ServerPresetsViewModel);
+
+            TabViewModels = new List<IPresetTabViewModel>()
             {
                 ClientPresetsViewModel,
                 ServerPresetsViewModel,
@@ -50,5 +71,21 @@ namespace VULauncher.ViewModels
         {
             TabIndex = e.NewTabIndex;
         }
+
+        public void SaveTab()
+        {
+            var currentTabViewModel = TabViewModels[TabIndex];
+            currentTabViewModel.Save();
+        }
+
+        public void SaveAllTabs()
+        {
+            TabViewModels.ForEach(t => t.Save());
+        }
+
+        //public void DiscardChanges()
+        //{
+
+        //}
     }
 }

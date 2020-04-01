@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using VULauncher.Models.PresetProviders;
 using VULauncher.Models.Repositories;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Items;
@@ -11,7 +12,7 @@ namespace VULauncher.ViewModels.SettingsViewModels
 
         public StartupsViewModel()
         {
-            Presets.AddRange(StartupPresetsRepository.Instance.StartupPresets);
+            Presets.AddRange(StartupPresetsProvider.Instance.StartupPresets);
             SelectedPreset = Presets.FirstOrDefault();
 
             RegisterChildItemCollection(Presets);

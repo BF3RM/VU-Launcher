@@ -5,16 +5,16 @@ using VULauncher.Models.Repositories.Common;
 using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories
+namespace VULauncher.Models.PresetProviders
 {
-    public class ClientPresetsRepository : FileRepository
+    public class ClientPresetsProvider : FileRepository
     {
-        private static readonly Lazy<ClientPresetsRepository> _lazy = new Lazy<ClientPresetsRepository>(() => new ClientPresetsRepository());
-        public static ClientPresetsRepository Instance => _lazy.Value;
+        private static readonly Lazy<ClientPresetsProvider> _lazy = new Lazy<ClientPresetsProvider>(() => new ClientPresetsProvider());
+        public static ClientPresetsProvider Instance => _lazy.Value;
 
         public List<ClientPresetItem> ClientPresets = new List<ClientPresetItem>();
 
-        private ClientPresetsRepository()
+        private ClientPresetsProvider()
         {
             base.Initialize();
         }
@@ -27,7 +27,7 @@ namespace VULauncher.Models.Repositories
                 FrequencyType = FrequencyType._60Hz,
                 OpenConsole = true,
                 SendRuntimeErrorDumps = false,
-                ClientParamsPreset = ClientParamsPresetsRepository.Instance.ClientParamsPresets.FirstOrDefault(),
+                ClientParamsPreset = ClientParamsPresetsProvider.Instance.ClientParamsPresets.FirstOrDefault(),
                 IsDirty = false,
             };
 

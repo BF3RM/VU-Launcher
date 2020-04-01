@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using VULauncher.Models.Entities;
 using VULauncher.Models.Repositories.Common;
+using VULauncher.Models.Repositories.Static;
 using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories
+namespace VULauncher.Models.PresetProviders
 {
-    public class MapListPresetsRepository : FileRepository
+    public class MapListPresetsProvider : FileRepository
     {
-        private static readonly Lazy<MapListPresetsRepository> _lazy = new Lazy<MapListPresetsRepository>(() => new MapListPresetsRepository());
-        public static MapListPresetsRepository Instance => _lazy.Value;
+        private static readonly Lazy<MapListPresetsProvider> _lazy = new Lazy<MapListPresetsProvider>(() => new MapListPresetsProvider());
+        public static MapListPresetsProvider Instance => _lazy.Value;
 
         public List<MapListPresetItem> MapListPresets = new List<MapListPresetItem>();
 
-        private MapListPresetsRepository()
+        private MapListPresetsProvider()
         {
             base.Initialize();
         }

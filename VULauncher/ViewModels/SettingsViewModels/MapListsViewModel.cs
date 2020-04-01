@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using VULauncher.Models.PresetProviders;
 using VULauncher.Models.Repositories;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Items;
@@ -11,7 +12,7 @@ namespace VULauncher.ViewModels.SettingsViewModels
 
         public MapListsViewModel()
         {
-            Presets.AddRange(MapListPresetsRepository.Instance.MapListPresets);
+            Presets.AddRange(MapListPresetsProvider.Instance.MapListPresets);
             SelectedPreset = Presets.FirstOrDefault();
 
             RegisterChildItemCollection(Presets);

@@ -4,9 +4,8 @@ using System.Linq;
 using VULauncher.Models.Entities;
 using VULauncher.Models.Repositories.Common;
 using VULauncher.ViewModels.Enums;
-using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories
+namespace VULauncher.Models.Repositories.Static
 {
     public class ParametersRepository : StaticRepository
     {

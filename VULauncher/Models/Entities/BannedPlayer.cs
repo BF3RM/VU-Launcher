@@ -10,8 +10,8 @@ namespace VULauncher.Models.Entities
         public int Index { get; set; }
         public string PlayerName { get; set; }
         public string PlayerIp { get; set; }
-        public DateTime BanTime { get; set; }
-        public DateTime UnbanTime { get; set; }
+        public DateTime? BanDate { get; set; }
+        public DateTime? UnbanDate { get; set; }
         public string BanReason { get; set; }
     }
 }

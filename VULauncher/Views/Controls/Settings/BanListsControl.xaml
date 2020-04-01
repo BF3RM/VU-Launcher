@@ -29,10 +29,10 @@
                                            CreatePresetCommand="{Binding CreatePresetCommand}"
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
 
-        <DataGrid ItemsSource="{Binding SelectedPreset.BannedPlayers}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+        <DataGrid ItemsSource="{Binding SelectedPreset.BannedPlayers}" AutoGenerateColumns="False" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#"/>
-                <DataGridTextColumn Header="Name"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding PlayerName}"/>
                 <DataGridTextColumn Header="IP"/>
                 <DataGridTextColumn Header="Guid"/>
                 <DataGridTextColumn Header="Remaining"/>

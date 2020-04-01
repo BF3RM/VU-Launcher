@@ -14,5 +14,7 @@ namespace VULauncher.ViewModels.Items.Common
             get => _name;
             set => SetField(ref _name, value, setDirty: true);
         }
+
+        public int Id { get; set; }
     }
 }

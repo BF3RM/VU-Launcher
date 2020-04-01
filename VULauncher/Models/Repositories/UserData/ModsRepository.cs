@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using VULauncher.Models.Entities;
 using VULauncher.Models.Repositories.Common;
-using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories
+namespace VULauncher.Models.Repositories.UserData
 {
     public class ModsRepository : FileRepository
     {

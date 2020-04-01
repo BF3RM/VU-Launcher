@@ -44,7 +44,7 @@
                                              ShowChangeTabButton="False"
                                              Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                                              Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
-        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding ClientParamsPresets}"
+        <components:PresetSelectionComponent ComboBoxItemsSource="{Binding ClientParamsViewModel.Presets}"
                                              ComboBoxSelectedItem="{Binding SelectedPreset.ClientParamsPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                              DescriptionText="VU Client Params Preset:"
                                              ShowChangeTabButton="True"
