@@ -14,8 +14,17 @@ namespace VULauncher.Models.PresetProviders
         private static readonly Lazy<ClientParamsPresetsProvider> _lazy = new Lazy<ClientParamsPresetsProvider>(() => new ClientParamsPresetsProvider());
         public static ClientParamsPresetsProvider Instance => _lazy.Value;
 
-        protected override string SubDirectory => "BanLists";
-        public override List<ClientParamsPresetItem> PresetItems => PresetEntities.ToItemList();
+        protected override string SubDirectory => "ClientParams";
+
+        protected override IEnumerable<ClientParamsPreset> ConvertItemsToEntities(IEnumerable<ClientParamsPresetItem> presetItems)
+        {
+            return presetItems.ToEntityList();
+        }
+
+        protected override IEnumerable<ClientParamsPresetItem> ConvertEntitiesToItems(IEnumerable<ClientParamsPreset> presetEntities)
+        {
+            return presetEntities.ToItemList();
+        }
 
         public ClientParamsPresetsProvider()
         {

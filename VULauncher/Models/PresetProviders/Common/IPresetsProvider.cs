@@ -8,6 +8,6 @@ namespace VULauncher.Models.PresetProviders.Common
     {
         List<TPresetItem> PresetItems { get; }
         void Save(IEnumerable<TPresetItem> presetItems);
-        TPresetItem FindById(int id);
+        TPresetItem FindPresetItemById(int id);
     }
 }

@@ -1,25 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VULauncher.Models.Entities;
+using VULauncher.Models.Entities.Extensions;
+using VULauncher.Models.PresetProviders.Common;
 using VULauncher.Models.Repositories.Common;
 using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items;
 
 namespace VULauncher.Models.PresetProviders
 {
-    public class ClientPresetsProvider : FileRepository
+    public class ClientPresetsProvider : PresetsProvider<ClientPreset, ClientPresetItem>
     {
-        private static readonly Lazy<ClientPresetsProvider> _lazy = new Lazy<ClientPresetsProvider>(() => new ClientPresetsProvider());
-        public static ClientPresetsProvider Instance => _lazy.Value;
+        private static readonly Lazy<ClientParamsPresetsProvider> _lazy = new Lazy<ClientParamsPresetsProvider>(() => new ClientParamsPresetsProvider());
+        public static ClientParamsPresetsProvider Instance => _lazy.Value;
 
-        public List<ClientPresetItem> ClientPresets = new List<ClientPresetItem>();
+        protected override string SubDirectory => "ClientPresets";
 
-        private ClientPresetsProvider()
+        protected override IEnumerable<ClientPreset> ConvertItemsToEntities(IEnumerable<ClientPresetItem> presetItems)
         {
-            base.Initialize();
+            return presetItems.ToEntityList();
         }
 
-        public override void Load() //TODO: DUMMY
+        protected override IEnumerable<ClientPresetItem> ConvertEntitiesToItems(IEnumerable<ClientPreset> presetEntities)
+        {
+            return presetEntities.ToItemList();
+        }
+
+        public ClientPresetsProvider()
+        {
+            LoadDummyData();
+        }
+
+        private void LoadDummyData() //TODO: DUMMY
         {
             var clientPreset = new ClientPresetItem()
             {
@@ -27,11 +40,11 @@ namespace VULauncher.Models.PresetProviders
                 FrequencyType = FrequencyType._60Hz,
                 OpenConsole = true,
                 SendRuntimeErrorDumps = false,
-                ClientParamsPreset = ClientParamsPresetsProvider.Instance.ClientParamsPresets.FirstOrDefault(),
+                ClientParamsPreset = ClientParamsPresetsProvider.Instance.PresetItems.FirstOrDefault(),
                 IsDirty = false,
             };
 
-            ClientPresets.Add(clientPreset);
+            PresetItems.Add(clientPreset);
         }
     }
 }

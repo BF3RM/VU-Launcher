@@ -60,12 +60,12 @@ namespace VULauncher.Models.PresetProviders.Common
             foreach (var presetEntity in presetEntities)
             {
                 var jsonString = JsonSerializer.Serialize(presetEntity);
-                var path = Path.Combine(CurrentDirectory, presetEntity.Name + ".json");
+                var path = Path.Combine(CurrentDirectory, $"{presetEntity.Id}_{presetEntity.Name}.json");
                 File.WriteAllText(path, jsonString);
             }
         }
 
-        public TPresetItem FindById(int id)
+        public TPresetItem FindPresetItemById(int id)
         {
             return PresetItems.FirstOrDefault(e => e.Id == id);
         }

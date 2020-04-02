@@ -7,7 +7,7 @@ using VULauncher.ViewModels.Items;
 
 namespace VULauncher.Models.Entities
 {
-    public class ClientPreset : Entity
+    public class ClientPreset : PresetEntity
     {
         public FrequencyType FrequencyType { get; set; }
         public int ClientParamsPresetId { get; set; }
