@@ -14,7 +14,5 @@ namespace VULauncher.ViewModels.Items.Common
             get => _isChecked;
             set => SetField(ref _isChecked, value, setDirty: true);
         }
-
-        public string DisplayName { get; set; }
     }
 }

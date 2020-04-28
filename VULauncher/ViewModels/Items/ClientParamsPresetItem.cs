@@ -11,9 +11,9 @@ namespace VULauncher.ViewModels.Items
     {
         public ClientParamsPresetItem()
         {
-            RegisterChildItemCollection(Parameters);
+            RegisterChildItemCollection(ParameterSelections);
         }
 
-        public ObservableItemCollection<ParameterSelectionItem> Parameters { get; set; } = new ObservableItemCollection<ParameterSelectionItem>();
+        public ObservableItemCollection<ParameterSelectionItem> ParameterSelections { get; set; } = new ObservableItemCollection<ParameterSelectionItem>();
     }
 }

@@ -2,29 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VULauncher.Models.Repositories.Static;
 using VULauncher.ViewModels.Items;
 
 namespace VULauncher.Models.Entities.Extensions
 {
-    public static class ClientParamsPresetExtensions
-    {
-        public static ClientParamsPresetItem ToItem(this ClientParamsPreset entity)
+	public static class ServerParamsPresetExtensions
+	{
+        public static ServerParamsPresetItem ToItem(this ServerParamsPreset entity)
         {
-            var item = new ClientParamsPresetItem()
+            var item = new ServerParamsPresetItem()
             {
                 Id = entity.Id,
                 Name = entity.Name,
             };
 
             item.ParameterSelections.AddRange(entity.ParameterSelections.ToItemList());
+
+            // TODO: the selected parameters are a selection of existing (hardcoded parameters). find a way to implement this 
+            //item.Parameters.AddRange(entity.Parameters.ToItemList());
             item.IsDirty = false;
 
             return item;
         }
 
-        public static ClientParamsPreset ToEntity(this ClientParamsPresetItem item)
+        public static ServerParamsPreset ToEntity(this ServerParamsPresetItem item)
         {
-            var entity = new ClientParamsPreset()
+            var entity = new ServerParamsPreset()
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -35,12 +39,12 @@ namespace VULauncher.Models.Entities.Extensions
             return entity;
         }
 
-        public static List<ClientParamsPresetItem> ToItemList(this IEnumerable<ClientParamsPreset> entities)
+        public static List<ServerParamsPresetItem> ToItemList(this IEnumerable<ServerParamsPreset> entities)
         {
             return entities.Select(e => e.ToItem()).ToList();
         }
 
-        public static List<ClientParamsPreset> ToEntityList(this IEnumerable<ClientParamsPresetItem> items)
+        public static List<ServerParamsPreset> ToEntityList(this IEnumerable<ServerParamsPresetItem> items)
         {
             return items.Select(e => e.ToEntity()).ToList();
         }

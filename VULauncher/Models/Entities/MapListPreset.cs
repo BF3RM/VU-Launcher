@@ -5,8 +5,8 @@ using VULauncher.Models.Entities.Common;
 
 namespace VULauncher.Models.Entities
 {
-    public class ClientParamsPreset : PresetEntity
+    public class MapListPreset : PresetEntity
     {
-        public List<ParameterSelection> ParameterSelections = new List<ParameterSelection>();
+        public List<MapSelection> MapSelections = new List<MapSelection>();
     }
 }

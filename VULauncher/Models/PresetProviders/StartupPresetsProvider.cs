@@ -1,26 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using VULauncher.Models.Entities;
+using VULauncher.Models.Entities.Extensions;
+using VULauncher.Models.PresetProviders.Common;
 using VULauncher.Models.Repositories.Common;
 using VULauncher.ViewModels.Items;
 
 namespace VULauncher.Models.PresetProviders
 {
-    public class StartupPresetsProvider : FileRepository
+    public class StartupPresetsProvider : PresetsProvider<StartupPreset, StartupPresetItem>
     {
         private static readonly Lazy<StartupPresetsProvider> _lazy = new Lazy<StartupPresetsProvider>(() => new StartupPresetsProvider());
         public static StartupPresetsProvider Instance => _lazy.Value;
 
-        public List<StartupPresetItem> StartupPresets = new List<StartupPresetItem>();
+        protected override string SubDirectory => "ServerPresets";
 
-        private StartupPresetsProvider()
+        protected override IEnumerable<StartupPreset> ConvertItemsToEntities(IEnumerable<StartupPresetItem> presetItems)
         {
-            base.Initialize();
+            return presetItems.ToEntityList();
         }
 
-        public override void Load() //TODO: DUMMY
+        protected override IEnumerable<StartupPresetItem> ConvertEntitiesToItems(IEnumerable<StartupPreset> presetEntities)
+        {
+            return presetEntities.ToItemList();
+        }
+
+        protected override void LoadDummyData() //TODO: DUMMY
         {
             var startupPreset = new StartupPresetItem()
             {
+                Id = 1,
                 Name = "RM_Dedi_Startup",
                 StartupFileContent = @"
                 admin.password superelitepassword
@@ -71,7 +80,7 @@ namespace VULauncher.Models.PresetProviders
                 IsDirty = false,
             };
 
-            StartupPresets.Add(startupPreset);
+            PresetItems.Add(startupPreset);
         }
     }
 }

@@ -27,15 +27,11 @@ namespace VULauncher.Models.PresetProviders
             return presetEntities.ToItemList();
         }
 
-        public BanListPresetsProvider()
+        protected override void LoadDummyData() // TODO: DUMMY
         {
-            LoadDummyData();
-        }
-
-        private void LoadDummyData() // TODO: DUMMY
-        {
-            var banListPreset = new BanListPresetItem()
+            var banListPreset = new BanListPreset()
             {
+                Id = 1,
                 Name = "BanList_Preset",
             };
 
@@ -62,10 +58,10 @@ namespace VULauncher.Models.PresetProviders
                 },
             };
 
-            banListPreset.BannedPlayers.AddRange(banList.ToItemList());
+            banListPreset.BannedPlayers.AddRange(banList);
             //banListPreset.IsDirty = false; // treat it like user input
 
-            PresetItems.Add(banListPreset);
+            PresetEntities.Add(banListPreset);
         }
     }
 }

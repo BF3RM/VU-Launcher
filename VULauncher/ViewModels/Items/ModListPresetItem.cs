@@ -8,11 +8,11 @@ namespace VULauncher.ViewModels.Items
 {
     public class ModListPresetItem : PresetItem
     {
-        public ObservableItemCollection<ModSelectionItem> ModSelection { get; set; } = new ObservableItemCollection<ModSelectionItem>();
+        public ObservableItemCollection<ModSelectionItem> ModSelections { get; set; } = new ObservableItemCollection<ModSelectionItem>();
 
         public ModListPresetItem()
         {
-            RegisterChildItemCollection(ModSelection);
+            RegisterChildItemCollection(ModSelections);
         }
     }
 }

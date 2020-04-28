@@ -43,7 +43,7 @@
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
 
         <ListView Grid.Row="3" Grid.Column="1" Grid.RowSpan="8"
-                  ItemsSource="{Binding SelectedPreset.ModListPreset.ModSelection}"
+                  ItemsSource="{Binding SelectedPreset.ModListPreset.ModSelections}"
                   IsSynchronizedWithCurrentItem="True"
                   Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.View>
@@ -52,11 +52,12 @@
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />
-                                </DataTemplate>
+                                    <!--<CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />-->
+									<CheckBox IsChecked="{Binding IsChecked}" />
+								</DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Header="Mod Name" Width="150"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding ModName}" Header="Mod Name" Width="150"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

@@ -12,8 +12,8 @@ namespace VULauncher.Models.PresetProviders
 {
     public class ClientPresetsProvider : PresetsProvider<ClientPreset, ClientPresetItem>
     {
-        private static readonly Lazy<ClientParamsPresetsProvider> _lazy = new Lazy<ClientParamsPresetsProvider>(() => new ClientParamsPresetsProvider());
-        public static ClientParamsPresetsProvider Instance => _lazy.Value;
+        private static readonly Lazy<ClientPresetsProvider> _lazy = new Lazy<ClientPresetsProvider>(() => new ClientPresetsProvider());
+        public static ClientPresetsProvider Instance => _lazy.Value;
 
         protected override string SubDirectory => "ClientPresets";
 
@@ -27,12 +27,7 @@ namespace VULauncher.Models.PresetProviders
             return presetEntities.ToItemList();
         }
 
-        public ClientPresetsProvider()
-        {
-            LoadDummyData();
-        }
-
-        private void LoadDummyData() //TODO: DUMMY
+        protected override void LoadDummyData() //TODO: DUMMY
         {
             var clientPreset = new ClientPresetItem()
             {

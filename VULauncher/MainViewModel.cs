@@ -51,10 +51,10 @@ namespace VULauncher
             SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
             SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveTab);
 
-            ClientPresets.AddRange(ClientPresetsProvider.Instance.ClientPresets);
+            ClientPresets.AddRange(ClientPresetsProvider.Instance.PresetItems);
             SelectedClientPreset = ClientPresets.FirstOrDefault();
 
-            ServerPresets.AddRange(ServerPresetsProvider.Instance.ServerPresets);
+            ServerPresets.AddRange(ServerPresetsProvider.Instance.PresetItems);
             SelectedServerPreset = ServerPresets.FirstOrDefault();
 
             ActiveViewType = ActiveViewType.Console;

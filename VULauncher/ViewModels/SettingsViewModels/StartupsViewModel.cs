@@ -6,15 +6,12 @@ using VULauncher.ViewModels.Items;
 
 namespace VULauncher.ViewModels.SettingsViewModels
 {
-    public class StartupsViewModel : PresetTabViewModel<StartupPresetItem>
+    public class StartupsViewModel : PresetTabViewModel<StartupPresetItem, StartupPresetsProvider>
     {
         public override string TabHeaderName { get; } = "Startups";
-
         public StartupsViewModel()
+            : base(StartupPresetsProvider.Instance)
         {
-            Presets.AddRange(StartupPresetsProvider.Instance.StartupPresets);
-            SelectedPreset = Presets.FirstOrDefault();
-
             RegisterChildItemCollection(Presets);
         }
     }

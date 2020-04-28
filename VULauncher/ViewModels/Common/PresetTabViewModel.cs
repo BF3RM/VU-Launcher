@@ -42,7 +42,7 @@ namespace VULauncher.ViewModels.Common
             if (!IsDirty)
                 return;
 
-            PresetsProvider.Save(Presets.Where(p => p.));
+            PresetsProvider.Save(Presets.Where(p => p.IsDirty));
         }
 
         protected PresetTabViewModel(TPresetsProvider presetsProvider)

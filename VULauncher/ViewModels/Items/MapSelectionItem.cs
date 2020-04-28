@@ -7,7 +7,7 @@ using VULauncher.ViewModels.Items.Common;
 
 namespace VULauncher.ViewModels.Items
 {
-    public class MapToPlayItem : ViewModel, IUserCreatableItem
+    public class MapSelectionItem : SelectableItem, IUserCreatableItem
     {
         private int _index;
         private MapType? _mapType;

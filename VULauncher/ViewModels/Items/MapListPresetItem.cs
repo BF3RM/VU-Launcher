@@ -9,11 +9,11 @@ namespace VULauncher.ViewModels.Items
 {
     public class MapListPresetItem : PresetItem
     {
-        public ObservableItemCollection<MapToPlayItem> MapList { get; set; } = new ObservableItemCollection<MapToPlayItem>();
+        public ObservableItemCollection<MapSelectionItem> MapSelections { get; set; } = new ObservableItemCollection<MapSelectionItem>();
 
         public MapListPresetItem()
         {
-            RegisterChildItemCollection(MapList);
+            RegisterChildItemCollection(MapSelections);
         }
     }
 }

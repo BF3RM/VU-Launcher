@@ -5,8 +5,8 @@ using VULauncher.Models.Entities.Common;
 
 namespace VULauncher.Models.Entities
 {
-    public class ModListPreset : PresetEntity
-    {
-        public List<ModSelection> ModSelections = new List<ModSelection>();
-    }
+	public class StartupPreset : PresetEntity
+	{
+		public string StartupFileContent { get; set; }
+	}
 }

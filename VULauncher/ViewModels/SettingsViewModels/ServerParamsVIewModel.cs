@@ -6,15 +6,12 @@ using VULauncher.ViewModels.Items;
 
 namespace VULauncher.ViewModels.SettingsViewModels
 {
-    public class ServerParamsViewModel : PresetTabViewModel<ServerParamsPresetItem>
+    public class ServerParamsViewModel : PresetTabViewModel<ServerParamsPresetItem, ServerParamsPresetsProvider>
     {
         public override string TabHeaderName { get; } = "Server Params";
-
         public ServerParamsViewModel()
+            : base(ServerParamsPresetsProvider.Instance)
         {
-            Presets.AddRange(ServerParamsPresetsProvider.Instance.ServerParamsPresets);
-            SelectedPreset = Presets.FirstOrDefault();
-
             RegisterChildItemCollection(Presets);
         }
     }

@@ -28,23 +28,25 @@
                                            CreatePresetCommand="{Binding CreatePresetCommand}"
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
 
-        <ListView Grid.Row="3" Grid.Column="1" 
-                  ItemsSource="{Binding SelectedPreset.Parameters}"
+		<ListView Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding SelectedPreset.ParameterSelections}"
                   IsSynchronizedWithCurrentItem="True"
                   Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Header="Parameter Name" Width="150"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding AdditionalParameter}" Header="Path" Width="150"/>
-                    </GridView.Columns>
+						<GridViewColumn>
+							<GridViewColumn.CellTemplate>
+								<DataTemplate>
+									<CheckBox IsChecked="{Binding IsChecked}"/>
+								</DataTemplate>
+							</GridViewColumn.CellTemplate>
+						</GridViewColumn>
+						<GridViewColumn DisplayMemberBinding="{Binding ParameterString}" Header="Parameter" Width="150"/>
+						<GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" Width="150"/>
+						<GridViewColumn DisplayMemberBinding="{Binding ExpectedValue}" Header="ExpectedValue" Width="150"/>
+						<GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" Width="150"/>
+					</GridView.Columns>
                 </GridView>
             </ListView.View>
         </ListView>

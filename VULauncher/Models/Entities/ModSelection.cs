@@ -5,9 +5,8 @@ using VULauncher.Models.Entities.Common;
 
 namespace VULauncher.Models.Entities
 {
-    public class ModSelection : Entity
+    public class ModSelection : SelectionEntity
     {
-        public string DisplayName { get; set; }
-        public bool IsChecked { get; set; }
+        public string ModName { get; set; }
     }
 }

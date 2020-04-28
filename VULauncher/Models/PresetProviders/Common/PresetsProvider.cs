@@ -14,9 +14,8 @@ namespace VULauncher.Models.PresetProviders.Common
         where TPresetEntity : PresetEntity
         where TPresetItem : PresetItem
     {
-        public List<TPresetItem> PresetItems { get; private set; }
-
-        protected List<TPresetEntity> PresetEntities { get; set; }
+        public List<TPresetItem> PresetItems { get; private set; } = new List<TPresetItem>();
+        protected List<TPresetEntity> PresetEntities { get; set; } = new List<TPresetEntity>();
         protected string CurrentDirectory => Path.Combine(Configuration.UserDataDirectory, SubDirectory);
 
         protected abstract string SubDirectory { get; }
@@ -25,13 +24,16 @@ namespace VULauncher.Models.PresetProviders.Common
 
         protected PresetsProvider()
         {
+            LoadDummyData();
             Load();
         }
 
+        protected abstract void LoadDummyData(); // Can either add dummy Presets as Entities or Items to the according Lists
+
         private void Load()
         {
-            PresetEntities = GetEntitiesFromFiles();
-            PresetItems = ConvertEntitiesToItems(PresetEntities).ToList();
+            PresetEntities.AddRange(GetEntitiesFromFiles());
+            PresetItems.AddRange(ConvertEntitiesToItems(PresetEntities));
         }
 
         private List<TPresetEntity> GetEntitiesFromFiles()

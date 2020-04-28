@@ -7,6 +7,6 @@
             Load();
         }
 
-        public abstract void Load();
+        protected abstract void Load();
     }
 }

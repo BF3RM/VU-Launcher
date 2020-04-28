@@ -6,15 +6,12 @@ using VULauncher.ViewModels.Items;
 
 namespace VULauncher.ViewModels.SettingsViewModels
 {
-    public class MapListsViewModel : PresetTabViewModel<MapListPresetItem>
+    public class MapListsViewModel : PresetTabViewModel<MapListPresetItem, MapListPresetsProvider>
     {
         public override string TabHeaderName { get; } = "MapLists";
-
         public MapListsViewModel()
+            : base(MapListPresetsProvider.Instance)
         {
-            Presets.AddRange(MapListPresetsProvider.Instance.MapListPresets);
-            SelectedPreset = Presets.FirstOrDefault();
-
             RegisterChildItemCollection(Presets);
         }
     }

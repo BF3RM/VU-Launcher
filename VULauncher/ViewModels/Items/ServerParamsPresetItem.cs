@@ -9,11 +9,11 @@ namespace VULauncher.ViewModels.Items
 {
     public class ServerParamsPresetItem : PresetItem
     {
-        public ObservableItemCollection<ParameterSelectionItem> Parameters { get; set; } = new ObservableItemCollection<ParameterSelectionItem>();
+        public ObservableItemCollection<ParameterSelectionItem> ParameterSelections { get; set; } = new ObservableItemCollection<ParameterSelectionItem>();
 
         public ServerParamsPresetItem()
         {
-            RegisterChildItemCollection(Parameters);
+            RegisterChildItemCollection(ParameterSelections);
         }
     }
 }

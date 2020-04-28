@@ -8,17 +8,17 @@ using VULauncher.ViewModels.Items.Common;
 
 namespace VULauncher.ViewModels.SettingsViewModels
 {
-    public class ClientPresetsViewModel : PresetTabViewModel<ClientPresetItem>
+    public class ClientPresetsViewModel : PresetTabViewModel<ClientPresetItem, ClientPresetsProvider>
     {
         public override string TabHeaderName { get; } = "Client Presets";
         public ClientParamsViewModel ClientParamsViewModel { get; set; }
 
         public ClientPresetsViewModel(ClientParamsViewModel clientParamsViewModel)
+            : base(ClientPresetsProvider.Instance)
         {
             ClientParamsViewModel = clientParamsViewModel;
 
-            Presets.AddRange(ClientPresetsProvider.Instance.ClientPresets);
-            SelectedPreset = Presets.FirstOrDefault();
+            RegisterChildItemCollection(Presets);
         }
     }
 }

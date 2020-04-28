@@ -10,6 +10,7 @@ namespace VULauncher.ViewModels.Items
     public class ServerPresetItem : PresetItem
     {
         private FrequencyType _frequencyType = FrequencyType._30Hz;
+        private ModListPresetItem _modListPreset;
         private ServerParamsPresetItem _serverParamsPreset;
         private MapListPresetItem _mapListPreset;
         private StartupPresetItem _startupPreset;
@@ -23,7 +24,18 @@ namespace VULauncher.ViewModels.Items
             set => SetField(ref _frequencyType, value, setDirty: true);
         }
 
-        public ModListPresetItem ModListPreset { get; set; }
+        public ModListPresetItem ModListPreset
+        {
+            get => _modListPreset;
+            set
+            {
+                if (SetField(ref _modListPreset, value))
+                {
+                    if (value != null)
+                        RegisterChildItem(value); // since the ModList is a child directly nested into the ServerPresetItem, we want to direclty track it and update the IsDirty accordingly
+                }
+            }
+        }
 
         public ServerParamsPresetItem ServerParamsPreset
         {

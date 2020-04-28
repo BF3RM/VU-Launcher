@@ -7,6 +7,6 @@ namespace VULauncher.Models.Entities
 {
     public class ServerParamsPreset : PresetEntity
     {
-        public List<Parameter> Parameters = new List<Parameter>();
+        public List<ParameterSelection> ParameterSelections = new List<ParameterSelection>();
     }
 }

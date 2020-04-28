@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using VULauncher.Models.Config;
 using VULauncher.Models.Entities;
 using VULauncher.Models.Repositories.Common;
 
@@ -17,20 +21,15 @@ namespace VULauncher.Models.Repositories.UserData
             base.Initialize();
         }
 
-        public override void Load() //TODO: DUMMY
+        protected override void Load() //TODO: DUMMY
         {
-            var mod = new Mod()
-            {
-                Name = "testmod",
-                Authors = new List<string>() { "3ti", "Pow" },
-                Description = "bla",
-                Url = "bla.com",
-                Version = "ver1",
-                HasVeniceExt = true,
-                HasWebUi = true,
-            };
+            var files = Directory.EnumerateDirectories(Configuration.ModsDirectory).SelectMany(directory => Directory.EnumerateFiles(directory, "mod.json"));
 
-            Mods.Add(mod);
+            foreach (var modFile in files)
+            {
+                var mod = JsonSerializer.Deserialize<Mod>(File.ReadAllText(modFile));
+                Mods.Add(mod);
+            }
         }
     }
 }
