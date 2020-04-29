@@ -29,13 +29,14 @@
                                            CreatePresetCommand="{Binding CreatePresetCommand}"
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
 
-        <DataGrid ItemsSource="{Binding SelectedPreset.MapList}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+		<DataGrid ItemsSource="{Binding SelectedPreset.MapSelections}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="#"/>
-                <DataGridTextColumn Header="Map Name"/>
-                <DataGridTextColumn Header="Dice Name"/>
-                <DataGridTextColumn Header="Game Mode"/>
-                <DataGridTextColumn Header="Repeats"/>
+                <DataGridTextColumn Header="#" Binding="{Binding Index}"/>
+				<DataGridComboBoxColumn Header="Map" ItemsSource="{Binding Source={StaticResource MapTypes}}" SelectedItemBinding="{Binding MapType}"/>
+				<DataGridTextColumn Header="" Binding="{Binding MapType, ConverterParameter={StaticResource EnumDescriptionTypeConverter}}" IsReadOnly="True"/>
+				<DataGridComboBoxColumn Header="GameMode" ItemsSource="{Binding Source={StaticResource GameModeTypes}}" SelectedItemBinding="{Binding GameModeType}"/>
+				<DataGridTextColumn Header="" Binding="{Binding GameModeType, ConverterParameter={StaticResource EnumDescriptionTypeConverter}}" IsReadOnly="True"/>
+				<DataGridTextColumn Header="Repeats" Binding="{Binding Repeats}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

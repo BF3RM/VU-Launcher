@@ -89,10 +89,7 @@ namespace VULauncher.ViewModels.Common
             if (string.IsNullOrWhiteSpace(presetName))
                 throw new InvalidOperationException("String cant be null or whitespace");
 
-            var preset = new TPresetItem()
-            {
-                Name = presetName,
-            };
+            var preset = PresetsProvider.CreateEmptyPresetItem(presetName);
 
             Presets.Add(preset);
             preset.Name = presetName;

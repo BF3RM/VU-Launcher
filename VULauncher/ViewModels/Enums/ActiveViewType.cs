@@ -8,6 +8,7 @@ namespace VULauncher.ViewModels.Enums
     {
         None,
         Console,
-        Settings
+        Settings,
+        Config
     }
 }

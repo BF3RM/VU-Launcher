@@ -45,7 +45,7 @@
 						<GridViewColumn DisplayMemberBinding="{Binding ParameterString}" Header="Parameter" Width="150"/>
 						<GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" Width="150"/>
 						<GridViewColumn DisplayMemberBinding="{Binding ExpectedValue}" Header="ExpectedValue" Width="150"/>
-						<GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" Width="150"/>
+						<GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" Width="Auto"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

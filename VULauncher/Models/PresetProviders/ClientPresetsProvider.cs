@@ -41,5 +41,18 @@ namespace VULauncher.Models.PresetProviders
 
             PresetItems.Add(clientPreset);
         }
+
+        public override ClientPresetItem CreateEmptyPresetItem(string presetName)
+        {
+            return new ClientPresetItem()
+            {
+                Id = 0,
+                FrequencyType = FrequencyType._30Hz,
+                Name = presetName,
+                SendRuntimeErrorDumps = true,
+                OpenConsole = true,
+                ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(1),
+            };
+        }
     }
 }

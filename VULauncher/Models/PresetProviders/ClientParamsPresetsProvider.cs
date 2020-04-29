@@ -10,69 +10,14 @@ using VULauncher.ViewModels.Items;
 
 namespace VULauncher.Models.PresetProviders
 {
-    public class ClientParamsPresetsProvider : PresetsProvider<ClientParamsPreset, ClientParamsPresetItem>
+    public class ClientParamsPresetsProvider : ParamsPresetsProvider<ClientParamsPreset, ClientParamsPresetItem>
     {
         private static readonly Lazy<ClientParamsPresetsProvider> _lazy = new Lazy<ClientParamsPresetsProvider>(() => new ClientParamsPresetsProvider());
         public static ClientParamsPresetsProvider Instance => _lazy.Value;
 
         protected override string SubDirectory => "ClientParams";
 
-        protected override IEnumerable<ClientParamsPreset> ConvertItemsToEntities(IEnumerable<ClientParamsPresetItem> presetItems)
-        {
-            return presetItems.ToEntityList();
-        }
-
-        protected override IEnumerable<ClientParamsPresetItem> ConvertEntitiesToItems(IEnumerable<ClientParamsPreset> presetEntities)
-        {
-            var existingParameters = ParametersRepository.Instance.ClientParameters;
-            var existingParameterStrings = existingParameters.Select(p => p.ParameterString);
-
-            foreach (var presetEntity in presetEntities)
-            {
-                var notFoundParameterStrings = new List<string>();
-                var notFoundParameterSelectionStrings = new List<string>();
-
-                foreach (var parameterSelection in presetEntity.ParameterSelections)
-                {
-                    if (!existingParameterStrings.Any(param => param == parameterSelection.ParameterString))
-                    {
-                        notFoundParameterStrings.Add(parameterSelection.ParameterString);
-                    }
-                }
-
-                var parameterSelectionNames = presetEntity.ParameterSelections.Select(m => m.ParameterString);
-
-                foreach (var parameterString in existingParameterStrings)
-                {
-                    if (!parameterSelectionNames.Contains(parameterString))
-                    {
-                        notFoundParameterSelectionStrings.Add(parameterString);
-                    }
-                }
-
-                // Add unchecked ParameterSelections for mods that have been added to the parametersRepository
-                presetEntity.ParameterSelections.AddRange(notFoundParameterSelectionStrings.Select(n => new ParameterSelection() { IsChecked = false, ParameterString = n }));
-
-                // Remove existing ParameterSelections for parameters that have been deleted from the parametersRepository
-                presetEntity.ParameterSelections.RemoveAll(s => notFoundParameterStrings.Contains(s.ParameterString));
-
-                presetEntity.ParameterSelections = presetEntity.ParameterSelections.OrderBy(s => s.ParameterString).ToList();
-
-                foreach (var parameterSelection in presetEntity.ParameterSelections)
-                {
-                    var parameter = existingParameters.First(p => p.ParameterString == parameterSelection.ParameterString);
-
-                    parameterSelection.IsMandatory = parameter.IsMandatory;
-                    parameterSelection.ExpectedValue = parameter.ExpectedValue;
-                    parameterSelection.Description = parameter.Description;
-
-                    if (parameterSelection.IsMandatory)
-                        parameterSelection.IsChecked = true;
-                }
-            }
-
-            return presetEntities.ToItemList();
-        }
+        protected override List<LaunchParameter> Parameters => ParametersRepository.Instance.ClientParameters;
 
         protected override void LoadDummyData() // TODO: DUMMY
         {

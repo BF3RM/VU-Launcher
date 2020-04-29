@@ -12,7 +12,7 @@ namespace VULauncher.Models.PresetProviders.Common
 {
     public abstract class PresetsProvider<TPresetEntity, TPresetItem> : IPresetsProvider<TPresetItem>
         where TPresetEntity : PresetEntity
-        where TPresetItem : PresetItem
+        where TPresetItem : PresetItem, new()
     {
         public List<TPresetItem> PresetItems { get; private set; } = new List<TPresetItem>();
         protected List<TPresetEntity> PresetEntities { get; set; } = new List<TPresetEntity>();
@@ -70,6 +70,11 @@ namespace VULauncher.Models.PresetProviders.Common
         public TPresetItem FindPresetItemById(int id)
         {
             return PresetItems.FirstOrDefault(e => e.Id == id);
+        }
+
+        public virtual TPresetItem CreateEmptyPresetItem(string presetName) 
+        {
+            return new TPresetItem();
         }
     }
 }

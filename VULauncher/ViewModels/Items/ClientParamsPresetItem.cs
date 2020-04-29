@@ -7,13 +7,7 @@ using VULauncher.ViewModels.Items.Common;
 
 namespace VULauncher.ViewModels.Items
 {
-    public class ClientParamsPresetItem : PresetItem
+    public class ClientParamsPresetItem : ParamsPresetItem
     {
-        public ClientParamsPresetItem()
-        {
-            RegisterChildItemCollection(ParameterSelections);
-        }
-
-        public ObservableItemCollection<ParameterSelectionItem> ParameterSelections { get; set; } = new ObservableItemCollection<ParameterSelectionItem>();
     }
 }

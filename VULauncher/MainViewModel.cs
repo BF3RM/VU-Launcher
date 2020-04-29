@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using VULauncher.Commands;
+using VULauncher.Models.Config;
 using VULauncher.Models.PresetProviders;
 using VULauncher.Models.Repositories;
 using VULauncher.ViewModels;
@@ -22,6 +24,7 @@ namespace VULauncher
 
         public ConsolesViewModel ConsolesViewModel { get; set; }
         public SettingsViewModel SettingsViewModel { get; set; }
+        public ConfigViewModel ConfigViewModel { get; set; }
 
         public RelayCommand StartClientPresetCommand { get; }
         public RelayCommand SaveTabCommand { get; }
@@ -43,8 +46,15 @@ namespace VULauncher
 
         public MainViewModel()
         {
+            if (string.IsNullOrEmpty(Configuration.Bf3DocumentsDirectory))
+                Configuration.Bf3DocumentsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Battlefield 3");
+
+            if (string.IsNullOrEmpty(Configuration.VUInstallationDirectory))
+                Configuration.VUInstallationDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VeniceUnleashed");
+
             ConsolesViewModel = new ConsolesViewModel();
             SettingsViewModel = new SettingsViewModel();
+            ConfigViewModel = new ConfigViewModel();
 
             StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
 
@@ -87,9 +97,18 @@ namespace VULauncher
             {
                 if (SetField(ref _activeViewType, value))
                 {
-                    CurrentViewModel = value == ActiveViewType.Console
-                        ? (ViewModel) ConsolesViewModel
-                        : SettingsViewModel;
+                    switch (value)
+                    {
+                        case ActiveViewType.Console:
+                            CurrentViewModel = ConsolesViewModel;
+                            break;
+                        case ActiveViewType.Settings:
+                            CurrentViewModel = SettingsViewModel;
+                            break;
+                        case ActiveViewType.Config:
+                            CurrentViewModel = ConfigViewModel;
+                            break;
+                    }
                 }
             } 
         }

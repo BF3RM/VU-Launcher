@@ -8,9 +8,11 @@
 
   <ItemGroup>
     <None Remove="Views\Icons\ApplicationBehaviorSettings_16x.png" />
+    <None Remove="Views\Icons\ApplicationClass.ico" />
     <None Remove="Views\Icons\Cancel_16x.png" />
     <None Remove="Views\Icons\Console.ico" />
     <None Remove="Views\Icons\Logo-v3.ico" />
+    <None Remove="Views\Icons\OpenFolder.ico" />
     <None Remove="Views\Icons\Restart_16x.png" />
     <None Remove="Views\Icons\Run.ico" />
     <None Remove="Views\Icons\Save.ico" />
@@ -27,9 +29,11 @@
 
   <ItemGroup>
     <Resource Include="Views\Icons\ApplicationBehaviorSettings_16x.png" />
+    <Resource Include="Views\Icons\ApplicationClass.ico" />
     <Resource Include="Views\Icons\Cancel_16x.png" />
     <Resource Include="Views\Icons\Console.ico" />
     <Resource Include="Views\Icons\Logo-v3.ico" />
+    <Resource Include="Views\Icons\OpenFolder.ico" />
     <Resource Include="Views\Icons\Restart_16x.png" />
     <Resource Include="Views\Icons\Run.ico" />
     <Resource Include="Views\Icons\Save.ico" />
@@ -91,6 +95,7 @@
   <ItemGroup>
     <PackageReference Include="Dirkster.AvalonDock" Version="4.0.0" />
     <PackageReference Include="MiqM.Xceed.Wpf.Toolkit.NETCore" Version="3.5.1.3" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

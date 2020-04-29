@@ -11,6 +11,7 @@ namespace VULauncher.ViewModels.Items
     {
         private string _value;
 
+        protected override bool CanSetChecked => !IsMandatory;
         public bool IsNew => Id == 0;
 
         public int Id { get; set; }

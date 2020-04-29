@@ -35,5 +35,19 @@
                 <x:Type TypeName="enums:FrequencyType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-    </Application.Resources>
+		<ObjectDataProvider MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}"
+                            x:Key="MapTypes">
+			<ObjectDataProvider.MethodParameters>
+				<x:Type TypeName="enums:MapType" />
+			</ObjectDataProvider.MethodParameters>
+		</ObjectDataProvider>
+		<ObjectDataProvider MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}"
+                            x:Key="GameModeTypes">
+			<ObjectDataProvider.MethodParameters>
+				<x:Type TypeName="enums:GameModeType"/>
+			</ObjectDataProvider.MethodParameters>
+		</ObjectDataProvider>
+	</Application.Resources>
 </Application>

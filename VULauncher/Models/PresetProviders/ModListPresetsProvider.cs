@@ -80,5 +80,19 @@ namespace VULauncher.Models.PresetProviders
             modListPreset.ModSelections.Add(modSelection);
             PresetEntities.Add(modListPreset);
         }
+
+        public override ModListPresetItem CreateEmptyPresetItem(string presetName)
+        {
+            var modListPresetItem = new ModListPresetItem()
+            {
+                Id = 0,
+                Name = presetName,
+                IsDirty = true,
+            };
+
+            modListPresetItem.ModSelections.AddRange(ModsRepository.Instance.Mods.Select(mod => new ModSelection() { IsChecked = false, ModName = mod.Name }).ToItemList());
+
+            return modListPresetItem;
+        }
     }
 }

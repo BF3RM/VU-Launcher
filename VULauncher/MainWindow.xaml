@@ -23,7 +23,10 @@
         <DataTemplate DataType="{x:Type viewModels:ConsolesViewModel}">
             <controls:ConsolesControl />
         </DataTemplate>
-    </Window.Resources>
+		<DataTemplate DataType="{x:Type viewModels:ConfigViewModel}">
+			<controls:ConfigControl />
+		</DataTemplate>
+	</Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -46,7 +49,11 @@
                 <Image Source="Views/Icons/Console.ico" HorizontalAlignment="Center"/>
             </ToggleButton>
 
-            <ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Settings}}">
+			<ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Settings}}">
+				<Image Source="Views/Icons/ApplicationClass.ico" HorizontalAlignment="Center"/>
+			</ToggleButton>
+
+			<ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Config}}">
                 <Image Source="Views/Icons/Settings.ico" HorizontalAlignment="Center"/>
             </ToggleButton>
 

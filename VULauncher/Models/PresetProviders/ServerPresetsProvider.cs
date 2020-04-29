@@ -45,5 +45,23 @@ namespace VULauncher.Models.PresetProviders
 
             PresetEntities.Add(serverPresetItem);
         }
+
+        public override ServerPresetItem CreateEmptyPresetItem(string presetName)
+        {
+            return new ServerPresetItem()
+            {
+                Id = 0,
+                FrequencyType = FrequencyType._30Hz,
+                Name = presetName,
+                SendRuntimeErrorDumps = true,
+                OpenConsole = true,
+                BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(1),
+                MapListPreset = MapListPresetsProvider.Instance.FindPresetItemById(1),
+                ModListPreset = ModListPresetsProvider.Instance.CreateEmptyPresetItem("_"),
+                ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(1),
+                StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(1),
+                IsDirty = false,
+            };
+        }
     }
 }
