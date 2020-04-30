@@ -10,7 +10,9 @@ namespace VULauncher.ViewModels.SettingsViewModels
 {
     public class ClientPresetsViewModel : PresetTabViewModel<ClientPresetItem, ClientPresetsProvider>
     {
-        public override string TabHeaderName { get; } = "Client Presets";
+        public override string TabHeaderName => "Client Presets";
+        protected override string NewPresetExampleName => "My_Client_Preset";
+
         public ClientParamsViewModel ClientParamsViewModel { get; set; }
 
         public ClientPresetsViewModel(ClientParamsViewModel clientParamsViewModel)

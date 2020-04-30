@@ -8,7 +8,9 @@ namespace VULauncher.ViewModels.SettingsViewModels
 {
     public class MapListsViewModel : PresetTabViewModel<MapListPresetItem, MapListPresetsProvider>
     {
-        public override string TabHeaderName { get; } = "MapLists";
+        public override string TabHeaderName => "MapLists";
+        protected override string NewPresetExampleName => "My_Map_List";
+
         public MapListsViewModel()
             : base(MapListPresetsProvider.Instance)
         {

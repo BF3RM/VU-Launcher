@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using VULauncher.Commands;
 using VULauncher.Models.Entities;
 using VULauncher.Models.Entities.Common;
@@ -20,6 +21,8 @@ namespace VULauncher.ViewModels.Common
         where TPresetsProvider : IPresetsProvider<TPresetItem>
     {
         private TPresetItem _selectedPreset;
+
+        protected virtual string NewPresetExampleName => "My_Preset";
 
         public ObservableItemCollection<TPresetItem> Presets { get; set; } = new ObservableItemCollection<TPresetItem>();
         public abstract string TabHeaderName { get; }
@@ -79,7 +82,7 @@ namespace VULauncher.ViewModels.Common
 
         private void CreatePreset()
         {
-            CreatePresetDialog dialog = new CreatePresetDialog();
+            CreatePresetDialog dialog = new CreatePresetDialog(NewPresetExampleName);
 
             if (dialog.ShowDialog() != true)
                 return;
@@ -99,6 +102,11 @@ namespace VULauncher.ViewModels.Common
         private void DeletePreset()
         {
             if (SelectedPreset == null)
+                return;
+
+            MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete the preset '{SelectedPreset.Name}'?", "", MessageBoxButton.YesNo);
+
+            if (result != MessageBoxResult.Yes)
                 return;
 
             Presets.Remove(SelectedPreset);

@@ -82,10 +82,5 @@ namespace VULauncher.ViewModels
         {
             TabViewModels.ForEach(t => t.Save());
         }
-
-        //public void DiscardChanges()
-        //{
-
-        //}
     }
 }

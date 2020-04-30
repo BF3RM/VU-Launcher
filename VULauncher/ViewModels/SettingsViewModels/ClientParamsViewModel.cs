@@ -8,7 +8,8 @@ namespace VULauncher.ViewModels.SettingsViewModels
 {
     public class ClientParamsViewModel : PresetTabViewModel<ClientParamsPresetItem, ClientParamsPresetsProvider>
     {
-        public override string TabHeaderName { get; } = "Client Params";
+        public override string TabHeaderName => "Client Params";
+        protected override string NewPresetExampleName => "My_Client_Parameters";
 
         public ClientParamsViewModel()
             : base(ClientParamsPresetsProvider.Instance)

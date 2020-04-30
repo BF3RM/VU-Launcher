@@ -27,10 +27,13 @@ namespace VULauncher.Views.Dialogs
             get { return _okCommand ??= new RelayCommand(o => OnOkButtonClicked(), o => CanClickOk); }
         }
 
-        public CreatePresetDialog()
+        public CreatePresetDialog(string watermarkText = null)
         {
+            this.Owner = App.Current.MainWindow;
             InitializeComponent();
+            this.watermarkTextBox.Watermark = $"e.g. '{watermarkText}'" ?? "no_watermark_set";
         }
+
 
         public bool CanClickOk // TODO: Doesnt work for some reason
         {
@@ -38,18 +41,6 @@ namespace VULauncher.Views.Dialogs
         }
 
         public string PresetNameTextBoxText { get; set; }
-        //{
-            //get { return (string) GetValue(PresetNameTextBoxTextProperty); }
-            //set
-            //{
-            //    SetValue(PresetNameTextBoxTextProperty, value);
-            //}
-        //}
-
-        //// Using a DependencyProperty as the backing store for SelectedValuePath.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty PresetNameTextBoxTextProperty =
-        //    DependencyProperty.Register("PresetNameTextBoxText", typeof(string), typeof(CreatePresetDialog), new UIPropertyMetadata(""));
-
 
         public void OnOkButtonClicked()
         {

@@ -8,7 +8,9 @@ namespace VULauncher.ViewModels.SettingsViewModels
 {
     public class StartupsViewModel : PresetTabViewModel<StartupPresetItem, StartupPresetsProvider>
     {
-        public override string TabHeaderName { get; } = "Startups";
+        public override string TabHeaderName => "Startups";
+        protected override string NewPresetExampleName => "My_Startup";
+
         public StartupsViewModel()
             : base(StartupPresetsProvider.Instance)
         {

@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <xctk:WatermarkTextBox Watermark="e.g. Client_Preset_1" Text="{Binding PresetNameTextBoxText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="0" Height="25"/>
+        <xctk:WatermarkTextBox Name="watermarkTextBox" Text="{Binding PresetNameTextBoxText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="0" Height="25"/>
         <Button Content="Ok" Grid.Row="1" HorizontalAlignment="Left" Width="100" Height="25"
                 Command="{Binding OkCommand}"
                 IsDefault="True"/>

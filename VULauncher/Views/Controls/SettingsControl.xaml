@@ -9,9 +9,9 @@
              xmlns:settings="clr-namespace:VULauncher.ViewModels.SettingsViewModels"
              mc:Ignorable="d" MinWidth="1000" MinHeight="600">
 
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <viewModels:SettingsViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
 
     <UserControl.Resources>
         <!--<DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">

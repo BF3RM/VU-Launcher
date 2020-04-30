@@ -6,7 +6,8 @@ namespace VULauncher.ViewModels.SettingsViewModels
 {
     public class ServerPresetsViewModel : PresetTabViewModel<ServerPresetItem, ServerPresetsProvider>
     {
-        public override string TabHeaderName { get; } = "Server Presets";
+        public override string TabHeaderName => "Server Presets";
+        protected override string NewPresetExampleName => "My_Server_Preset";
 
         public ServerParamsViewModel ServerParamsViewModel { get; set; }
         public MapListsViewModel MapListsViewModel { get; set; }
