@@ -27,8 +27,8 @@ namespace VULauncher.Views.Components
 
         public IEnumerable ComboBoxItemsSource
         {
-            get { return (IEnumerable)GetValue(ComboBoxItemsSourceProperty); }
-            set { SetValue(ComboBoxItemsSourceProperty, value); }
+            get => (IEnumerable)GetValue(ComboBoxItemsSourceProperty);
+            set => SetValue(ComboBoxItemsSourceProperty, value);
         }
 
         public static readonly DependencyProperty ComboBoxItemsSourceProperty =
@@ -36,8 +36,8 @@ namespace VULauncher.Views.Components
 
         public object ComboBoxSelectedItem
         {
-            get { return (object)GetValue(ComboBoxSelectedItemProperty); }
-            set { SetValue(ComboBoxSelectedItemProperty, value); }
+            get => (object)GetValue(ComboBoxSelectedItemProperty);
+            set => SetValue(ComboBoxSelectedItemProperty, value);
         }
 
         public static readonly DependencyProperty ComboBoxSelectedItemProperty =
@@ -45,8 +45,8 @@ namespace VULauncher.Views.Components
 
         public RelayCommand StartPresetCommand
         {
-            get { return (RelayCommand)GetValue(StartPresetCommandProperty); }
-            set { SetValue(StartPresetCommandProperty, value); }
+            get => (RelayCommand)GetValue(StartPresetCommandProperty);
+            set => SetValue(StartPresetCommandProperty, value);
         }
 
         public static readonly DependencyProperty StartPresetCommandProperty =
@@ -55,8 +55,8 @@ namespace VULauncher.Views.Components
 
         public RelayCommand StopPresetCommand
         {
-            get { return (RelayCommand)GetValue(StopPresetCommandProperty); }
-            set { SetValue(StopPresetCommandProperty, value); }
+            get => (RelayCommand)GetValue(StopPresetCommandProperty);
+            set => SetValue(StopPresetCommandProperty, value);
         }
 
         public static readonly DependencyProperty StopPresetCommandProperty =
@@ -64,12 +64,16 @@ namespace VULauncher.Views.Components
 
         public RelayCommand RestartPresetCommand
         {
-            get { return (RelayCommand)GetValue(RestartPresetCommandProperty); }
-            set { SetValue(RestartPresetCommandProperty, value); }
+            get => (RelayCommand)GetValue(RestartPresetCommandProperty);
+            set => SetValue(RestartPresetCommandProperty, value);
         }
 
         public static readonly DependencyProperty RestartPresetCommandProperty =
             DependencyProperty.Register("RestartPresetCommand", typeof(RelayCommand), typeof(LaunchComponent), new UIPropertyMetadata(null));
 
+        private void LaunchSplitButtonItem_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            LaunchSplitButton.IsOpen = false;
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace VULauncher.Models.PresetProviders
         private static readonly Lazy<ServerParamsPresetsProvider> _lazy = new Lazy<ServerParamsPresetsProvider>(() => new ServerParamsPresetsProvider());
         public static ServerParamsPresetsProvider Instance => _lazy.Value;
 
-        protected override string SubDirectory => "ServerParamsPresets";
+        protected override string FileName => "ServerParamsPresets";
 
         protected override List<LaunchParameter> Parameters => ParametersRepository.Instance.ServerParameters;
 

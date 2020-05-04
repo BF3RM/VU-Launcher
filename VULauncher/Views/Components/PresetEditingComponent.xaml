@@ -15,8 +15,8 @@
         </Grid.ColumnDefinitions>
 
         <xctk:WatermarkComboBox Grid.Column="0" IsEditable="True" Watermark="-- No preset selected --" Padding="5,3,0,0"
-                                ItemsSource="{Binding ComboBoxItemsSource, ElementName=PresetEditingComponentInstance, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedItem="{Binding ComboBoxSelectedItem, ElementName=PresetEditingComponentInstance, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                ItemsSource="{Binding ComboBoxItemsSource, ElementName=PresetEditingComponentInstance, UpdateSourceTrigger=PropertyChanged}"
                                 DisplayMemberPath="Name"/>
         <Button Grid.Column="1" Command="{Binding CreatePresetCommand, ElementName=PresetEditingComponentInstance}" Width="20" Height="20" Background="Transparent" BorderThickness="0">
             <Image Source="../Icons/SketchflowNewNavScreen_16x.png" HorizontalAlignment="Center"/>

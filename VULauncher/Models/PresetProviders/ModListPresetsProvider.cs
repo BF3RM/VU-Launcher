@@ -15,7 +15,7 @@ namespace VULauncher.Models.PresetProviders
         private static readonly Lazy<ModListPresetsProvider> _lazy = new Lazy<ModListPresetsProvider>(() => new ModListPresetsProvider());
         public static ModListPresetsProvider Instance => _lazy.Value;
 
-        protected override string SubDirectory => "ModListPresets";
+        protected override string FileName => "ModListPresets";
 
         protected override IEnumerable<ModListPreset> ConvertItemsToEntities(IEnumerable<ModListPresetItem> presetItems)
         {
@@ -81,18 +81,10 @@ namespace VULauncher.Models.PresetProviders
             PresetEntities.Add(modListPreset);
         }
 
-        public override ModListPresetItem CreateEmptyPresetItem(string presetName)
+        protected override ModListPresetItem CreateEmptyPresetItem(ModListPresetItem newPresetItem)
         {
-            var modListPresetItem = new ModListPresetItem()
-            {
-                Id = 0,
-                Name = presetName,
-                IsDirty = true,
-            };
-
-            modListPresetItem.ModSelections.AddRange(ModsRepository.Instance.Mods.Select(mod => new ModSelection() { IsChecked = false, ModName = mod.Name }).ToItemList());
-
-            return modListPresetItem;
+            newPresetItem.ModSelections.AddRange(ModsRepository.Instance.Mods.Select(mod => new ModSelection() { IsChecked = false, ModName = mod.Name }).ToItemList());
+            return newPresetItem;
         }
     }
 }

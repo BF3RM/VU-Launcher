@@ -21,8 +21,6 @@ namespace VULauncher.ViewModels.SettingsViewModels
             MapListsViewModel = mapListsViewModel;
             StartupsViewModel = startupsViewModel;
             BanListsViewModel = banListsViewModel;
-
-            RegisterChildItemCollection(Presets);
         }
     }
 }

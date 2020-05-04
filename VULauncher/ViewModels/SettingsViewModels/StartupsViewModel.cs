@@ -14,7 +14,6 @@ namespace VULauncher.ViewModels.SettingsViewModels
         public StartupsViewModel()
             : base(StartupPresetsProvider.Instance)
         {
-            RegisterChildItemCollection(Presets);
         }
     }
 }

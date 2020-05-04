@@ -23,8 +23,8 @@
         </Grid.RowDefinitions>
 
         <components:PresetEditingComponent Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" 
-                                           ComboBoxItemsSource="{Binding Presets, UpdateSourceTrigger=PropertyChanged}" 
                                            ComboBoxSelectedItem="{Binding SelectedPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                           ComboBoxItemsSource="{Binding Presets, UpdateSourceTrigger=PropertyChanged}" 
                                            CreatePresetCommand="{Binding CreatePresetCommand}"
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
 

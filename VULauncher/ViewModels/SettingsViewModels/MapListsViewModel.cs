@@ -14,7 +14,6 @@ namespace VULauncher.ViewModels.SettingsViewModels
         public MapListsViewModel()
             : base(MapListPresetsProvider.Instance)
         {
-            RegisterChildItemCollection(Presets);
         }
     }
 }

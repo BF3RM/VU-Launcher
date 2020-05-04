@@ -9,16 +9,9 @@ namespace VULauncher.ViewModels.Items
 {
     public class ClientPresetItem : PresetItem
     {
-        private FrequencyType _frequencyType = FrequencyType._30Hz;
         private ClientParamsPresetItem _clientParamsPreset;
         private bool _sendRuntimeErrorDumps = true;
         private bool _openConsole = true;
-
-        public FrequencyType FrequencyType
-        {
-            get => _frequencyType;
-            set => SetField(ref _frequencyType, value, setDirty: true);
-        }
 
         public ClientParamsPresetItem ClientParamsPreset
         {

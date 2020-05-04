@@ -20,7 +20,6 @@ namespace VULauncher.Models.Entities.Extensions
                 ModListPreset = ModListPresetsProvider.Instance.FindPresetItemById(entity.ModListPresetId),
                 ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(entity.ServerParamsPresetId),
                 StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(entity.StartupPresetId),
-                FrequencyType = entity.FrequencyType,
                 OpenConsole = entity.OpenConsole,
                 SendRuntimeErrorDumps = entity.SendRuntimeErrorDumps,
                 IsDirty = false,
@@ -38,7 +37,6 @@ namespace VULauncher.Models.Entities.Extensions
                 ModListPresetId = item.ModListPreset.Id,
                 ServerParamsPresetId = item.ServerParamsPreset.Id,
                 StartupPresetId = item.StartupPreset.Id,
-                FrequencyType = item.FrequencyType,
                 OpenConsole = item.OpenConsole,
                 SendRuntimeErrorDumps = item.SendRuntimeErrorDumps,
             };

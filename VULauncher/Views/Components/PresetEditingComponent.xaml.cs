@@ -27,8 +27,8 @@ namespace VULauncher.Views.Components
 
         public IEnumerable ComboBoxItemsSource
         {
-            get { return (IEnumerable)GetValue(ComboBoxItemsSourceProperty); }
-            set { SetValue(ComboBoxItemsSourceProperty, value); }
+            get => (IEnumerable)GetValue(ComboBoxItemsSourceProperty);
+            set => SetValue(ComboBoxItemsSourceProperty, value);
         }
 
         public static readonly DependencyProperty ComboBoxItemsSourceProperty =
@@ -36,8 +36,8 @@ namespace VULauncher.Views.Components
 
         public object ComboBoxSelectedItem
         {
-            get { return (object)GetValue(ComboBoxSelectedItemProperty); }
-            set { SetValue(ComboBoxSelectedItemProperty, value); }
+            get => (object)GetValue(ComboBoxSelectedItemProperty);
+            set => SetValue(ComboBoxSelectedItemProperty, value);
         }
 
         public static readonly DependencyProperty ComboBoxSelectedItemProperty =
@@ -45,8 +45,8 @@ namespace VULauncher.Views.Components
 
         public RelayCommand CreatePresetCommand
         {
-            get { return (RelayCommand)GetValue(CreatePresetCommandProperty); }
-            set { SetValue(CreatePresetCommandProperty, value); }
+            get => (RelayCommand)GetValue(CreatePresetCommandProperty);
+            set => SetValue(CreatePresetCommandProperty, value);
         }
 
         public static readonly DependencyProperty CreatePresetCommandProperty =
@@ -54,8 +54,8 @@ namespace VULauncher.Views.Components
 
         public RelayCommand DeletePresetCommand
         {
-            get { return (RelayCommand)GetValue(DeletePresetCommandProperty); }
-            set { SetValue(DeletePresetCommandProperty, value); }
+            get => (RelayCommand)GetValue(DeletePresetCommandProperty);
+            set => SetValue(DeletePresetCommandProperty, value);
         }
 
         public static readonly DependencyProperty DeletePresetCommandProperty =

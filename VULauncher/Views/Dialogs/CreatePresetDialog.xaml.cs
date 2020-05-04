@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VULauncher.Commands;
@@ -24,14 +25,16 @@ namespace VULauncher.Views.Dialogs
 
         public RelayCommand OkCommand
         {
-            get { return _okCommand ??= new RelayCommand(o => OnOkButtonClicked(), o => CanClickOk); }
+            get => _okCommand ??= new RelayCommand(o => OnOkButtonClicked(), o => CanClickOk);
         }
 
-        public CreatePresetDialog(string watermarkText = null)
+        public CreatePresetDialog(Window owner, string watermarkText = null)
         {
-            this.Owner = App.Current.MainWindow;
+            this.Owner = owner;
             InitializeComponent();
-            this.watermarkTextBox.Watermark = $"e.g. '{watermarkText}'" ?? "no_watermark_set";
+            //this.watermarkTextBox.Watermark = $"e.g. '{watermarkText}'" ?? "no_watermark_set";
+            this.Title = $"e.g. '{watermarkText}'" ?? "no_watermark_set";
+            this.watermarkTextBox.Focus();
         }
 
 

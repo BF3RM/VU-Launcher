@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VULauncher.Commands;
+using VULauncher.Views.Common;
 
 namespace VULauncher.Views.Components
 {
@@ -50,7 +51,7 @@ namespace VULauncher.Views.Components
         }
 
         public static readonly DependencyProperty ChangeTabCommandProperty =
-            DependencyProperty.Register("ChangeTabCommand", typeof(RelayCommand), typeof(PresetSelectionComponent), new UIPropertyMetadata(null));
+            DependencyProperty.Register("ChangeTabCommand", typeof(RelayCommand<ChangePresetTabParameters>), typeof(PresetSelectionComponent), new UIPropertyMetadata(null));
 
         public object ChangeTabCommandParameter
         {

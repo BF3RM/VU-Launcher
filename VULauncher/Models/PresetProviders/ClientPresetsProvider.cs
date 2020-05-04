@@ -15,7 +15,7 @@ namespace VULauncher.Models.PresetProviders
         private static readonly Lazy<ClientPresetsProvider> _lazy = new Lazy<ClientPresetsProvider>(() => new ClientPresetsProvider());
         public static ClientPresetsProvider Instance => _lazy.Value;
 
-        protected override string SubDirectory => "ClientPresets";
+        protected override string FileName => "ClientPresets";
 
         protected override IEnumerable<ClientPreset> ConvertItemsToEntities(IEnumerable<ClientPresetItem> presetItems)
         {
@@ -32,7 +32,6 @@ namespace VULauncher.Models.PresetProviders
             var clientPreset = new ClientPresetItem()
             {
                 Name = "Client_60Hz",
-                FrequencyType = FrequencyType._60Hz,
                 OpenConsole = true,
                 SendRuntimeErrorDumps = false,
                 ClientParamsPreset = ClientParamsPresetsProvider.Instance.PresetItems.FirstOrDefault(),
@@ -42,17 +41,12 @@ namespace VULauncher.Models.PresetProviders
             PresetItems.Add(clientPreset);
         }
 
-        public override ClientPresetItem CreateEmptyPresetItem(string presetName)
+        protected override ClientPresetItem CreateEmptyPresetItem(ClientPresetItem newPresetItem)
         {
-            return new ClientPresetItem()
-            {
-                Id = 0,
-                FrequencyType = FrequencyType._30Hz,
-                Name = presetName,
-                SendRuntimeErrorDumps = true,
-                OpenConsole = true,
-                ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(1),
-            };
+            newPresetItem.SendRuntimeErrorDumps = true;
+            newPresetItem.OpenConsole = true;
+            newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(1);
+            return newPresetItem;
         }
     }
 }

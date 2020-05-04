@@ -10,10 +10,19 @@
              xmlns:consolesViewModels="clr-namespace:VULauncher.ViewModels.ConsoleViewModels"
              StartupUri="MainWindow.xaml" DispatcherUnhandledException="App_OnDispatcherUnhandledException">
     <Application.Resources>
+        <system:Int32 x:Key="ClientPresetsTabIndex">0</system:Int32>
+        <system:Int32 x:Key="ServerPresetsTabIndex">1</system:Int32>
+        <system:Int32 x:Key="ClientParamsTabIndex">2</system:Int32>
+        <system:Int32 x:Key="ServerParamsTabIndex">3</system:Int32>
+        <system:Int32 x:Key="MapListsTabIndex">4</system:Int32>
+        <system:Int32 x:Key="StartupsTabIndex">5</system:Int32>
+        <system:Int32 x:Key="BanListsTabIndex">6</system:Int32>
+
         <converters:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
         <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:EnumDescriptionTypeConverter x:Key="EnumDescriptionTypeConverter"/>
+        <converters:ChangePresetTabParametersMultiConverter x:Key="ChangePresetTabParametersMultiConverter"/>
 
         <DataTemplate DataType="{x:Type consolesViewModels:VuConsoleViewModel}">
             <consoles:VuConsoleControl/>

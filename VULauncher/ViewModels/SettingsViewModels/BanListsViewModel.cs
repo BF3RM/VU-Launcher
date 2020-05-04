@@ -14,7 +14,6 @@ namespace VULauncher.ViewModels.SettingsViewModels
         public BanListsViewModel()
             : base(BanListPresetsProvider.Instance)
         {
-            RegisterChildItemCollection(Presets);
         }
     }
 }

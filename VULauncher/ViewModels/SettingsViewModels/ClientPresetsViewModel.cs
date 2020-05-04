@@ -19,8 +19,6 @@ namespace VULauncher.ViewModels.SettingsViewModels
             : base(ClientPresetsProvider.Instance)
         {
             ClientParamsViewModel = clientParamsViewModel;
-
-            RegisterChildItemCollection(Presets);
         }
     }
 }

@@ -6,6 +6,7 @@ namespace VULauncher.ViewModels.Common
 {
     public interface IPresetTabViewModel : ITabViewModel
     {
+        void SetSelectedPreset(int selectedPresetId);
         void Save();
     }
 }

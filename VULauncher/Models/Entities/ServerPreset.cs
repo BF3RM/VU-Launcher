@@ -7,8 +7,7 @@ using VULauncher.ViewModels.Enums;
 namespace VULauncher.Models.Entities
 {
     public class ServerPreset : PresetEntity
-    {
-        public FrequencyType FrequencyType { get; set; }
+    { 
         public int ServerParamsPresetId { get; set; }
         public int MapListPresetId { get; set; }
         public int ModListPresetId { get; set; }

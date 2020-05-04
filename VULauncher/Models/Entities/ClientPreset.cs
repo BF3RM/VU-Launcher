@@ -9,7 +9,6 @@ namespace VULauncher.Models.Entities
 {
     public class ClientPreset : PresetEntity
     {
-        public FrequencyType FrequencyType { get; set; }
         public int ClientParamsPresetId { get; set; }
         public bool SendRuntimeErrorDumps { get; set; }
         public bool OpenConsole { get; set; }

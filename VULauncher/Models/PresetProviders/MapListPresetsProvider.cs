@@ -13,7 +13,7 @@ namespace VULauncher.Models.PresetProviders
         private static readonly Lazy<MapListPresetsProvider> _lazy = new Lazy<MapListPresetsProvider>(() => new MapListPresetsProvider());
         public static MapListPresetsProvider Instance => _lazy.Value;
 
-        protected override string SubDirectory => "MapListPresets";
+        protected override string FileName => "MapListPresets";
 
         protected override IEnumerable<MapListPreset> ConvertItemsToEntities(IEnumerable<MapListPresetItem> presetItems)
         {

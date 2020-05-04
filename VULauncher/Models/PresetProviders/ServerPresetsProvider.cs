@@ -15,7 +15,7 @@ namespace VULauncher.Models.PresetProviders
         private static readonly Lazy<ServerPresetsProvider> _lazy = new Lazy<ServerPresetsProvider>(() => new ServerPresetsProvider());
         public static ServerPresetsProvider Instance => _lazy.Value;
 
-        protected override string SubDirectory => "ServerPresets";
+        protected override string FileName => "ServerPresets";
 
         protected override IEnumerable<ServerPreset> ConvertItemsToEntities(IEnumerable<ServerPresetItem> presetItems)
         {
@@ -33,7 +33,6 @@ namespace VULauncher.Models.PresetProviders
             {
                 Id = 1,
                 Name = "Server_60Hz",
-                FrequencyType = FrequencyType._60Hz,
                 ModListPresetId = 1,
                 ServerParamsPresetId = 1,
                 MapListPresetId = 1,
@@ -46,22 +45,16 @@ namespace VULauncher.Models.PresetProviders
             PresetEntities.Add(serverPresetItem);
         }
 
-        public override ServerPresetItem CreateEmptyPresetItem(string presetName)
+        protected override ServerPresetItem CreateEmptyPresetItem(ServerPresetItem newPresetItem)
         {
-            return new ServerPresetItem()
-            {
-                Id = 0,
-                FrequencyType = FrequencyType._30Hz,
-                Name = presetName,
-                SendRuntimeErrorDumps = true,
-                OpenConsole = true,
-                BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(1),
-                MapListPreset = MapListPresetsProvider.Instance.FindPresetItemById(1),
-                ModListPreset = ModListPresetsProvider.Instance.CreateEmptyPresetItem("_"),
-                ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(1),
-                StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(1),
-                IsDirty = false,
-            };
+            newPresetItem.SendRuntimeErrorDumps = true;
+            newPresetItem.OpenConsole = true;
+            newPresetItem.BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(1);
+            newPresetItem.MapListPreset = MapListPresetsProvider.Instance.FindPresetItemById(1);
+            newPresetItem.ModListPreset = ModListPresetsProvider.Instance.CreateEmptyPresetItem(newPresetItem.Id, "_"); // TODO: giving it the same ID as parent, probably bad?
+            newPresetItem.ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(1);
+            newPresetItem.StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(1);
+            return newPresetItem;
         }
     }
 }

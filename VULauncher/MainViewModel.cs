@@ -18,8 +18,6 @@ namespace VULauncher
     public class MainViewModel : ViewModel
     {
         private ActiveViewType _activeViewType;
-        private ClientPresetItem _selectedClientPreset;
-        private ServerPresetItem _selectedServerPreset;
         private ViewModel _currentViewModel;
 
         public ConsolesViewModel ConsolesViewModel { get; set; }
@@ -29,20 +27,6 @@ namespace VULauncher
         public RelayCommand StartClientPresetCommand { get; }
         public RelayCommand SaveTabCommand { get; }
         public RelayCommand SaveAllTabsCommand { get; }
-
-        public ObservableItemCollection<ClientPresetItem> ClientPresets { get; set; } = new ObservableItemCollection<ClientPresetItem>();
-        public ClientPresetItem SelectedClientPreset
-        {
-            get => _selectedClientPreset;
-            set => SetField(ref _selectedClientPreset, value);
-        }
-
-        public ObservableItemCollection<ServerPresetItem> ServerPresets { get; set; } = new ObservableItemCollection<ServerPresetItem>();
-        public ServerPresetItem SelectedServerPreset
-        {
-            get => _selectedServerPreset;
-            set => SetField(ref _selectedServerPreset, value);
-        }
 
         public MainViewModel()
         {
@@ -60,12 +44,6 @@ namespace VULauncher
 
             SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
             SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveTab);
-
-            ClientPresets.AddRange(ClientPresetsProvider.Instance.PresetItems);
-            SelectedClientPreset = ClientPresets.FirstOrDefault();
-
-            ServerPresets.AddRange(ServerPresetsProvider.Instance.PresetItems);
-            SelectedServerPreset = ServerPresets.FirstOrDefault();
 
             ActiveViewType = ActiveViewType.Console;
         }
@@ -97,18 +75,13 @@ namespace VULauncher
             {
                 if (SetField(ref _activeViewType, value))
                 {
-                    switch (value)
+                    CurrentViewModel = value switch
                     {
-                        case ActiveViewType.Console:
-                            CurrentViewModel = ConsolesViewModel;
-                            break;
-                        case ActiveViewType.Settings:
-                            CurrentViewModel = SettingsViewModel;
-                            break;
-                        case ActiveViewType.Config:
-                            CurrentViewModel = ConfigViewModel;
-                            break;
-                    }
+                        ActiveViewType.Console => ConsolesViewModel,
+                        ActiveViewType.Settings => SettingsViewModel,
+                        ActiveViewType.Config => ConfigViewModel,
+                        _ => CurrentViewModel
+                    };
                 }
             } 
         }
@@ -118,46 +91,5 @@ namespace VULauncher
             get => _currentViewModel;
             set => SetField(ref _currentViewModel, value);
         }
-
-        //public ClientPresetsViewModel ClientPresetsViewModel { get; set; } = new ClientPresetsViewModel();
-        //public ServerPresetsViewModel ServerPresetsViewModel { get; set; } = new ServerPresetsViewModel();
-        //public ClientParamsViewModel ClientParamsViewModel { get; set; } = new ClientParamsViewModel();
-        //public ServerParamsViewModel ServerParamsViewModel { get; set; } = new ServerParamsViewModel();
-        //public MapListsViewModel MapListsViewModel { get; set; } = new MapListsViewModel();
-        //public StartupsViewModel StartupsViewModel { get; set; } = new StartupsViewModel();
-        //public BanListsViewModel BanListsViewModel { get; set; } = new BanListsViewModel();
-
-        //public List<PresetTabViewModel> TabViewModels { get; }
-
-        //private int _tabIndex;
-        //public int TabIndex
-        //{
-        //    get => _tabIndex;
-        //    set => SetField(ref _tabIndex, value);
-        //}
-
-        //public MainViewModel()
-        //{
-        //    TabViewModels = new List<PresetTabViewModel>()
-        //    {
-        //        ClientPresetsViewModel,
-        //        ServerPresetsViewModel,
-        //        ClientParamsViewModel,
-        //        ServerParamsViewModel,
-        //        MapListsViewModel,
-        //        StartupsViewModel,
-        //        BanListsViewModel,
-        //    };
-
-        //    foreach (var tabViewModel in TabViewModels)
-        //    {
-        //        tabViewModel.TabIndexChanged += TabViewModel_OnTabIndexChanged;
-        //    }
-        //}
-
-        //private void TabViewModel_OnTabIndexChanged(object sender, TabIndexChangedEventArgs e)
-        //{
-        //    TabIndex = e.NewTabIndex;
-        //}
     }
 }

@@ -15,7 +15,7 @@ namespace VULauncher.Models.PresetProviders
         private static readonly Lazy<BanListPresetsProvider> _lazy = new Lazy<BanListPresetsProvider>(() => new BanListPresetsProvider());
         public static BanListPresetsProvider Instance => _lazy.Value;
 
-        protected override string SubDirectory => "BanLists";
+        protected override string FileName => "BanLists";
 
         protected override IEnumerable<BanListPreset> ConvertItemsToEntities(IEnumerable<BanListPresetItem> presetItems)
         {

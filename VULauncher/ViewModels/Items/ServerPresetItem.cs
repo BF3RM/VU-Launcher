@@ -9,7 +9,6 @@ namespace VULauncher.ViewModels.Items
 {
     public class ServerPresetItem : PresetItem
     {
-        private FrequencyType _frequencyType = FrequencyType._30Hz;
         private ModListPresetItem _modListPreset;
         private ServerParamsPresetItem _serverParamsPreset;
         private MapListPresetItem _mapListPreset;
@@ -17,12 +16,6 @@ namespace VULauncher.ViewModels.Items
         private BanListPresetItem _banListPreset;
         private bool _sendRuntimeErrorDumps = true;
         private bool _openConsole = true;
-
-        public FrequencyType FrequencyType
-        {
-            get => _frequencyType;
-            set => SetField(ref _frequencyType, value, setDirty: true);
-        }
 
         public ModListPresetItem ModListPreset
         {

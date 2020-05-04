@@ -34,15 +34,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25"/>
-            <ColumnDefinition Width="25"/>
-            <ColumnDefinition Width="25"/>
-            <ColumnDefinition Width="25"/>
-            <ColumnDefinition Width="25"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="300*"/>
-        </Grid.ColumnDefinitions>-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="90*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
 
         <ToolBar DockPanel.Dock="Top" AllowDrop="False" Grid.Row="0" Height="32" Background="White" >
             <ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Console}}">
@@ -60,15 +55,45 @@
             <Separator></Separator>
 
             <Button Command="{Binding SaveTabCommand}">
-                <Image Source="Views/Icons/Save.ico" HorizontalAlignment="Center"/>
+                <Image Source="Views/Icons/Save.ico" HorizontalAlignment="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
             </Button>
 
             <Button Command="{Binding SaveAllTabsCommand}">
-                <Image Source="Views/Icons/SaveAll.ico" HorizontalAlignment="Center"/>
+                <Image Source="Views/Icons/SaveAll.ico" HorizontalAlignment="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
             </Button>
 
             <Button Command="{Binding DiscardChangesCommand}">
-                <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center"/>
+                <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
             </Button>
 
             <Separator></Separator>
@@ -76,8 +101,8 @@
                                         StartPresetCommand="{Binding StartClientPresetCommand}" 
                                         RestartPresetCommand="{Binding RestartClientPresetCommand}" 
                                         StopPresetCommand="{Binding StopClientPresetCommand}"
-                                        ComboBoxItemsSource="{Binding ClientPresets, UpdateSourceTrigger=PropertyChanged}"
-                                        ComboBoxSelectedItem="{Binding SelectedClientPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                        ComboBoxItemsSource="{Binding SettingsViewModel.ClientPresetsViewModel.Presets, UpdateSourceTrigger=PropertyChanged}"
+                                        ComboBoxSelectedItem="{Binding SettingsViewModel.ClientPresetsViewModel.SelectedPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
             <Separator ></Separator>
 
@@ -85,16 +110,30 @@
                                         StartPresetCommand="{Binding StartServerPresetCommand}" 
                                         RestartPresetCommand="{Binding RestartServerPresetCommand}" 
                                         StopPresetCommand="{Binding StopServerPresetCommand}"
-                                        ComboBoxItemsSource="{Binding ServerPresets, UpdateSourceTrigger=PropertyChanged}"
-                                        ComboBoxSelectedItem="{Binding SelectedServerPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                        ComboBoxItemsSource="{Binding SettingsViewModel.ServerPresetsViewModel.Presets, UpdateSourceTrigger=PropertyChanged}"
+                                        ComboBoxSelectedItem="{Binding SettingsViewModel.ServerPresetsViewModel.SelectedPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </ToolBar>
-
+        <ToolBar DockPanel.Dock="Top" AllowDrop="False" Grid.Row="0" Height="32" Grid.Column="1" Background="White">
+            <Button Command="{Binding OpenGitHubCommand}">
+                <Image Source="Views/Icons/GitLogo.ico" HorizontalAlignment="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Button>
+        </ToolBar>
 
 
         <!--<controls:ConsolesControl Grid.Row="1" Visibility="{Binding ActiveViewType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static enums:ActiveViewType.Console}}"/>
         <controls:SettingsControl Grid.Row="1" Visibility="{Binding ActiveViewType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static enums:ActiveViewType.Settings}}"/>-->
 
-        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Grid.Column="0" Grid.ColumnSpan="2"/>
 
         <!--<syncfusion:DockingManager Grid.Row="1" Grid.Column="0" sfSkinManager:SfSkinManager.VisualStyle="Metro">
             <ContentControl x:Name="client" syncfusion:DockingManager.Header="VU Client" syncfusion:DockingManager.SideInDockedMode="Top"/>

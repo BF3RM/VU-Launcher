@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
 using VULauncher.Commands;
 using VULauncher.Models.Entities;
 using VULauncher.Models.Entities.Common;
@@ -10,6 +12,7 @@ using VULauncher.Models.PresetProviders.Common;
 using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Items;
 using VULauncher.ViewModels.Items.Common;
+using VULauncher.Views.Common;
 using VULauncher.Views.Dialogs;
 
 namespace VULauncher.ViewModels.Common
@@ -27,7 +30,7 @@ namespace VULauncher.ViewModels.Common
         public ObservableItemCollection<TPresetItem> Presets { get; set; } = new ObservableItemCollection<TPresetItem>();
         public abstract string TabHeaderName { get; }
 
-        public RelayCommand ChangeTabCommand { get; }
+        public RelayCommand<ChangePresetTabParameters> ChangeTabCommand { get; }
         public RelayCommand CreatePresetCommand { get; }
         public RelayCommand DeletePresetCommand { get; }
 
@@ -39,6 +42,11 @@ namespace VULauncher.ViewModels.Common
         protected TPresetsProvider PresetsProvider { get; }
 
         public event TabIndexChangedEventHandler TabIndexChanged;
+
+        public void SetSelectedPreset(int selectedPresetId)
+        {
+            SelectedPreset = Presets.First(p => p.Id == selectedPresetId);
+        }
 
         public void Save()
         {
@@ -53,7 +61,7 @@ namespace VULauncher.ViewModels.Common
             CreatePresetCommand = new RelayCommand(x => CreatePreset(), x => CanCreatePreset);
             DeletePresetCommand = new RelayCommand(x => DeletePreset(), x => CanDeletePreset);
 
-            ChangeTabCommand = new RelayCommand(parameter => InvokeTabIndexChange(int.Parse((string)parameter)), parameter => CanChangeTab);
+            ChangeTabCommand = new RelayCommand<ChangePresetTabParameters>(InvokeTabIndexChange, parameter => CanChangeTab);
 
             PresetsProvider = presetsProvider;
 
@@ -75,16 +83,27 @@ namespace VULauncher.ViewModels.Common
             }
         }
 
-        private void InvokeTabIndexChange(int newTabIndex)
+        private void InvokeTabIndexChange(ChangePresetTabParameters parameters)
         {
-            TabIndexChanged?.Invoke(this, new TabIndexChangedEventArgs(newTabIndex));
+            TabIndexChanged?.Invoke(this, new TabIndexChangedEventArgs(parameters.TabIndex, parameters.SelectedPresetId));
         }
 
         private void CreatePreset()
         {
-            CreatePresetDialog dialog = new CreatePresetDialog(NewPresetExampleName);
+            var mainWindow = App.Current.MainWindow ?? throw new InvalidOperationException("App.Current.MainWindow cant be null");
 
-            if (dialog.ShowDialog() != true)
+            CreatePresetDialog dialog = new CreatePresetDialog(mainWindow, NewPresetExampleName);
+
+            mainWindow.Effect = new BlurEffect();
+            mainWindow.Opacity = 0.5;
+
+            var result = dialog.ShowDialog();
+
+            mainWindow.Opacity = 1;
+            //mainWindow.Background = Brushes.White;
+            mainWindow.Effect = null;
+
+            if (result != true)
                 return;
 
             var presetName = dialog.PresetNameTextBoxText;
@@ -92,7 +111,7 @@ namespace VULauncher.ViewModels.Common
             if (string.IsNullOrWhiteSpace(presetName))
                 throw new InvalidOperationException("String cant be null or whitespace");
 
-            var preset = PresetsProvider.CreateEmptyPresetItem(presetName);
+            var preset = PresetsProvider.CreateEmptyPresetItem(GetNewPresetId(), presetName);
 
             Presets.Add(preset);
             preset.Name = presetName;
@@ -104,13 +123,23 @@ namespace VULauncher.ViewModels.Common
             if (SelectedPreset == null)
                 return;
 
+            var mainWindow = App.Current.MainWindow ?? throw new InvalidOperationException("App.Current.MainWindow cant be null");
+            mainWindow.Effect = new BlurEffect();
+            mainWindow.Opacity = 0.5;
             MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete the preset '{SelectedPreset.Name}'?", "", MessageBoxButton.YesNo);
+            mainWindow.Opacity = 1;
+            mainWindow.Effect = null;
 
             if (result != MessageBoxResult.Yes)
                 return;
 
             Presets.Remove(SelectedPreset);
             SelectedPreset = Presets.FirstOrDefault();
+        }
+
+        private int GetNewPresetId()
+        {
+            return Presets.Max(p => p.Id) + 1;
         }
     }
 }

@@ -9,6 +9,6 @@ namespace VULauncher.Models.PresetProviders.Common
         List<TPresetItem> PresetItems { get; }
         void Save(IEnumerable<TPresetItem> presetItems);
         TPresetItem FindPresetItemById(int id);
-        TPresetItem CreateEmptyPresetItem(string presetName);
+        TPresetItem CreateEmptyPresetItem(int presetId, string presetName);
     }
 }

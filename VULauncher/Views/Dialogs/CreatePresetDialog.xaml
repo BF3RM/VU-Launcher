@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VULauncher.Views.Dialogs"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Enter the presets name:" Height="115" Width="276" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterOwner" ShowInTaskbar="True" ResizeMode="NoResize"
+        Height="115" Width="276" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterOwner" ShowInTaskbar="True" ResizeMode="NoResize" Icon="../Icons/Settings.ico"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.RowDefinitions>

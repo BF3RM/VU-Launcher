@@ -16,8 +16,8 @@
 
         <Label Grid.Column="0" Content="{Binding DescriptionText, ElementName=PresetSelectionComponentInstance, UpdateSourceTrigger=PropertyChanged}"/>
         <xctk:WatermarkComboBox Watermark="-- No preset selected --" Padding="5,3,0,0" Grid.Column="1" IsEditable="True"
-                                ItemsSource="{Binding ComboBoxItemsSource, ElementName=PresetSelectionComponentInstance, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedItem="{Binding ComboBoxSelectedItem, ElementName=PresetSelectionComponentInstance, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                ItemsSource="{Binding ComboBoxItemsSource, ElementName=PresetSelectionComponentInstance, UpdateSourceTrigger=PropertyChanged}"
                                 DisplayMemberPath="Name"/>
         <Button Grid.Column="2" Command="{Binding ChangeTabCommand, ElementName=PresetSelectionComponentInstance}" CommandParameter="{Binding ChangeTabCommandParameter, ElementName=PresetSelectionComponentInstance}" 
                 Visibility="{Binding ShowChangeTabButton, ElementName=PresetSelectionComponentInstance, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"

@@ -11,6 +11,7 @@
     <None Remove="Views\Icons\ApplicationClass.ico" />
     <None Remove="Views\Icons\Cancel_16x.png" />
     <None Remove="Views\Icons\Console.ico" />
+    <None Remove="Views\Icons\GitLogo.ico" />
     <None Remove="Views\Icons\Logo-v3.ico" />
     <None Remove="Views\Icons\OpenFolder.ico" />
     <None Remove="Views\Icons\Restart_16x.png" />
@@ -24,14 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Views\Icons\ApplicationBehaviorSettings_16x.png" />
     <Resource Include="Views\Icons\ApplicationClass.ico" />
     <Resource Include="Views\Icons\Cancel_16x.png" />
     <Resource Include="Views\Icons\Console.ico" />
+    <Resource Include="Views\Icons\GitLogo.ico" />
     <Resource Include="Views\Icons\Logo-v3.ico" />
     <Resource Include="Views\Icons\OpenFolder.ico" />
     <Resource Include="Views\Icons\Restart_16x.png" />

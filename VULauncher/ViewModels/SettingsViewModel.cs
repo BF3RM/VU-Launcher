@@ -70,6 +70,8 @@ namespace VULauncher.ViewModels
         private void TabViewModel_OnTabIndexChanged(object sender, TabIndexChangedEventArgs e)
         {
             TabIndex = e.NewTabIndex;
+            var currentTabViewModel = TabViewModels[TabIndex];
+            currentTabViewModel.SetSelectedPreset(e.SelectedPresetId);
         }
 
         public void SaveTab()
