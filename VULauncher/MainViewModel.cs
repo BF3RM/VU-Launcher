@@ -7,6 +7,7 @@ using VULauncher.Commands;
 using VULauncher.Models.Config;
 using VULauncher.Models.PresetProviders;
 using VULauncher.Models.Repositories;
+using VULauncher.Models.Setup;
 using VULauncher.ViewModels;
 using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Common;
@@ -30,11 +31,7 @@ namespace VULauncher
 
         public MainViewModel()
         {
-            if (string.IsNullOrEmpty(Configuration.Bf3DocumentsDirectory))
-                Configuration.Bf3DocumentsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Battlefield 3");
-
-            if (string.IsNullOrEmpty(Configuration.VUInstallationDirectory))
-                Configuration.VUInstallationDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VeniceUnleashed");
+            LocalSetup.VerifyOrCreate();
 
             ConsolesViewModel = new ConsolesViewModel();
             SettingsViewModel = new SettingsViewModel();
