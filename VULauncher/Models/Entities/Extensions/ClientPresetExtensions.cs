@@ -15,7 +15,7 @@ namespace VULauncher.Models.Entities.Extensions
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(entity.Id),
+                ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetById(entity.ClientParamsPresetId).ToItem(),
                 OpenConsole = entity.OpenConsole,
                 SendRuntimeErrorDumps = entity.SendRuntimeErrorDumps,
                 IsDirty = false,

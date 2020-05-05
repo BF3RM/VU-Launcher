@@ -14,7 +14,6 @@ namespace VULauncher.Models.PresetProviders.Common
         where TPresetEntity : PresetEntity
         where TPresetItem : PresetItem, new()
     {
-        public List<TPresetItem> PresetItems { get; private set; } = new List<TPresetItem>();
         protected List<TPresetEntity> PresetEntities { get; set; } = new List<TPresetEntity>();
         protected string PersistenceDirectory => Path.Combine(Configuration.UserDataDirectory, "_UserData");
         private string SaveFilePath => Path.Combine(PersistenceDirectory, $"{FileName}.json");
@@ -34,7 +33,6 @@ namespace VULauncher.Models.PresetProviders.Common
         private void Load()
         {
             PresetEntities.AddRange(GetEntitiesFromFiles());
-            PresetItems.AddRange(ConvertEntitiesToItems(PresetEntities));
         }
 
         private IEnumerable<TPresetEntity> GetEntitiesFromFiles()
@@ -50,6 +48,11 @@ namespace VULauncher.Models.PresetProviders.Common
             return entities;
         }
 
+        public IEnumerable<TPresetItem> LoadPresetItems()
+        {
+	        return ConvertEntitiesToItems(PresetEntities);
+        }
+
         public void Save(IEnumerable<TPresetItem> presetItems)
         {
             var entities = ConvertItemsToEntities(presetItems);
@@ -60,11 +63,12 @@ namespace VULauncher.Models.PresetProviders.Common
         {
             var jsonString = JsonSerializer.Serialize(presetEntities);
             File.WriteAllText(SaveFilePath, jsonString);
+            Load();
         }
 
-        public TPresetItem FindPresetItemById(int id)
+        public TPresetEntity FindPresetById(int id)
         {
-            return PresetItems.FirstOrDefault(e => e.Id == id);
+            return PresetEntities.FirstOrDefault(e => e.Id == id);
         }
 
         public TPresetItem CreateEmptyPresetItem(int presetId, string presetName) 

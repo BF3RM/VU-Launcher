@@ -27,7 +27,7 @@ namespace VULauncher.Models.PresetProviders
 
         protected override void LoadDummyData() //TODO: DUMMY
         {
-            var startupPreset = new StartupPresetItem()
+            var startupPreset = new StartupPreset()
             {
                 Id = 1,
                 Name = "RM_Dedi_Startup",
@@ -77,10 +77,9 @@ namespace VULauncher.Models.PresetProviders
                 vu.HighPerformanceReplication true
                 vu.DesertingAllowed true
                 ",
-                IsDirty = false,
             };
 
-            PresetItems.Add(startupPreset);
+            PresetEntities.Add(startupPreset);
         }
     }
 }

@@ -28,6 +28,8 @@ namespace VULauncher
         public RelayCommand StartClientPresetCommand { get; }
         public RelayCommand SaveTabCommand { get; }
         public RelayCommand SaveAllTabsCommand { get; }
+        public RelayCommand DiscardChangesTabCommand { get; }
+        public RelayCommand DiscardChangesAllTabsCommand { get; }
 
         public MainViewModel()
         {
@@ -41,6 +43,8 @@ namespace VULauncher
 
             SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
             SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveTab);
+            DiscardChangesTabCommand = new RelayCommand(x => DiscardChangesTab(), x => CanDiscardChangesTab);
+            DiscardChangesAllTabsCommand = new RelayCommand(x => DiscardChangesAllTabs(), x => CanDiscardChangesTab);
 
             ActiveViewType = ActiveViewType.Console;
         }
@@ -60,7 +64,18 @@ namespace VULauncher
             SettingsViewModel.SaveAllTabs();
         }
 
+        private void DiscardChangesTab()
+        {
+            SettingsViewModel.DiscardChangesTab();
+        }
+
+        private void DiscardChangesAllTabs()
+        {
+            SettingsViewModel.DiscardChangesAllTabs();
+        }
+
         private bool CanSaveTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
+        private bool CanDiscardChangesTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
 
         private bool CanStartClientPreset => ConsolesViewModel != null;
 

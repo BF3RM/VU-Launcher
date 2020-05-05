@@ -41,7 +41,7 @@
                                            CreatePresetCommand="{Binding CreatePresetCommand}"
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
 
-        <ListView Grid.Row="3" Grid.Column="1" Grid.RowSpan="8"
+        <ListView Grid.Row="3" Grid.Column="1" Grid.RowSpan="7"
                   ItemsSource="{Binding SelectedPreset.ModListPreset.ModSelections}"
                   IsSynchronizedWithCurrentItem="True"
                   Visibility="{Binding HasPresetSelected, Converter={StaticResource BooleanToVisibilityConverter}}">

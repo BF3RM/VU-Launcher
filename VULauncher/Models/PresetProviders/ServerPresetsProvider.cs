@@ -49,11 +49,11 @@ namespace VULauncher.Models.PresetProviders
         {
             newPresetItem.SendRuntimeErrorDumps = true;
             newPresetItem.OpenConsole = true;
-            newPresetItem.BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(1);
-            newPresetItem.MapListPreset = MapListPresetsProvider.Instance.FindPresetItemById(1);
+            newPresetItem.BanListPreset = BanListPresetsProvider.Instance.FindPresetById(1).ToItem();
+            newPresetItem.MapListPreset = MapListPresetsProvider.Instance.FindPresetById(1).ToItem();
             newPresetItem.ModListPreset = ModListPresetsProvider.Instance.CreateEmptyPresetItem(newPresetItem.Id, "_"); // TODO: giving it the same ID as parent, probably bad?
-            newPresetItem.ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(1);
-            newPresetItem.StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(1);
+            newPresetItem.ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetById(1).ToItem();
+            newPresetItem.StartupPreset = StartupPresetsProvider.Instance.FindPresetById(1).ToItem();
             return newPresetItem;
         }
     }

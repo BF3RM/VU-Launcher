@@ -8,5 +8,6 @@ namespace VULauncher.ViewModels.Common
     {
         void SetSelectedPreset(int selectedPresetId);
         void Save();
+        void DiscardChanges();
     }
 }

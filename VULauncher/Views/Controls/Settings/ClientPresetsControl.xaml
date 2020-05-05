@@ -37,8 +37,8 @@
                                            ComboBoxItemsSource="{Binding Presets, UpdateSourceTrigger=PropertyChanged}" 
                                            CreatePresetCommand="{Binding CreatePresetCommand}"
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
-        <components:PresetSelectionComponent ComboBoxSelectedItem="{Binding SelectedPreset.ClientParamsPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                             ComboBoxItemsSource="{Binding ClientParamsViewModel.Presets}"
+		<components:PresetSelectionComponent ComboBoxSelectedItem="{Binding SelectedPreset.ClientParamsPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+		                                     ComboBoxItemsSource="{Binding ClientParamsViewModel.Presets}"
                                              DescriptionText="VU Client Params Preset:"
                                              ShowChangeTabButton="True"
                                              ChangeTabCommand ="{Binding ChangeTabCommand}"

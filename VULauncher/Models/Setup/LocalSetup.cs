@@ -31,6 +31,9 @@ namespace VULauncher.Models.Setup
 				var result = MessageBox.Show($"Server.key file was not found at {Configuration.Bf3DocumentsDirectory}, you won't be able to run a server without a key", "Server key not found");
 			}
 
+			if (!File.Exists(Configuration.MapListFilePath))
+				File.Create(Configuration.MapListFilePath);
+
 			if (!File.Exists(Configuration.ModListFilePath))
 				File.Create(Configuration.ModListFilePath);
 

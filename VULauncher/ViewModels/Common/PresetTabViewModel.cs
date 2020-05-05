@@ -53,7 +53,16 @@ namespace VULauncher.ViewModels.Common
             if (!IsDirty)
                 return;
 
-            PresetsProvider.Save(Presets.Where(p => p.IsDirty));
+            PresetsProvider.Save(Presets);
+            LoadPresetItems();
+        }
+
+        public void DiscardChanges()
+        {
+	        if (!IsDirty)
+		        return;
+
+            LoadPresetItems();
         }
 
         protected PresetTabViewModel(TPresetsProvider presetsProvider)
@@ -65,10 +74,23 @@ namespace VULauncher.ViewModels.Common
 
             PresetsProvider = presetsProvider;
 
-            Presets.AddRange(PresetsProvider.PresetItems);
-            SelectedPreset = Presets.FirstOrDefault();
-
+            LoadPresetItems(clearBeforeLoading: false, updateIsDirty: false);
             RegisterChildItemCollection(Presets);
+        }
+
+        private void LoadPresetItems(bool clearBeforeLoading = true, bool updateIsDirty = true)
+        {
+	        if (clearBeforeLoading)
+	        {
+				Presets.Clear();
+				SelectedPreset = null;
+            }
+
+	        Presets.AddRange(PresetsProvider.LoadPresetItems());
+	        SelectedPreset = Presets.FirstOrDefault();
+
+            if (updateIsDirty)
+				NotifyPropertyChanged(nameof(IsDirty));
         }
 
         public TPresetItem SelectedPreset

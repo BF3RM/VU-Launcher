@@ -29,23 +29,22 @@ namespace VULauncher.Models.PresetProviders
 
         protected override void LoadDummyData() //TODO: DUMMY
         {
-            var clientPreset = new ClientPresetItem()
+            var clientPreset = new ClientPreset()
             {
                 Name = "Client_60Hz",
                 OpenConsole = true,
                 SendRuntimeErrorDumps = false,
-                ClientParamsPreset = ClientParamsPresetsProvider.Instance.PresetItems.FirstOrDefault(),
-                IsDirty = false,
+                ClientParamsPresetId = 1,
             };
 
-            PresetItems.Add(clientPreset);
+            PresetEntities.Add(clientPreset);
         }
 
         protected override ClientPresetItem CreateEmptyPresetItem(ClientPresetItem newPresetItem)
         {
             newPresetItem.SendRuntimeErrorDumps = true;
             newPresetItem.OpenConsole = true;
-            newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(1);
+            newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetById(1).ToItem();
             return newPresetItem;
         }
     }

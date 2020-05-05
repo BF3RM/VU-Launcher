@@ -82,7 +82,7 @@
                 </Image>
             </Button>
 
-            <Button Command="{Binding DiscardChangesCommand}">
+            <Button Command="{Binding DiscardChangesTabCommand}">
                 <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">
                     <Image.Style>
                         <Style TargetType="Image">
@@ -96,7 +96,21 @@
                 </Image>
             </Button>
 
-            <Separator></Separator>
+	        <Button Command="{Binding DiscardChangesAllTabsCommand}">
+		        <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">
+			        <Image.Style>
+				        <Style TargetType="Image">
+					        <Style.Triggers>
+						        <Trigger Property="IsEnabled" Value="False">
+							        <Setter Property="Opacity" Value="0.5" />
+						        </Trigger>
+					        </Style.Triggers>
+				        </Style>
+			        </Image.Style>
+		        </Image>
+	        </Button>
+
+			<Separator></Separator>
             <components:LaunchComponent HorizontalAlignment="Left" 
                                         StartPresetCommand="{Binding StartClientPresetCommand}" 
                                         RestartPresetCommand="{Binding RestartClientPresetCommand}" 

@@ -27,6 +27,7 @@ namespace VULauncher.Models.Config
         public static string VUBinariesDirectory => Path.Combine(VUInstallationDirectory, "client");
 
         public static string ServerKeyFilePath => Path.Combine(Bf3DocumentsDirectory, "server.key");
+        public static string MapListFilePath => Path.Combine(AdminDirectory, "MapList.txt");
         public static string ModListFilePath => Path.Combine(AdminDirectory, "ModList.txt");
         public static string StartupFilePath => Path.Combine(AdminDirectory, "Startup.txt");
         public static string BanListFilePath => Path.Combine(AdminDirectory, "BanList.txt");
