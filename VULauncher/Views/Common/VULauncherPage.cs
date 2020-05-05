@@ -60,15 +60,15 @@ namespace VULauncher.Views.Common
         protected void OnDeleteButtonClick(DataGrid dataGrid, Action<IUserCreatableItem> deleteItemAction)
         {
             Dispatcher?.BeginInvoke(DispatcherPriority.Input, new Action(() =>
-                                                                         {
-                                                                             var item = dataGrid?.SelectedItem as IUserCreatableItem;
+            {
+                var item = dataGrid?.SelectedItem as IUserCreatableItem;
 
-                                                                             if (item == null)
-                                                                                 return;
+                if (item == null)
+                    return;
 
-                                                                             deleteItemAction(item);
-                                                                             dataGrid.Focus();
-                                                                         }));
+                deleteItemAction(item);
+                dataGrid.Focus();
+            }));
         }
     }
 }

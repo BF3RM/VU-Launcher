@@ -21,21 +21,44 @@ namespace VULauncher.ViewModels
 
         public ConsolesViewModel()
         {
-            var consoleViewModel = new VuConsoleViewModel("VU Client 1");
-            var consoleViewModel2 = new VuConsoleViewModel("VU Client 2");
-            //var consoleViewModel3 = new VuConsoleViewModel("VU Client 3");
-            //var consoleViewModel4 = new VuConsoleViewModel("VU Client 4");
-
-            DockingViewModels.Add(consoleViewModel);
-            DockingViewModels.Add(consoleViewModel2);
+            //var consoleViewModel = new VuConsoleViewModel("VU Client 1");
+            //var consoleViewModel2 = new VuConsoleViewModel("VU Client 2");
+            ////var consoleViewModel3 = new VuConsoleViewModel("VU Client 3");
+            ////var consoleViewModel4 = new VuConsoleViewModel("VU Client 4");
+            //DockingViewModels.Add(consoleViewModel);
+            //DockingViewModels.Add(consoleViewModel2);
+            //consoleViewModel.WriteLog("hello yeeeee");
+            //consoleViewModel2.WriteLog("hello yeeeee 22222");
             //DockingViewModels.Add(consoleViewModel3);
             //DockingViewModels.Add(consoleViewModel4);
+        }
+
+        public void Add(VuConsoleViewModel consoleViewModel)
+        {
+            if (consoleViewModel != null)
+            {
+                DockingViewModels.Add(consoleViewModel);
+            }
+        }
+
+        public void Remove(VuConsoleViewModel consoleViewModel)
+        {
+            if (consoleViewModel != null)
+            {
+                DockingViewModels.Remove(consoleViewModel);
+            }
         }
 
         public void StartClientPreset(string presetName)
         {
             var consoleViewModel = new VuConsoleViewModel($"VU Client - {presetName}");
             DockingViewModels.Add(consoleViewModel);
+            for (int i = 0; i < 80; i++)
+            {
+                consoleViewModel.WriteLog($"hello yeeeee {i}");
+            }
+
+            consoleViewModel.IsSelected = true;
         }
     }
 }

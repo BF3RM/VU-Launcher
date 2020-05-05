@@ -13,15 +13,16 @@ namespace VULauncher.ViewModels.Common
         private bool _isClosed;
         private bool _canClose = true;
         private string _title;
+        private bool _isSelected;
 
-        public ICommand CloseCommand { get; }
+        public ICommand CloseCommand { set; get; }
 
         public DockableDocumentViewModel()
         {
-            CloseCommand = new RelayCommand(x =>
-            {
-                IsClosed = true;
-            });
+            //CloseCommand = new RelayCommand(x =>
+            //{
+            //    IsClosed = true;
+            //});
 
 
             this.CanClose = true;
@@ -43,6 +44,12 @@ namespace VULauncher.ViewModels.Common
         {
             get => _title;
             set => SetField(ref _title, value);
+        }
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => SetField(ref _isSelected, value);
         }
     }
 }

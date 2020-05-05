@@ -21,7 +21,7 @@
             <controls:SettingsControl/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModels:ConsolesViewModel}">
-            <controls:ConsolesControl />
+            <controls:ConsolesControl/>
         </DataTemplate>
     </Window.Resources>
 

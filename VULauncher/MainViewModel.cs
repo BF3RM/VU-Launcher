@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using VULauncher.Commands;
 using VULauncher.Models.Repositories;
+using VULauncher.Modules;
 using VULauncher.ViewModels;
 using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Common;
@@ -24,6 +25,8 @@ namespace VULauncher
 
         public RelayCommand StartClientPresetCommand { get; }
 
+        public RelayCommand StartServerPresetCommand { get; }
+
         public ObservableItemCollection<ClientPresetItem> ClientPresets { get; set; } = new ObservableItemCollection<ClientPresetItem>();
         public ClientPresetItem SelectedClientPreset
         {
@@ -38,15 +41,20 @@ namespace VULauncher
             set => SetField(ref _selectedServerPreset, value);
         }
 
+        public List<Game> GameList { get; set; }
+
         public MainViewModel()
         {
             ConsolesViewModel = new ConsolesViewModel();
             SettingsViewModel = new SettingsViewModel();
+            GameList = new List<Game>();
 
             StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
 
             ClientPresets.AddRange(ClientPresetsRepository.Instance.ClientPresets);
             SelectedClientPreset = ClientPresets.FirstOrDefault();
+
+            StartServerPresetCommand = new RelayCommand(x => StartServerPreset());
 
             ServerPresets.AddRange(ServerPresetsRepository.Instance.ServerPresets);
             SelectedServerPreset = ServerPresets.FirstOrDefault();
@@ -56,7 +64,16 @@ namespace VULauncher
 
         private void StartClientPreset()
         {
-            //ConsolesViewModel?.StartClientPreset();
+            Game game = new Game(ConsolesViewModel);
+            game.StartClientTest();
+            GameList.Add(game);
+        }
+
+        private void StartServerPreset()
+        {
+            Game game = new Game(ConsolesViewModel);
+            game.StartServerTest();
+            GameList.Add(game);
         }
 
         private bool CanStartClientPreset => ConsolesViewModel != null;
