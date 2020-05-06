@@ -7,7 +7,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" Height="25" Width="190" Name="LaunchComponentInstance" Background="Transparent">
     <Grid >
-        <xctk:SplitButton x:Name="LaunchSplitButton" Width="170" Height="25" VerticalAlignment="Center" Background="Transparent" BorderThickness="0">
+        <xctk:SplitButton x:Name="LaunchSplitButton" Width="170" Height="25" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Command="{Binding StartPresetCommand, ElementName=LaunchComponentInstance}">
             <xctk:SplitButton.Content>
                 <Grid Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
