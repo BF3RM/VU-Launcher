@@ -52,25 +52,6 @@ namespace VULauncher.Views.Components
         public static readonly DependencyProperty StartPresetCommandProperty =
             DependencyProperty.Register("StartPresetCommand", typeof(RelayCommand), typeof(LaunchComponent), new UIPropertyMetadata(null));
 
-
-        public RelayCommand StopPresetCommand
-        {
-            get => (RelayCommand)GetValue(StopPresetCommandProperty);
-            set => SetValue(StopPresetCommandProperty, value);
-        }
-
-        public static readonly DependencyProperty StopPresetCommandProperty =
-            DependencyProperty.Register("StopPresetCommand", typeof(RelayCommand), typeof(LaunchComponent), new UIPropertyMetadata(null));
-
-        public RelayCommand RestartPresetCommand
-        {
-            get => (RelayCommand)GetValue(RestartPresetCommandProperty);
-            set => SetValue(RestartPresetCommandProperty, value);
-        }
-
-        public static readonly DependencyProperty RestartPresetCommandProperty =
-            DependencyProperty.Register("RestartPresetCommand", typeof(RelayCommand), typeof(LaunchComponent), new UIPropertyMetadata(null));
-
         private void LaunchSplitButtonItem_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             LaunchSplitButton.IsOpen = false;

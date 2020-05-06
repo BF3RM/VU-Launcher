@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using VULauncher.Commands;
-using VULauncher.Models.Config;
-using VULauncher.Models.PresetProviders;
-using VULauncher.Models.Repositories;
 using VULauncher.Models.Setup;
+using VULauncher.Modules;
 using VULauncher.ViewModels;
-using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Enums;
-using VULauncher.ViewModels.Items;
 
 namespace VULauncher
 {
@@ -26,10 +18,14 @@ namespace VULauncher
         public ConfigViewModel ConfigViewModel { get; set; }
 
         public RelayCommand StartClientPresetCommand { get; }
+        public RelayCommand StartServerPresetCommand { get; }
+       
         public RelayCommand SaveTabCommand { get; }
         public RelayCommand SaveAllTabsCommand { get; }
         public RelayCommand DiscardChangesTabCommand { get; }
         public RelayCommand DiscardChangesAllTabsCommand { get; }
+
+        public List<Game> GameList { get; set; }
 
         public MainViewModel()
         {
@@ -39,19 +35,31 @@ namespace VULauncher
             SettingsViewModel = new SettingsViewModel();
             ConfigViewModel = new ConfigViewModel();
 
-            StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
-
             SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
             SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveTab);
             DiscardChangesTabCommand = new RelayCommand(x => DiscardChangesTab(), x => CanDiscardChangesTab);
             DiscardChangesAllTabsCommand = new RelayCommand(x => DiscardChangesAllTabs(), x => CanDiscardChangesTab);
+
+            StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
+            StartServerPresetCommand = new RelayCommand(x => StartServerPreset(), x => CanStartServerPreset);
+
+            GameList = new List<Game>();
 
             ActiveViewType = ActiveViewType.Console;
         }
 
         private void StartClientPreset()
         {
-            //ConsolesViewModel?.StartClientPreset();
+            Game game = new Game(ConsolesViewModel);
+            game.StartClientTest();
+            GameList.Add(game);
+        }
+
+        private void StartServerPreset()
+        {
+            Game game = new Game(ConsolesViewModel);
+            game.StartServerTest();
+            GameList.Add(game);
         }
 
         private void SaveTab()
@@ -78,6 +86,7 @@ namespace VULauncher
         private bool CanDiscardChangesTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
 
         private bool CanStartClientPreset => ConsolesViewModel != null;
+        private bool CanStartServerPreset => ConsolesViewModel != null;
 
         public ActiveViewType ActiveViewType
         {

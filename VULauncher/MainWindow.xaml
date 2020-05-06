@@ -21,7 +21,7 @@
             <controls:SettingsControl/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModels:ConsolesViewModel}">
-            <controls:ConsolesControl />
+            <controls:ConsolesControl/>
         </DataTemplate>
 		<DataTemplate DataType="{x:Type viewModels:ConfigViewModel}">
 			<controls:ConfigControl />
@@ -113,8 +113,6 @@
 			<Separator></Separator>
             <components:LaunchComponent HorizontalAlignment="Left" 
                                         StartPresetCommand="{Binding StartClientPresetCommand}" 
-                                        RestartPresetCommand="{Binding RestartClientPresetCommand}" 
-                                        StopPresetCommand="{Binding StopClientPresetCommand}"
                                         ComboBoxItemsSource="{Binding SettingsViewModel.ClientPresetsViewModel.Presets, UpdateSourceTrigger=PropertyChanged}"
                                         ComboBoxSelectedItem="{Binding SettingsViewModel.ClientPresetsViewModel.SelectedPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
@@ -122,8 +120,6 @@
 
             <components:LaunchComponent HorizontalAlignment="Left" 
                                         StartPresetCommand="{Binding StartServerPresetCommand}" 
-                                        RestartPresetCommand="{Binding RestartServerPresetCommand}" 
-                                        StopPresetCommand="{Binding StopServerPresetCommand}"
                                         ComboBoxItemsSource="{Binding SettingsViewModel.ServerPresetsViewModel.Presets, UpdateSourceTrigger=PropertyChanged}"
                                         ComboBoxSelectedItem="{Binding SettingsViewModel.ServerPresetsViewModel.SelectedPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </ToolBar>
