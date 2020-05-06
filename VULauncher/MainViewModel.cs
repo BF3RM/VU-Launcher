@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using VULauncher.Commands;
 using VULauncher.Models.Setup;
-using VULauncher.Modules;
 using VULauncher.ViewModels;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Enums;
@@ -25,8 +24,6 @@ namespace VULauncher
         public RelayCommand DiscardChangesTabCommand { get; }
         public RelayCommand DiscardChangesAllTabsCommand { get; }
 
-        public List<Game> GameList { get; set; }
-
         public MainViewModel()
         {
             LocalSetup.VerifyOrCreate();
@@ -43,23 +40,17 @@ namespace VULauncher
             StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
             StartServerPresetCommand = new RelayCommand(x => StartServerPreset(), x => CanStartServerPreset);
 
-            GameList = new List<Game>();
-
             ActiveViewType = ActiveViewType.Console;
         }
 
         private void StartClientPreset()
         {
-            Game game = new Game(ConsolesViewModel);
-            game.StartClientTest();
-            GameList.Add(game);
+	        ConsolesViewModel.StartClient(SettingsViewModel.ClientPresetsViewModel.SelectedPreset);
         }
 
         private void StartServerPreset()
         {
-            Game game = new Game(ConsolesViewModel);
-            game.StartServerTest();
-            GameList.Add(game);
+	        ConsolesViewModel.StartServer(SettingsViewModel.ServerPresetsViewModel.SelectedPreset);
         }
 
         private void SaveTab()
