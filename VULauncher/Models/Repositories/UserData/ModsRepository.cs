@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
+using Newtonsoft.Json;
 using VULauncher.Models.Config;
 using VULauncher.Models.Entities;
 using VULauncher.Models.Repositories.Common;
@@ -27,7 +27,7 @@ namespace VULauncher.Models.Repositories.UserData
 
             foreach (var modFile in files)
             {
-                var mod = JsonSerializer.Deserialize<Mod>(File.ReadAllText(modFile));
+                var mod = JsonConvert.DeserializeObject<Mod>(File.ReadAllText(modFile));
                 Mods.Add(mod);
             }
         }

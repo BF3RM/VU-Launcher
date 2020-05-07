@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using VULauncher.Models.Config;
 using VULauncher.Models.Entities.Common;
 using VULauncher.ViewModels.Items.Common;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace VULauncher.Models.PresetProviders.Common
 {

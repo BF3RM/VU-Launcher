@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using VULauncher.Models.Entities.Common;
 
 namespace VULauncher.Models.Entities
