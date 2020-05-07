@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 using VULauncher.Models.Config;
 using VULauncher.Models.Entities.Common;
 using VULauncher.ViewModels.Items.Common;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace VULauncher.Models.PresetProviders.Common
 {
@@ -15,6 +16,7 @@ namespace VULauncher.Models.PresetProviders.Common
         where TPresetItem : PresetItem, new()
     {
         protected List<TPresetEntity> PresetEntities { get; set; } = new List<TPresetEntity>();
+        public List<TPresetItem> PresetItems { get; set; } = new List<TPresetItem>();
         protected string PersistenceDirectory => Path.Combine(Configuration.UserDataDirectory, "_UserData");
         private string SaveFilePath => Path.Combine(PersistenceDirectory, $"{FileName}.json");
 
@@ -24,15 +26,22 @@ namespace VULauncher.Models.PresetProviders.Common
 
         protected PresetsProvider()
         {
-            LoadDummyData();
-            Load();
+            //LoadDummyData();
+            Load(resetPresetLists: false);
         }
 
         protected abstract void LoadDummyData(); // Can either add dummy Presets as Entities or Items to the according Lists
 
-        private void Load()
+        private void Load(bool resetPresetLists = true)
         {
+            if (resetPresetLists)
+            {
+                PresetEntities.Clear();
+                PresetItems.Clear();
+            }
+
             PresetEntities.AddRange(GetEntitiesFromFiles());
+            PresetItems.AddRange(ConvertEntitiesToItems(PresetEntities));
         }
 
         private IEnumerable<TPresetEntity> GetEntitiesFromFiles()
@@ -43,14 +52,19 @@ namespace VULauncher.Models.PresetProviders.Common
             if (!File.Exists(SaveFilePath))
                 return Enumerable.Empty<TPresetEntity>();
 
-            var entities = JsonSerializer.Deserialize<IEnumerable<TPresetEntity>>(File.ReadAllText(SaveFilePath));
+            var entities = JsonConvert.DeserializeObject<IEnumerable<TPresetEntity>>(File.ReadAllText(SaveFilePath));
 
             return entities;
         }
 
-        public IEnumerable<TPresetItem> LoadPresetItems()
+        //public IEnumerable<TPresetItem> LoadPresetItems()
+        //{
+        // return ConvertEntitiesToItems(PresetEntities);
+        //}
+
+        public void ReloadPresetItems()
         {
-	        return ConvertEntitiesToItems(PresetEntities);
+            Load(resetPresetLists: true);
         }
 
         public void Save(IEnumerable<TPresetItem> presetItems)
@@ -61,25 +75,30 @@ namespace VULauncher.Models.PresetProviders.Common
 
         private void SaveEntities(IEnumerable<TPresetEntity> presetEntities)
         {
-            var jsonString = JsonSerializer.Serialize(presetEntities);
+            var jsonString = JsonConvert.SerializeObject(presetEntities);
             File.WriteAllText(SaveFilePath, jsonString);
-            Load();
+            Load(resetPresetLists: true);
         }
 
-        public TPresetEntity FindPresetById(int id)
+        public TPresetItem FindPresetItemById(int id)
         {
-            return PresetEntities.FirstOrDefault(e => e.Id == id);
+            return PresetItems.FirstOrDefault(e => e.Id == id);
         }
 
-        public TPresetItem CreateEmptyPresetItem(int presetId, string presetName) 
+        public TPresetItem CreateEmptyPresetItem(string presetName)
         {
-            var newPresetItem = new TPresetItem { Id = presetId, Name = presetName };
+            var newPresetItem = new TPresetItem { Id = GetNewPresetId(), Name = presetName };
             return CreateEmptyPresetItem(newPresetItem);
         }
 
         protected virtual TPresetItem CreateEmptyPresetItem(TPresetItem newPresetItem)
         {
             return newPresetItem;
+        }
+
+        private int GetNewPresetId()
+        {
+            return (PresetItems.Any() ? PresetItems.Max(p => p.Id) : 0) + 1;
         }
     }
 }

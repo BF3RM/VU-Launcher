@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Enums;
@@ -7,7 +8,7 @@ using VULauncher.ViewModels.Items.Common;
 
 namespace VULauncher.ViewModels.Items
 {
-    public class ServerPresetItem : PresetItem
+    public class ServerPresetItem : PresetItem, ILaunchPresetItem
     {
         private ModListPresetItem _modListPreset;
         private ServerParamsPresetItem _serverParamsPreset;
@@ -64,6 +65,14 @@ namespace VULauncher.ViewModels.Items
         {
             get => _openConsole;
             set => SetField(ref _openConsole, value, setDirty: true);
+        }
+
+        public IEnumerable<ParameterSelectionItem> GetSelectedParameters()
+        {
+            if (ServerParamsPreset == null)
+                return Enumerable.Empty<ParameterSelectionItem>();
+
+            return ServerParamsPreset.ParameterSelections.Where(p => p.IsChecked);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace VULauncher.Views.Common
     public class ChangePresetTabParameters
     {
         public int TabIndex { get; set; }
-        public int SelectedPresetId { get; set; }
+        public int? SelectedPresetId { get; set; }
     }
 }

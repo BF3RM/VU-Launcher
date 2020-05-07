@@ -44,7 +44,7 @@ namespace VULauncher.Models.PresetProviders
         {
             newPresetItem.SendRuntimeErrorDumps = true;
             newPresetItem.OpenConsole = true;
-            newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetById(1).ToItem();
+            newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(1);
             return newPresetItem;
         }
     }

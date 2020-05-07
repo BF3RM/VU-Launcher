@@ -54,7 +54,7 @@ namespace VULauncher.ViewModels.Common
                 return;
 
             PresetsProvider.Save(Presets);
-            LoadPresetItems();
+            LoadPresetItems(clearBeforeLoading: true, updateIsDirty: true);
         }
 
         public void DiscardChanges()
@@ -62,7 +62,7 @@ namespace VULauncher.ViewModels.Common
 	        if (!IsDirty)
 		        return;
 
-            LoadPresetItems();
+            LoadPresetItems(clearBeforeLoading: true, updateIsDirty: true);
         }
 
         protected PresetTabViewModel(TPresetsProvider presetsProvider)
@@ -86,7 +86,8 @@ namespace VULauncher.ViewModels.Common
 				SelectedPreset = null;
             }
 
-	        Presets.AddRange(PresetsProvider.LoadPresetItems());
+            PresetsProvider.ReloadPresetItems();
+	        Presets.AddRange(PresetsProvider.PresetItems);
 	        SelectedPreset = Presets.FirstOrDefault();
 
             if (updateIsDirty)
@@ -133,7 +134,7 @@ namespace VULauncher.ViewModels.Common
             if (string.IsNullOrWhiteSpace(presetName))
                 throw new InvalidOperationException("String cant be null or whitespace");
 
-            var preset = PresetsProvider.CreateEmptyPresetItem(GetNewPresetId(), presetName);
+            var preset = PresetsProvider.CreateEmptyPresetItem(presetName);
 
             Presets.Add(preset);
             preset.Name = presetName;
@@ -157,11 +158,6 @@ namespace VULauncher.ViewModels.Common
 
             Presets.Remove(SelectedPreset);
             SelectedPreset = Presets.FirstOrDefault();
-        }
-
-        private int GetNewPresetId()
-        {
-            return Presets.Max(p => p.Id) + 1;
         }
     }
 }

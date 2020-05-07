@@ -46,6 +46,7 @@ namespace VULauncher.Models.PresetProviders
                 new ParameterSelection()
                 {
                     ParameterString = "updateBranch",
+                    Value = "dev",
                     IsChecked = true,
                 },
             };

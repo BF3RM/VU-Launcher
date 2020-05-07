@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -10,7 +11,10 @@ using VULauncher.Models.Config;
 using VULauncher.Util;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.ConsoleViewModels;
+using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items;
+using VULauncher.ViewModels.Items.Common;
+using VULauncher.ViewModels.Items.Extensions;
 
 namespace VULauncher.ViewModels
 {
@@ -21,12 +25,14 @@ namespace VULauncher.ViewModels
 	    private static readonly string _vuCom = "vu.com";
 	    private static readonly string _vuClient = "Client";
 	    private static readonly string _vuServer = "Server";
+        private VuConsoleViewModel _activeConsoleViewModel;
 
         public ObservableCollection<DockableDocumentViewModel> DockingViewModels { get; set; } = new ObservableCollection<DockableDocumentViewModel>();
 
-        private VuConsoleViewModel _activeConsoleViewModel;
+        public bool IsClientRunning => DockingViewModels.Any(d => (d as VuConsoleViewModel)?.StartupType == StartupType.Client);
+        public bool IsServerRunning => DockingViewModels.Any(d => (d as VuConsoleViewModel)?.StartupType == StartupType.Server);
 
-        public VuConsoleViewModel ActiveConsoleViewModel
+        public VuConsoleViewModel ActiveConsoleViewModel // TODO: not used. is this needed for any docking stuff?
         {
             get => _activeConsoleViewModel;
             set => SetField(ref _activeConsoleViewModel, value);
@@ -48,18 +54,22 @@ namespace VULauncher.ViewModels
             }
         }
 
-        private enum StartupType
+        public void StartVuConsole(ILaunchPresetItem launchPresetItem, StartupType startupType)
         {
-            Client = 0,
-            Server = 1
+            if (launchPresetItem == null) throw new ArgumentNullException(nameof(launchPresetItem));
+
+            var concatenatedLaunchParameters = launchPresetItem.GetSelectedParameters().ConcatStartupStrings();
+            var openConsoleInsideLauncher = launchPresetItem.OpenConsole;
+
+            new Thread(() => CreateVuConsoleViewModelAndGameProcess(startupType, launchPresetItem.Name, concatenatedLaunchParameters, openConsoleInsideLauncher)).Start();
         }
 
-        private void Start(StartupType startupType, string presetName, string arguments, bool attach = false)
+        private void CreateVuConsoleViewModelAndGameProcess(StartupType startupType, string presetName, string concatenatedLaunchParameters, bool attach = false)
         {
             string environmentName = (startupType == StartupType.Client) ? _vuClient : _vuServer;
             string appName = (startupType == StartupType.Client) ? _vuExe : _vuCom;
 
-            var vuConsoleViewModel = new VuConsoleViewModel($"{environmentName} - {presetName}");
+            var vuConsoleViewModel = new VuConsoleViewModel($"{environmentName} - {presetName}", startupType);
 
             if (attach)
             {
@@ -72,6 +82,7 @@ namespace VULauncher.ViewModels
                     else
                     {
                         MessageBoxResult result = MessageBox.Show($"Are you sure you want to close '{presetName}'?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
                         if (result == MessageBoxResult.Yes)
                         {
                             Kill(vuConsoleViewModel);
@@ -85,11 +96,12 @@ namespace VULauncher.ViewModels
                 });
 
                 vuConsoleViewModel.IsSelected = true;
+                ActiveConsoleViewModel = vuConsoleViewModel;
             }
 
             try
             {
-                using (vuConsoleViewModel.GameProcess.Start(Configuration.VUInstallationDirectory, Path.Combine(Configuration.VUInstallationDirectory, appName), arguments))
+                using (vuConsoleViewModel.GameProcess.Start(Configuration.VUInstallationDirectory, Path.Combine(Configuration.VUInstallationDirectory, appName), concatenatedLaunchParameters))
                 {
                     if (attach)
                     {
@@ -144,16 +156,5 @@ namespace VULauncher.ViewModels
 				vuConsoleViewModel.GameProcess.Kill();
             }
         }
-
-        public void StartClient(ClientPresetItem clientPresetItem)
-        {
-            new Thread(() => Start(StartupType.Client, clientPresetItem.Name, "-console -vudebug -dwebui -vextdebug -debug -updateBranch dev -tracedc -headless", true)).Start();
-        }
-
-        public void StartServer(ServerPresetItem serverPresetItem)
-        {
-            new Thread(() => Start(StartupType.Server, serverPresetItem.Name, "-server -dedicated -vudebug -high120 -highResTerrain -tracedc -headless", true)).Start();
-        }
-
     }
 }

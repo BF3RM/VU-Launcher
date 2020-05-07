@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using VULauncher.Commands;
 using VULauncher.Models.Setup;
 using VULauncher.ViewModels;
@@ -33,9 +34,9 @@ namespace VULauncher
             ConfigViewModel = new ConfigViewModel();
 
             SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
-            SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveTab);
+            SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveAllTabs);
             DiscardChangesTabCommand = new RelayCommand(x => DiscardChangesTab(), x => CanDiscardChangesTab);
-            DiscardChangesAllTabsCommand = new RelayCommand(x => DiscardChangesAllTabs(), x => CanDiscardChangesTab);
+            DiscardChangesAllTabsCommand = new RelayCommand(x => DiscardChangesAllTabs(), x => CanDiscardChangesAllTabs);
 
             StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
             StartServerPresetCommand = new RelayCommand(x => StartServerPreset(), x => CanStartServerPreset);
@@ -45,12 +46,14 @@ namespace VULauncher
 
         private void StartClientPreset()
         {
-	        ConsolesViewModel.StartClient(SettingsViewModel.ClientPresetsViewModel.SelectedPreset);
+            ActiveViewType = ActiveViewType.Console;
+            ConsolesViewModel.StartVuConsole(SettingsViewModel.ClientPresetsViewModel.SelectedPreset, StartupType.Client);
         }
 
         private void StartServerPreset()
         {
-	        ConsolesViewModel.StartServer(SettingsViewModel.ServerPresetsViewModel.SelectedPreset);
+            ActiveViewType = ActiveViewType.Console;
+	        ConsolesViewModel.StartVuConsole(SettingsViewModel.ServerPresetsViewModel.SelectedPreset, StartupType.Server);
         }
 
         private void SaveTab()
@@ -73,11 +76,21 @@ namespace VULauncher
             SettingsViewModel.DiscardChangesAllTabs();
         }
 
-        private bool CanSaveTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
-        private bool CanDiscardChangesTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
+        private bool CanSaveTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.CurrentTabViewModel.IsDirty;
+        private bool CanSaveAllTabs => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
+        private bool CanDiscardChangesTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.CurrentTabViewModel.IsDirty;
+        private bool CanDiscardChangesAllTabs => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
 
-        private bool CanStartClientPreset => ConsolesViewModel != null;
-        private bool CanStartServerPreset => ConsolesViewModel != null;
+        private bool CanStartClientPreset
+        {
+            get => SettingsViewModel.ClientPresetsViewModel.SelectedPreset?.ClientParamsPreset != null && (!ConsolesViewModel.IsClientRunning || 
+                                                                                                           ConsolesViewModel.IsClientRunning && SettingsViewModel.ClientPresetsViewModel.SelectedPreset.HasMultiParameterSelected);
+        }
+
+        private bool CanStartServerPreset
+        {
+            get => SettingsViewModel.ServerPresetsViewModel.SelectedPreset?.ServerParamsPreset != null && !ConsolesViewModel.IsServerRunning;
+        } 
 
         public ActiveViewType ActiveViewType
         {

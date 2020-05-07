@@ -13,7 +13,7 @@ namespace VULauncher.ViewModels
         // TODO: having bound the changing of tabs to a tabindex and using the ITabViewModel interface for that is kinda ugly since it lows too little control over the active VM
 
         private int _tabIndex;
-        private IPresetTabViewModel CurrentTabViewModel => TabViewModels[TabIndex];
+        public IPresetTabViewModel CurrentTabViewModel => TabViewModels[TabIndex];
 
         public ClientParamsViewModel ClientParamsViewModel { get; set; }
         public ClientPresetsViewModel ClientPresetsViewModel { get; set; }
@@ -71,7 +71,8 @@ namespace VULauncher.ViewModels
         private void TabViewModel_OnTabIndexChanged(object sender, TabIndexChangedEventArgs e)
         {
             TabIndex = e.NewTabIndex;
-            CurrentTabViewModel.SetSelectedPreset(e.SelectedPresetId);
+            if (e.SelectedPresetId.HasValue)
+                CurrentTabViewModel.SetSelectedPreset(e.SelectedPresetId.Value);
         }
 
         public void SaveTab()
