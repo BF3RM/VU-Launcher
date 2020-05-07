@@ -21,6 +21,47 @@ namespace VULauncher.ViewModels.SettingsViewModels
             MapListsViewModel = mapListsViewModel;
             StartupsViewModel = startupsViewModel;
             BanListsViewModel = banListsViewModel;
+
+            ServerParamsViewModel.PresetItemDeleted += ServerParamsViewModel_PresetItemDeleted;
+            MapListsViewModel.PresetItemDeleted += MapListsViewModel_PresetItemDeleted;
+            StartupsViewModel.PresetItemDeleted += StartupsViewModel_PresetItemDeleted;
+            BanListsViewModel.PresetItemDeleted += BanListsViewModel_PresetItemDeleted;
+        }
+
+        private void ServerParamsViewModel_PresetItemDeleted(object sender, PresetItemDeletedEventArgs e)
+        {
+            foreach (var presetItem in Presets)
+            {
+                if (presetItem.ServerParamsPreset.Id == e.DeletedPresetId)
+                    presetItem.ServerParamsPreset = null;
+            }
+        }
+
+        private void MapListsViewModel_PresetItemDeleted(object sender, PresetItemDeletedEventArgs e)
+        {
+            foreach (var presetItem in Presets)
+            {
+                if (presetItem.MapListPreset.Id == e.DeletedPresetId)
+                    presetItem.MapListPreset = null;
+            }
+        }
+
+        private void StartupsViewModel_PresetItemDeleted(object sender, PresetItemDeletedEventArgs e)
+        {
+            foreach (var presetItem in Presets)
+            {
+                if (presetItem.StartupPreset.Id == e.DeletedPresetId)
+                    presetItem.StartupPreset = null;
+            }
+        }
+
+        private void BanListsViewModel_PresetItemDeleted(object sender, PresetItemDeletedEventArgs e)
+        {
+            foreach (var presetItem in Presets)
+            {
+                if (presetItem.BanListPreset.Id == e.DeletedPresetId)
+                    presetItem.BanListPreset = null;
+            }
         }
     }
 }

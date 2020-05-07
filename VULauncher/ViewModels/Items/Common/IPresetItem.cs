@@ -9,5 +9,6 @@ namespace VULauncher.ViewModels.Items.Common
     {
         int Id { get; set; }
         string Name { get; set; }
+        IEnumerable<ValidationError> GetValidationErrors();
     }
 }

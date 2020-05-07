@@ -13,7 +13,7 @@ namespace VULauncher.Models.PresetProviders
         private static readonly Lazy<StartupPresetsProvider> _lazy = new Lazy<StartupPresetsProvider>(() => new StartupPresetsProvider());
         public static StartupPresetsProvider Instance => _lazy.Value;
 
-        protected override string FileName => "ServerPresets";
+        protected override string FileName => "Startups";
 
         protected override IEnumerable<StartupPreset> ConvertItemsToEntities(IEnumerable<StartupPresetItem> presetItems)
         {

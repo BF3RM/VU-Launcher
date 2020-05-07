@@ -44,5 +44,15 @@ namespace VULauncher.ViewModels.Items
 
             return ClientParamsPreset.ParameterSelections.Where(p => p.IsChecked);
         }
+
+        public override IEnumerable<ValidationError> GetValidationErrors()
+        {
+            var validationErrors = new List<ValidationError>();
+
+            if (ClientParamsPreset == null)
+                validationErrors.Add(new ValidationError($"Client Params Preset must be set on Client Preset '{Name}'"));
+
+            return validationErrors;
+        }
     }
 }

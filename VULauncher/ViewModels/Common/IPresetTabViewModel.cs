@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VULauncher.ViewModels.Items.Common;
 
 namespace VULauncher.ViewModels.Common
 {
@@ -10,5 +11,6 @@ namespace VULauncher.ViewModels.Common
         void SetSelectedPreset(int selectedPresetId);
         void Save();
         void DiscardChanges();
+        IEnumerable<ValidationError> GetValidationErrors();
     }
 }

@@ -54,7 +54,16 @@ namespace VULauncher.Models.PresetProviders
             newPresetItem.ModListPreset = ModListPresetsProvider.Instance.CreateEmptyPresetItem("_");
             newPresetItem.ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(1);
             newPresetItem.StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(1);
-            return newPresetItem;
+            return newPresetItem;§
+        }
+
+        protected override void SaveDependenciesOfPresetItems(List<ServerPresetItem> presetItems)
+        {
+            BanListPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.BanListPreset));
+            MapListPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.MapListPreset));
+            ModListPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.ModListPreset));
+            ServerParamsPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.ServerParamsPreset));
+            StartupPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.StartupPreset));
         }
     }
 }

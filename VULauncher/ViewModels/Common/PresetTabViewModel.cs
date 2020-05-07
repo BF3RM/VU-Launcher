@@ -12,12 +12,14 @@ using VULauncher.Models.PresetProviders.Common;
 using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Items;
 using VULauncher.ViewModels.Items.Common;
+using VULauncher.ViewModels.Items.Extensions;
 using VULauncher.Views.Common;
 using VULauncher.Views.Dialogs;
 
 namespace VULauncher.ViewModels.Common
 {
     public delegate void TabIndexChangedEventHandler(object sender, TabIndexChangedEventArgs e);
+    public delegate void PresetItemDeletedEventHandler(object sender, PresetItemDeletedEventArgs e);
 
     public abstract class PresetTabViewModel<TPresetItem, TPresetsProvider> : ItemsParentViewModel, IPresetTabViewModel
         where TPresetItem : PresetItem, new()
@@ -42,6 +44,7 @@ namespace VULauncher.ViewModels.Common
         protected TPresetsProvider PresetsProvider { get; }
 
         public event TabIndexChangedEventHandler TabIndexChanged;
+        public event PresetItemDeletedEventHandler PresetItemDeleted;
 
         public void SetSelectedPreset(int selectedPresetId)
         {
@@ -53,7 +56,7 @@ namespace VULauncher.ViewModels.Common
             if (!IsDirty)
                 return;
 
-            PresetsProvider.Save(Presets);
+            PresetsProvider.Save(Presets.ToList());
             LoadPresetItems(clearBeforeLoading: true, updateIsDirty: true);
         }
 
@@ -63,6 +66,11 @@ namespace VULauncher.ViewModels.Common
 		        return;
 
             LoadPresetItems(clearBeforeLoading: true, updateIsDirty: true);
+        }
+
+        public virtual IEnumerable<ValidationError> GetValidationErrors()
+        {
+            return Presets.GetValidationErrors();
         }
 
         protected PresetTabViewModel(TPresetsProvider presetsProvider)
@@ -156,6 +164,7 @@ namespace VULauncher.ViewModels.Common
             if (result != MessageBoxResult.Yes)
                 return;
 
+            PresetItemDeleted?.Invoke(this, new PresetItemDeletedEventArgs(SelectedPreset.Id));
             Presets.Remove(SelectedPreset);
             SelectedPreset = Presets.FirstOrDefault();
         }

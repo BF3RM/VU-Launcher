@@ -66,8 +66,24 @@ namespace VULauncher.Models.PresetProviders.Common
             Load(resetPresetLists: true);
         }
 
-        public void Save(IEnumerable<TPresetItem> presetItems)
+        protected virtual void SaveDependenciesOfPresetItems(List<TPresetItem> presetItems)
         {
+        }
+
+        public void AddAndSave(IEnumerable<TPresetItem> presetItems)
+        {
+            foreach (var presetItem in presetItems)
+            {
+                if (!PresetItems.Any(p => p.Id == presetItem.Id))
+                    PresetItems.Add(presetItem);
+            }
+
+            Save(PresetItems);
+        }
+
+        public void Save(List<TPresetItem> presetItems)
+        {
+            SaveDependenciesOfPresetItems(presetItems);
             var entities = ConvertItemsToEntities(presetItems);
             SaveEntities(entities);
         }

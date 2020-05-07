@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using VULauncher.ViewModels.Common;
 
@@ -13,6 +14,11 @@ namespace VULauncher.ViewModels.Items.Common
         {
             get => _name;
             set => SetField(ref _name, value, setDirty: true);
+        }
+
+        public virtual IEnumerable<ValidationError> GetValidationErrors()
+        {
+            return Enumerable.Empty<ValidationError>();
         }
 
         public int Id { get; set; }

@@ -74,5 +74,24 @@ namespace VULauncher.ViewModels.Items
 
             return ServerParamsPreset.ParameterSelections.Where(p => p.IsChecked);
         }
+
+        public override IEnumerable<ValidationError> GetValidationErrors()
+        {
+            var validationErrors = new List<ValidationError>();
+
+            if (ServerParamsPreset == null)
+                validationErrors.Add(new ValidationError($"Server Params Preset must be set on Server Preset '{Name}'"));
+
+            if (MapListPreset == null)
+                validationErrors.Add(new ValidationError($"MapList Preset must be set on Server Preset '{Name}'"));
+
+            if (StartupPreset == null)
+                validationErrors.Add(new ValidationError($"Startup Preset must be set on Server Preset '{Name}'"));
+
+            if (BanListPreset == null)
+                validationErrors.Add(new ValidationError($"ModList Preset must be set on Server Preset '{Name}'"));
+
+            return validationErrors;
+        }
     }
 }

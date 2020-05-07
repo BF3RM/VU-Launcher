@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Items.Common;
 using VULauncher.ViewModels.SettingsViewModels;
@@ -77,11 +78,27 @@ namespace VULauncher.ViewModels
 
         public void SaveTab()
         {
+            var validationErrors = CurrentTabViewModel.GetValidationErrors().ToList();
+
+            if (HasValidationErrors(validationErrors, out string errorMessage))
+            {
+                MessageBox.Show(errorMessage);
+                return;
+            }
+
             CurrentTabViewModel.Save();
         }
 
         public void SaveAllTabs()
         {
+            var validationErrors = TabViewModels.SelectMany(t => t.GetValidationErrors()).ToList();
+
+            if (HasValidationErrors(validationErrors, out string errorMessage))
+            {
+                MessageBox.Show(errorMessage);
+                return;
+            }
+
             TabViewModels.ForEach(t => t.Save());
         }
 
@@ -93,6 +110,27 @@ namespace VULauncher.ViewModels
         public void DiscardChangesAllTabs()
         {
             TabViewModels.ForEach(t => t.DiscardChanges());
+        }
+
+        private bool HasValidationErrors(List<ValidationError> validationErrors, out string errorMessage)
+        {
+            errorMessage = "";
+
+            if (validationErrors.Any())
+            {
+                errorMessage = "Cannot save changes: " + Environment.NewLine;
+
+                foreach (var validationError in validationErrors)
+                {
+                    errorMessage += Environment.NewLine + validationError.Message;
+                }
+
+                errorMessage += Environment.NewLine;
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
