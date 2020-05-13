@@ -54,7 +54,7 @@
 
             <Separator></Separator>
 
-            <Button Command="{Binding SaveTabCommand}">
+            <!--<Button Command="{Binding SaveTabCommand}">
                 <Image Source="Views/Icons/Save.ico" HorizontalAlignment="Center">
                     <Image.Style>
                         <Style TargetType="Image">
@@ -66,10 +66,10 @@
                         </Style>
                     </Image.Style>
                 </Image>
-            </Button>
+            </Button>-->
 
             <Button Command="{Binding SaveAllTabsCommand}">
-                <Image Source="Views/Icons/SaveAll.ico" HorizontalAlignment="Center">
+				<Image Source="Views/Icons/Save.ico" HorizontalAlignment="Center">
                     <Image.Style>
                         <Style TargetType="Image">
                             <Style.Triggers>
@@ -82,7 +82,7 @@
                 </Image>
             </Button>
 
-            <Button Command="{Binding DiscardChangesTabCommand}">
+            <!--<Button Command="{Binding DiscardChangesTabCommand}">
                 <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">
                     <Image.Style>
                         <Style TargetType="Image">
@@ -94,7 +94,7 @@
                         </Style>
                     </Image.Style>
                 </Image>
-            </Button>
+            </Button>-->
 
 	        <Button Command="{Binding DiscardChangesAllTabsCommand}">
 		        <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">

@@ -29,7 +29,7 @@
                                            CreatePresetCommand="{Binding CreatePresetCommand}"
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
 
-		<DataGrid ItemsSource="{Binding SelectedPreset.MapSelections}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False">
+		<DataGrid ItemsSource="{Binding SelectedPreset.MapSelections}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" CanUserAddRows="True" CanUserDeleteRows="True" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Binding="{Binding Index}"/>
 				<DataGridComboBoxColumn Header="Map" ItemsSource="{Binding Source={StaticResource MapTypes}}" SelectedItemBinding="{Binding MapType}"/>

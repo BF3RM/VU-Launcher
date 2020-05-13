@@ -11,5 +11,10 @@ namespace VULauncher.Views.Controls.Settings
         {
             InitializeComponent();
         }
+
+        //private void DataGrid_AddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e)
+        //{
+
+        //}
     }
 }

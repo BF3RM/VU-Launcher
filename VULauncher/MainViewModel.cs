@@ -20,9 +20,9 @@ namespace VULauncher
         public RelayCommand StartClientPresetCommand { get; }
         public RelayCommand StartServerPresetCommand { get; }
        
-        public RelayCommand SaveTabCommand { get; }
+        //public RelayCommand SaveTabCommand { get; }
         public RelayCommand SaveAllTabsCommand { get; }
-        public RelayCommand DiscardChangesTabCommand { get; }
+        //public RelayCommand DiscardChangesTabCommand { get; }
         public RelayCommand DiscardChangesAllTabsCommand { get; }
 
         public MainViewModel()
@@ -33,9 +33,9 @@ namespace VULauncher
             SettingsViewModel = new SettingsViewModel();
             ConfigViewModel = new ConfigViewModel();
 
-            SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
+            //SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
             SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveAllTabs);
-            DiscardChangesTabCommand = new RelayCommand(x => DiscardChangesTab(), x => CanDiscardChangesTab);
+            //DiscardChangesTabCommand = new RelayCommand(x => DiscardChangesTab(), x => CanDiscardChangesTab);
             DiscardChangesAllTabsCommand = new RelayCommand(x => DiscardChangesAllTabs(), x => CanDiscardChangesAllTabs);
 
             StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
@@ -56,20 +56,20 @@ namespace VULauncher
 	        ConsolesViewModel.StartVuConsole(SettingsViewModel.ServerPresetsViewModel.SelectedPreset, StartupType.Server);
         }
 
-        private void SaveTab()
-        {
-            SettingsViewModel.SaveTab();
-        }
+        //private void SaveTab()
+        //{
+        //    SettingsViewModel.SaveTab();
+        //}
 
         private void SaveAllTabs()
         {
             SettingsViewModel.SaveAllTabs();
         }
 
-        private void DiscardChangesTab()
-        {
-            SettingsViewModel.DiscardChangesTab();
-        }
+        //private void DiscardChangesTab()
+        //{
+        //    SettingsViewModel.DiscardChangesTab();
+        //}
 
         private void DiscardChangesAllTabs()
         {

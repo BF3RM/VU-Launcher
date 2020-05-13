@@ -14,6 +14,11 @@ namespace VULauncher.ViewModels.Items
         private GameModeType? _gameModeType;
         private int _repeats;
 
+        public MapSelectionItem()
+        {
+
+        }
+
         public int Index
         {
             get => _index;

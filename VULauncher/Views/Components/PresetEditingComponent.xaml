@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:VULauncher.Views.Components"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             Height="25" Width="400" Background="White" Name="PresetEditingComponentInstance">
+             Height="25" Width="300" Background="White" Name="PresetEditingComponentInstance">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -14,7 +14,7 @@
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
 
-        <xctk:WatermarkComboBox Grid.Column="0" IsEditable="True" Watermark="-- No preset selected --" Padding="5,3,0,0"
+        <xctk:WatermarkComboBox Grid.Column="0" IsEditable="False" Watermark="-- No preset selected --" Padding="5,3,0,0"
                                 SelectedItem="{Binding ComboBoxSelectedItem, ElementName=PresetEditingComponentInstance, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                 ItemsSource="{Binding ComboBoxItemsSource, ElementName=PresetEditingComponentInstance, UpdateSourceTrigger=PropertyChanged}"
                                 DisplayMemberPath="Name"/>
