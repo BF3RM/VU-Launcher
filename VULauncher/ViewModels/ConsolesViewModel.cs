@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows;
 using VULauncher.Commands;
 using VULauncher.Models.Config;
+using VULauncher.Models.Repositories.ServerFilesManagers;
 using VULauncher.Util;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.ConsoleViewModels;
@@ -20,7 +21,6 @@ namespace VULauncher.ViewModels
 {
     public class ConsolesViewModel : ViewModel
     {
-	    private const string _vuPath = @"C:\Program Files (x86)\VeniceUnleashed\";
 	    private static readonly string _vuExe = "vu.exe";
 	    private static readonly string _vuCom = "vu.com";
 	    private static readonly string _vuClient = "Client";
@@ -61,7 +61,20 @@ namespace VULauncher.ViewModels
             var concatenatedLaunchParameters = launchPresetItem.GetSelectedParameters().ConcatStartupStrings();
             var openConsoleInsideLauncher = launchPresetItem.OpenConsole;
 
+            if (startupType == StartupType.Server)
+            {
+	            OverwriteTxtFiles((ServerPresetItem)launchPresetItem);
+            }
+
             new Thread(() => CreateVuConsoleViewModelAndGameProcess(startupType, launchPresetItem.Name, concatenatedLaunchParameters, openConsoleInsideLauncher)).Start();
+        }
+
+        private void OverwriteTxtFiles(ServerPresetItem serverPresetItem)
+        {
+            ModListManager.Instance.WriteModListFile(serverPresetItem.ModSelections);
+            //MapListManager.Instance.WriteMapListFile(serverPresetItem.MapListPreset.MapSelections);
+            StartupManager.Instance.WriteStartupFile(serverPresetItem.StartupPreset.StartupFileContent);
+            BanListManager.Instance.WriteBanListFile(serverPresetItem.BanListPreset.BannedPlayers);
         }
 
         private void CreateVuConsoleViewModelAndGameProcess(StartupType startupType, string presetName, string concatenatedLaunchParameters, bool attach = false)
@@ -101,7 +114,7 @@ namespace VULauncher.ViewModels
 
             try
             {
-                using (vuConsoleViewModel.GameProcess.Start(Configuration.VUInstallationDirectory, Path.Combine(Configuration.VUInstallationDirectory, appName), concatenatedLaunchParameters))
+                using (vuConsoleViewModel.GameProcess.Start(Configuration.VUInstallationDirectory, Path.Combine(Configuration.VUBinariesDirectory, appName), concatenatedLaunchParameters))
                 {
                     if (attach)
                     {

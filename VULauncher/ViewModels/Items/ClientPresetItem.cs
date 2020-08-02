@@ -11,7 +11,6 @@ namespace VULauncher.ViewModels.Items
     public class ClientPresetItem : PresetItem, ILaunchPresetItem
     {
         private ClientParamsPresetItem _clientParamsPreset;
-        private bool _sendRuntimeErrorDumps = true;
         private bool _openConsole = true;
 
         public bool HasMultiParameterSelected
@@ -23,12 +22,6 @@ namespace VULauncher.ViewModels.Items
         {
             get => _clientParamsPreset;
             set => SetField(ref _clientParamsPreset, value, setDirty: true);
-        }
-
-        public bool SendRuntimeErrorDumps
-        {
-            get => _sendRuntimeErrorDumps;
-            set => SetField(ref _sendRuntimeErrorDumps, value, setDirty: true);
         }
 
         public bool OpenConsole

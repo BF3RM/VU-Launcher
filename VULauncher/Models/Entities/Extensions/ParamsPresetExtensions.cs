@@ -21,6 +21,7 @@ namespace VULauncher.Models.Entities.Extensions
             };
 
             item.ParameterSelections.AddRange(entity.ParameterSelections.ToItemList());
+            item.ParameterSelections.IsDirty = false;
             item.IsDirty = false;
 
             return item;

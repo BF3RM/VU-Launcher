@@ -17,6 +17,7 @@ namespace VULauncher.Models.Entities.Extensions
             };
 
             item.BannedPlayers.AddRange(entity.BannedPlayers.ToItemList());
+            item.BannedPlayers.IsDirty = false;
             item.IsDirty = false;
 
             return item;

@@ -18,42 +18,5 @@ namespace VULauncher.Models.PresetProviders
         protected override string FileName => "ServerParamsPresets";
 
         protected override List<LaunchParameter> Parameters => ParametersRepository.Instance.ServerParameters;
-
-        protected override void LoadDummyData() // TODO: DUMMY
-        {
-            var serverParamsPreset = new ServerParamsPreset()
-            {
-                Id = 1,
-                Name = "Server_Params",
-            };
-
-            //var serverParameters = ParametersRepository.Instance.ServerParameters;
-
-            var serverParameterSelections = new List<ParameterSelection>()
-            {
-                new ParameterSelection()
-                {
-                    ParameterString = "highResTerrain",
-                    IsChecked = true,
-                },
-
-                new ParameterSelection()
-                {
-                    ParameterString = "high120",
-                    IsChecked = false,
-                },
-
-                new ParameterSelection()
-                {
-                    ParameterString = "updateBranch",
-                    Value = "dev",
-                    IsChecked = true,
-                },
-            };
-
-            serverParamsPreset.ParameterSelections.AddRange(serverParameterSelections);
-
-            PresetEntities.Add(serverParamsPreset);
-        }
     }
 }

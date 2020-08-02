@@ -14,25 +14,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <!--<DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
-            <local:SettingsControl/>
-        </DataTemplate>-->
-        <!--<DataTemplate DataType="{x:Type consolesViewModels:VuConsoleViewModel}">
-            <consolesControls:VuConsoleControl/>
-        </DataTemplate>-->
+
     </UserControl.Resources>
 
     <Grid>
-        <!--<dockingAdapter:DockingAdapter ItemsSource="{Binding DockingViewModels}"
-                                       ActiveDocument="{Binding ActiveConsoleViewModel, Mode=TwoWay}">
-
-        </dockingAdapter:DockingAdapter>-->
-        <!--<avalondock:DockingManager ActiveContent="{Binding ActiveConsoleViewModel, Mode=TwoWay}">
-            -->
-        <!--TODO!-->
-        <!--
-        </avalondock:DockingManager>-->
-
         <xcad:DockingManager Grid.Row="1"
                              DocumentsSource="{Binding DockingViewModels}"
                              AnchorablesSource="{Binding Anchorables}">

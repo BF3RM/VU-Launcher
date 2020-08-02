@@ -18,42 +18,5 @@ namespace VULauncher.Models.PresetProviders
         protected override string FileName => "ClientParams";
 
         protected override List<LaunchParameter> Parameters => ParametersRepository.Instance.ClientParameters;
-
-        protected override void LoadDummyData() // TODO: DUMMY
-        {
-            var clientParamsPreset = new ClientParamsPreset()
-            {
-                Id = 1,
-                Name = "Client_Parameters",
-            };
-
-            //var clientParameters = ParametersRepository.Instance.ClientParameters;
-
-            var clientParameters = new List<ParameterSelection>()
-            {
-                new ParameterSelection()
-                {
-                    ParameterString = "updateBranch",
-                    Value = "dev",
-                    IsChecked = true,
-                },
-
-                new ParameterSelection()
-                {
-                    ParameterString = "perftrace",
-                    IsChecked = false,
-                },
-
-                new ParameterSelection()
-                {
-                    ParameterString = "console",
-                    IsChecked = true,
-                },
-            };
-
-            clientParamsPreset.ParameterSelections.AddRange(clientParameters);
-
-            PresetEntities.Add(clientParamsPreset);
-        }
     }
 }

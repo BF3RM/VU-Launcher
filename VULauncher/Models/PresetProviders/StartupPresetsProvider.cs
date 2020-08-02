@@ -25,17 +25,13 @@ namespace VULauncher.Models.PresetProviders
             return presetEntities.ToItemList();
         }
 
-        protected override void LoadDummyData() //TODO: DUMMY
+        protected override StartupPresetItem CreateEmptyPresetItem(StartupPresetItem newPresetItem)
         {
-            var startupPreset = new StartupPreset()
-            {
-                Id = 1,
-                Name = "RM_Dedi_Startup",
-                StartupFileContent = @"
+	        newPresetItem.StartupFileContent = @$"
                 admin.password superelitepassword
 
-                vars.serverName '[RM_DEV] 3ti65`s God Tier PC\'
-                vars.gamePassword ''
+                vars.serverName '<YOUR_SERVER_NAME>'
+                vars.gamePassword '<YOUR_SERVER_PASSWORD>'
                 vars.serverDescription ''
                 vars.friendlyFire true
                 vars.idleTimeout 0
@@ -76,10 +72,9 @@ namespace VULauncher.Models.PresetProviders
                 vu.VehicleDisablingEnabled false
                 vu.HighPerformanceReplication true
                 vu.DesertingAllowed true
-                ",
-            };
+                ";
 
-            PresetEntities.Add(startupPreset);
+            return newPresetItem;
         }
     }
 }

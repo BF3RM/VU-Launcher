@@ -27,22 +27,8 @@ namespace VULauncher.Models.PresetProviders
             return presetEntities.ToItemList();
         }
 
-        protected override void LoadDummyData() //TODO: DUMMY
-        {
-            var clientPreset = new ClientPreset()
-            {
-                Name = "Client_60Hz",
-                OpenConsole = true,
-                SendRuntimeErrorDumps = false,
-                ClientParamsPresetId = 1,
-            };
-
-            PresetEntities.Add(clientPreset);
-        }
-
         protected override ClientPresetItem CreateEmptyPresetItem(ClientPresetItem newPresetItem)
         {
-            newPresetItem.SendRuntimeErrorDumps = true;
             newPresetItem.OpenConsole = true;
             newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(1);
             return newPresetItem;

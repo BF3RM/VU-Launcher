@@ -29,6 +29,6 @@
                                            CreatePresetCommand="{Binding CreatePresetCommand}"
                                            DeletePresetCommand="{Binding DeletePresetCommand}"/>
 
-        <TextBox Text="{Binding SelectedPreset.StartupFileContent}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBox Text="{Binding SelectedPreset.StartupFileContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
     </Grid>
 </common:BaseControl>

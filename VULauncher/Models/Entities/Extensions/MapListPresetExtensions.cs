@@ -17,6 +17,7 @@ namespace VULauncher.Models.Entities.Extensions
             };
 
             item.MapSelections.AddRange(entity.MapSelections.ToItemList());
+            item.MapSelections.IsDirty = false;
 
             // TODO: the selected parameters are a selection of existing (hardcoded parameters). find a way to implement this 
             //item.Parameters.AddRange(entity.Parameters.ToItemList());

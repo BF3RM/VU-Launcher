@@ -24,39 +24,5 @@ namespace VULauncher.Models.PresetProviders
         {
             return presetEntities.ToItemList();
         }
-
-        protected override void LoadDummyData() // TODO: DUMMY
-        {
-            var mapListPreset = new MapListPreset()
-            {
-                Id = 1,
-                Name = "RM_MapList",
-            };
-
-            var maps = MapsRepository.Instance.Maps;
-
-            var mapList = new List<MapSelection>()
-            {
-                new MapSelection()
-                {
-                    Index = 0,
-                    MapType = maps[0].MapType,
-                    GameModeType = maps[0].GameModeTypes[0],
-                    Repeats = 1,
-                },
-
-                new MapSelection()
-                {
-                    Index = 1,
-                    MapType = maps[1].MapType,
-                    GameModeType = maps[1].GameModeTypes[1],
-                    Repeats = 1,
-                }
-            };
-
-            mapListPreset.MapSelections.AddRange(mapList);
-
-            PresetEntities.Add(mapListPreset);
-        }
     }
 }

@@ -46,6 +46,19 @@ namespace VULauncher.ViewModels.Common
         public event TabIndexChangedEventHandler TabIndexChanged;
         public event PresetItemDeletedEventHandler PresetItemDeleted;
 
+        protected PresetTabViewModel(TPresetsProvider presetsProvider)
+        {
+	        CreatePresetCommand = new RelayCommand(x => CreatePreset(), x => CanCreatePreset);
+	        DeletePresetCommand = new RelayCommand(x => DeletePreset(), x => CanDeletePreset);
+
+	        ChangeTabCommand = new RelayCommand<ChangePresetTabParameters>(InvokeTabIndexChange, parameter => CanChangeTab);
+
+	        PresetsProvider = presetsProvider;
+
+	        LoadPresetItems(clearBeforeLoading: false, updateIsDirty: false);
+	        RegisterChildItemCollection(Presets);
+        }
+
         public void SetSelectedPreset(int selectedPresetId)
         {
             SelectedPreset = Presets.First(p => p.Id == selectedPresetId);
@@ -57,7 +70,11 @@ namespace VULauncher.ViewModels.Common
                 return;
 
             PresetsProvider.Save(Presets.ToList());
-            LoadPresetItems(clearBeforeLoading: true, updateIsDirty: true);
+        }
+
+        public void ReloadItems()
+        {
+	        LoadPresetItems(clearBeforeLoading: true, updateIsDirty: true);
         }
 
         public void DiscardChanges()
@@ -73,19 +90,6 @@ namespace VULauncher.ViewModels.Common
             return Presets.GetValidationErrors();
         }
 
-        protected PresetTabViewModel(TPresetsProvider presetsProvider)
-        {
-            CreatePresetCommand = new RelayCommand(x => CreatePreset(), x => CanCreatePreset);
-            DeletePresetCommand = new RelayCommand(x => DeletePreset(), x => CanDeletePreset);
-
-            ChangeTabCommand = new RelayCommand<ChangePresetTabParameters>(InvokeTabIndexChange, parameter => CanChangeTab);
-
-            PresetsProvider = presetsProvider;
-
-            LoadPresetItems(clearBeforeLoading: false, updateIsDirty: false);
-            RegisterChildItemCollection(Presets);
-        }
-
         private void LoadPresetItems(bool clearBeforeLoading = true, bool updateIsDirty = true)
         {
 	        if (clearBeforeLoading)
@@ -96,7 +100,9 @@ namespace VULauncher.ViewModels.Common
 
             PresetsProvider.ReloadPresetItems();
 	        Presets.AddRange(PresetsProvider.PresetItems);
+	        Presets.IsDirty = false;
 	        SelectedPreset = Presets.FirstOrDefault();
+	        //IsDirty = false;
 
             if (updateIsDirty)
 				NotifyPropertyChanged(nameof(IsDirty));

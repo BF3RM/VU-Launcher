@@ -5,65 +5,78 @@ using VULauncher.Models.Entities;
 using VULauncher.Models.Entities.Extensions;
 using VULauncher.Models.PresetProviders.Common;
 using VULauncher.Models.Repositories.Common;
+using VULauncher.Models.Repositories.UserData;
 using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items;
 
 namespace VULauncher.Models.PresetProviders
 {
-    public class ServerPresetsProvider : PresetsProvider<ServerPreset, ServerPresetItem>
-    {
-        private static readonly Lazy<ServerPresetsProvider> _lazy = new Lazy<ServerPresetsProvider>(() => new ServerPresetsProvider());
-        public static ServerPresetsProvider Instance => _lazy.Value;
+	public class ServerPresetsProvider : PresetsProvider<ServerPreset, ServerPresetItem>
+	{
+		private static readonly Lazy<ServerPresetsProvider> _lazy = new Lazy<ServerPresetsProvider>(() => new ServerPresetsProvider());
+		public static ServerPresetsProvider Instance => _lazy.Value;
 
-        protected override string FileName => "ServerPresets";
+		protected override string FileName => "ServerPresets";
 
-        protected override IEnumerable<ServerPreset> ConvertItemsToEntities(IEnumerable<ServerPresetItem> presetItems)
-        {
-            return presetItems.ToEntityList();
-        }
+		protected override IEnumerable<ServerPreset> ConvertItemsToEntities(IEnumerable<ServerPresetItem> presetItems)
+		{
+			return presetItems.ToEntityList();
+		}
 
-        protected override IEnumerable<ServerPresetItem> ConvertEntitiesToItems(IEnumerable<ServerPreset> presetEntities)
-        {
-            return presetEntities.ToItemList();
-        }
+		protected override IEnumerable<ServerPresetItem> ConvertEntitiesToItems(IEnumerable<ServerPreset> presetEntities)
+		{
+			var modNamesExistingOnDrive = ModsRepository.Instance.Mods.Select(m => m.Name).ToList();
 
-        protected override void LoadDummyData() //TODO: DUMMY
-        {
-            var serverPresetItem = new ServerPreset()
-            {
-                Id = 1,
-                Name = "Server_60Hz",
-                ModListPresetId = 1,
-                ServerParamsPresetId = 1,
-                MapListPresetId = 1,
-                StartupPresetId = 1,
-                BanListPresetId = 1, 
-                OpenConsole = true,
-                SendRuntimeErrorDumps = false,
-            };
+			foreach (var presetEntity in presetEntities)
+			{
+				var notFoundModNames = new List<string>();
+				var newlyAddedModNames = new List<string>();
 
-            PresetEntities.Add(serverPresetItem);
-        }
+				foreach (var modSelection in presetEntity.ModSelections)
+				{
+					if (!modNamesExistingOnDrive.Any(modName => modName == modSelection.ModName))
+					{
+						notFoundModNames.Add(modSelection.ModName);
+					}
+				}
 
-        protected override ServerPresetItem CreateEmptyPresetItem(ServerPresetItem newPresetItem)
-        {
-            newPresetItem.SendRuntimeErrorDumps = true;
-            newPresetItem.OpenConsole = true;
-            newPresetItem.BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(1);
-            newPresetItem.MapListPreset = MapListPresetsProvider.Instance.FindPresetItemById(1);
-            newPresetItem.ModListPreset = ModListPresetsProvider.Instance.CreateEmptyPresetItem("_");
-            newPresetItem.ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(1);
-            newPresetItem.StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(1);
-            return newPresetItem;
-        }
+				var modSelectionNames = presetEntity.ModSelections.Select(m => m.ModName).ToList();
 
-        //protected override void SaveDependenciesOfPresetItems(List<ServerPresetItem> presetItems)
-        //{
-        //    BanListPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.BanListPreset));
-        //    MapListPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.MapListPreset));
-        //    ModListPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.ModListPreset));
-        //    ServerParamsPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.ServerParamsPreset));
-        //    StartupPresetsProvider.Instance.AddAndSave(presetItems.Select(p => p.StartupPreset));
-        //}
+				foreach (var modName in modNamesExistingOnDrive)
+				{
+					if (!modSelectionNames.Contains(modName))
+					{
+						newlyAddedModNames.Add(modName);
+					}
+				}
+
+				// Add unchecked modSelections for mods that have been added to the mods dir
+				presetEntity.ModSelections.AddRange(newlyAddedModNames.Select(n => new ModSelection() {IsChecked = false, ModName = n}));
+
+				// Remove existing ModSelections for mods that have been deleted from the mods dir
+				presetEntity.ModSelections.RemoveAll(s => notFoundModNames.Contains(s.ModName));
+
+				presetEntity.ModSelections = presetEntity.ModSelections.OrderBy(s => s.ModName).ToList();
+			}
+
+			return presetEntities.ToItemList();
+		}
+
+		protected override ServerPresetItem CreateEmptyPresetItem(ServerPresetItem newPresetItem)
+		{
+			newPresetItem.OpenConsole = true;
+			newPresetItem.BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(1);
+			newPresetItem.MapListPreset = MapListPresetsProvider.Instance.FindPresetItemById(1);
+			newPresetItem.ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(1);
+			newPresetItem.StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(1);
+			newPresetItem.ModSelections.AddRange(GetNewModSelection());
+			return newPresetItem;
+		}
+
+		private IEnumerable<ModSelectionItem> GetNewModSelection()
+		{
+			var modSelectionItems = ModsRepository.Instance.Mods.Select(m => new ModSelectionItem() {IsChecked = false, ModName = m.Name});
+			return modSelectionItems;
+		}
     }
 }

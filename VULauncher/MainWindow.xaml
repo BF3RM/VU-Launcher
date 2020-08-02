@@ -7,9 +7,7 @@
         xmlns:controls="clr-namespace:VULauncher.Views.Controls"
         xmlns:viewModels="clr-namespace:VULauncher.ViewModels"
         xmlns:components="clr-namespace:VULauncher.Views.Components"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:enums="clr-namespace:VULauncher.ViewModels.Enums"
-        xmlns:consoles="clr-namespace:VULauncher.Views.Controls.Consoles"
         mc:Ignorable="d" Title="VU Launcher" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Icon="Views/Icons/Logo-v3.ico">
 
     <Window.DataContext>
@@ -27,6 +25,12 @@
 			<controls:ConfigControl />
 		</DataTemplate>
 	</Window.Resources>
+
+    <Window.InputBindings>
+	    <KeyBinding Modifiers="Control"
+	                Key="S"
+	                Command="{Binding SaveAllTabsCommand}" />
+	</Window.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -54,20 +58,6 @@
 
             <Separator></Separator>
 
-            <!--<Button Command="{Binding SaveTabCommand}">
-                <Image Source="Views/Icons/Save.ico" HorizontalAlignment="Center">
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Opacity" Value="0.5" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-            </Button>-->
-
             <Button Command="{Binding SaveAllTabsCommand}">
 				<Image Source="Views/Icons/Save.ico" HorizontalAlignment="Center">
                     <Image.Style>
@@ -81,20 +71,6 @@
                     </Image.Style>
                 </Image>
             </Button>
-
-            <!--<Button Command="{Binding DiscardChangesTabCommand}">
-                <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Opacity" Value="0.5" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-            </Button>-->
 
 	        <Button Command="{Binding DiscardChangesAllTabsCommand}">
 		        <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">
@@ -139,33 +115,6 @@
             </Button>
         </ToolBar>
 
-
-        <!--<controls:ConsolesControl Grid.Row="1" Visibility="{Binding ActiveViewType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static enums:ActiveViewType.Console}}"/>
-        <controls:SettingsControl Grid.Row="1" Visibility="{Binding ActiveViewType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static enums:ActiveViewType.Settings}}"/>-->
-
-        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Grid.Column="0" Grid.ColumnSpan="2"/>
-
-        <!--<syncfusion:DockingManager Grid.Row="1" Grid.Column="0" sfSkinManager:SfSkinManager.VisualStyle="Metro">
-            <ContentControl x:Name="client" syncfusion:DockingManager.Header="VU Client" syncfusion:DockingManager.SideInDockedMode="Top"/>
-
-            <ContentControl x:Name="server" syncfusion:DockingManager.Header="VU Server" syncfusion:DockingManager.SideInDockedMode="Bottom"/>
-        </syncfusion:DockingManager>-->
-
-        <!--<TabControl Grid.Column="0" Grid.Row="1" ItemsSource="{Binding TabViewModels, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding TabIndex, UpdateSourceTrigger=PropertyChanged}">
-            <TabControl.Resources>
-                <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-                    <Setter Property="HeaderTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding TabHeaderName}" Style="{StaticResource TabItemTextBlockStyle}"/>
-                                    <Label Content="*" FontWeight="Bold" Height="20" Padding="-5" Visibility="{Binding IsDirty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TabControl.Resources>
-        </TabControl>-->
+		<ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Grid.Column="0" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

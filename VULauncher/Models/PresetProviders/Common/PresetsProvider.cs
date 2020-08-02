@@ -25,11 +25,8 @@ namespace VULauncher.Models.PresetProviders.Common
 
         protected PresetsProvider()
         {
-            //LoadDummyData();
             Load(resetPresetLists: false);
         }
-
-        protected abstract void LoadDummyData(); // Can either add dummy Presets as Entities or Items to the according Lists
 
         private void Load(bool resetPresetLists = true)
         {
@@ -56,41 +53,20 @@ namespace VULauncher.Models.PresetProviders.Common
             return entities;
         }
 
-        //public IEnumerable<TPresetItem> LoadPresetItems()
-        //{
-        // return ConvertEntitiesToItems(PresetEntities);
-        //}
-
         public void ReloadPresetItems()
         {
             Load(resetPresetLists: true);
         }
 
-        //protected virtual void SaveDependenciesOfPresetItems(List<TPresetItem> presetItems)
-        //{
-        //}
-
-        public void AddAndSave(IEnumerable<TPresetItem> presetItems)
-        {
-            foreach (var presetItem in presetItems)
-            {
-                if (!PresetItems.Any(p => p.Id == presetItem.Id))
-                    PresetItems.Add(presetItem);
-            }
-
-            Save(PresetItems);
-        }
-
         public void Save(List<TPresetItem> presetItems)
         {
-            //SaveDependenciesOfPresetItems(presetItems);
             var entities = ConvertItemsToEntities(presetItems);
             SaveEntities(entities);
         }
 
         private void SaveEntities(IEnumerable<TPresetEntity> presetEntities)
         {
-            var jsonString = JsonConvert.SerializeObject(presetEntities);
+            var jsonString = JsonConvert.SerializeObject(presetEntities, Formatting.Indented);
             File.WriteAllText(SaveFilePath, jsonString);
             Load(resetPresetLists: true);
         }

@@ -9,14 +9,7 @@
              xmlns:settings="clr-namespace:VULauncher.ViewModels.SettingsViewModels"
              mc:Ignorable="d" MinWidth="1000" MinHeight="600">
 
-    <!--<UserControl.DataContext>
-        <viewModels:SettingsViewModel/>
-    </UserControl.DataContext>-->
-
     <UserControl.Resources>
-        <!--<DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
-            <local:SettingsControl/>
-        </DataTemplate>-->
         <DataTemplate DataType="{x:Type settings:ClientPresetsViewModel}">
             <settings1:ClientPresetsControl/>
         </DataTemplate>

@@ -10,10 +10,9 @@ namespace VULauncher.Models.Entities
     { 
         public int ServerParamsPresetId { get; set; }
         public int MapListPresetId { get; set; }
-        public int ModListPresetId { get; set; }
         public int StartupPresetId { get; set; }
         public int BanListPresetId { get; set; }
-        public bool SendRuntimeErrorDumps { get; set; }
         public bool OpenConsole { get; set; }
+        public List<ModSelection> ModSelections = new List<ModSelection>();
     }
 }

@@ -11,17 +11,25 @@ namespace VULauncher.ViewModels.Collections
     {
         event EventHandler<ItemPropertyChangedEventArgs> ItemPropertyChanged;
         event EventHandler<IsDirtyChangedEventArgs> ItemIsDirtyChanged;
-        bool IsDirty { get; }
+        event EventHandler<NotifyCollectionChangedEventArgs> CollectionChanged;
+        bool IsDirty { get; set; }
     }
 
     public class ObservableItemCollection<T> : WpfObservableRangeCollection<T>, IObservableItemCollection
         where T : IObservableObject
 
     {
-        public bool IsDirty => this.Any(item => item.IsDirty);
+	    private bool _isDirty;
+
+	    public bool IsDirty
+        {
+	        get => _isDirty || this.Any(item => item.IsDirty);
+	        set => _isDirty = value;
+        }
 
         public event EventHandler<ItemPropertyChangedEventArgs> ItemPropertyChanged;
         public event EventHandler<IsDirtyChangedEventArgs> ItemIsDirtyChanged;
+        public new event EventHandler<NotifyCollectionChangedEventArgs> CollectionChanged;
 
         public ObservableItemCollection() : base()
         {
@@ -60,6 +68,7 @@ namespace VULauncher.ViewModels.Collections
             }
 
             base.OnCollectionChanged(e);
+            CollectionChanged?.Invoke(this, e);
         }
 
         protected override void ClearItems()

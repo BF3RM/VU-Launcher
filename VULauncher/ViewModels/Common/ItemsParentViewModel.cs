@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using VULauncher.ViewModels.Collections;
@@ -30,6 +31,7 @@ namespace VULauncher.ViewModels.Common
         {
             _trackedChildItemsLists.Add(collection);
 
+            collection.CollectionChanged += Collection_CollectionChanged;
             collection.ItemPropertyChanged += OnChildItemPropertyChanged;
             collection.ItemIsDirtyChanged += OnChildItemIsDirtyChanged;
         }
@@ -46,6 +48,7 @@ namespace VULauncher.ViewModels.Common
         {
             foreach (IObservableItemCollection collection in _trackedChildItemsLists)
             {
+				collection.CollectionChanged -= Collection_CollectionChanged;
                 collection.ItemPropertyChanged -= OnChildItemPropertyChanged;
                 collection.ItemIsDirtyChanged -= OnChildItemIsDirtyChanged;
             }
@@ -59,6 +62,12 @@ namespace VULauncher.ViewModels.Common
             base.Dispose();
         }
 
+
+        protected virtual void Collection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            NotifyPropertyChanged(nameof(IsDirty));
+        }
+
         // This can be used by the derived class to track any specific child item property changing
         protected virtual void OnChildItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -68,7 +77,7 @@ namespace VULauncher.ViewModels.Common
         // This can be used by the derived class to track any specific child item's IsDirty flag being set
         protected virtual void OnChildItemIsDirtyChanged(object sender, IsDirtyChangedEventArgs e)
         {
-            NotifyIsDirtyChanged(e.PropertyName); // TODO XY: Change to the name of the actual object or collection thats being tracked, not its fields?
+            NotifyPropertyChanged(nameof(IsDirty));
         }
     }
 }

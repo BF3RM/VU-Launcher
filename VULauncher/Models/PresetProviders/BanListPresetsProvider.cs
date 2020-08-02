@@ -26,42 +26,5 @@ namespace VULauncher.Models.PresetProviders
         {
             return presetEntities.ToItemList();
         }
-
-        protected override void LoadDummyData() // TODO: DUMMY
-        {
-            var banListPreset = new BanListPreset()
-            {
-                Id = 1,
-                Name = "BanList_Preset",
-            };
-
-            var banList = new List<BannedPlayer>()
-            {
-                new BannedPlayer()
-                {
-                    Index = 0,
-                    PlayerName = "3ti65",
-                    PlayerIp = "15.17.197.58",
-                    BanReason = "Gaylord",
-                    BanDate = new DateTime(2019, 11, 1),
-                    UnbanDate = new DateTime(2020, 1, 30),
-                },
-
-                new BannedPlayer()
-                {
-                    Index = 0,
-                    PlayerName = "Powback",
-                    PlayerIp = "122.209.98.88",
-                    BanReason = "Straightlord",
-                    BanDate = new DateTime(2019, 11, 3),
-                    UnbanDate = new DateTime(2020, 5, 11),
-                },
-            };
-
-            banListPreset.BannedPlayers.AddRange(banList);
-            //banListPreset.IsDirty = false; // treat it like user input
-
-            PresetEntities.Add(banListPreset);
-        }
     }
 }

@@ -11,19 +11,20 @@ namespace VULauncher.Models.Entities.Extensions
 	{
         public static ServerPresetItem ToItem(this ServerPreset entity)
         {
-            return new ServerPresetItem()
+            var item = new ServerPresetItem()
             {
                 Id = entity.Id,
                 Name = entity.Name,
                 BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(entity.BanListPresetId),
                 MapListPreset = MapListPresetsProvider.Instance.FindPresetItemById(entity.MapListPresetId),
-                ModListPreset = ModListPresetsProvider.Instance.FindPresetItemById(entity.ModListPresetId),
                 ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(entity.ServerParamsPresetId),
                 StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(entity.StartupPresetId),
                 OpenConsole = entity.OpenConsole,
-                SendRuntimeErrorDumps = entity.SendRuntimeErrorDumps,
-                IsDirty = false,
             };
+
+            item.ModSelections.AddRange(entity.ModSelections.ToItemList());
+            item.IsDirty = false;
+            return item;
         }
 
         public static ServerPreset ToEntity(this ServerPresetItem item)
@@ -34,11 +35,10 @@ namespace VULauncher.Models.Entities.Extensions
                 Name = item.Name,
                 BanListPresetId = item.BanListPreset.Id,
                 MapListPresetId = item.MapListPreset.Id,
-                ModListPresetId = item.ModListPreset.Id,
                 ServerParamsPresetId = item.ServerParamsPreset.Id,
                 StartupPresetId = item.StartupPreset.Id,
                 OpenConsole = item.OpenConsole,
-                SendRuntimeErrorDumps = item.SendRuntimeErrorDumps,
+                ModSelections = item.ModSelections.ToEntityList(),
             };
         }
 

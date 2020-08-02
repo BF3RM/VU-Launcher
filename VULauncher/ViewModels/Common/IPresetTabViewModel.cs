@@ -10,6 +10,7 @@ namespace VULauncher.ViewModels.Common
         bool IsDirty { get; }
         void SetSelectedPreset(int selectedPresetId);
         void Save();
+        void ReloadItems();
         void DiscardChanges();
         IEnumerable<ValidationError> GetValidationErrors();
     }

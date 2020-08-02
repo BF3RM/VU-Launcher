@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items.Common;
@@ -10,25 +11,17 @@ namespace VULauncher.ViewModels.Items
 {
     public class ServerPresetItem : PresetItem, ILaunchPresetItem
     {
-        private ModListPresetItem _modListPreset;
+        private bool _openConsole = true;
         private ServerParamsPresetItem _serverParamsPreset;
         private MapListPresetItem _mapListPreset;
         private StartupPresetItem _startupPreset;
         private BanListPresetItem _banListPreset;
-        private bool _sendRuntimeErrorDumps = true;
-        private bool _openConsole = true;
 
-        public ModListPresetItem ModListPreset
+        public ObservableItemCollection<ModSelectionItem> ModSelections { get; set; } = new ObservableItemCollection<ModSelectionItem>();
+
+        public ServerPresetItem()
         {
-            get => _modListPreset;
-            set
-            {
-                if (SetField(ref _modListPreset, value))
-                {
-                    if (value != null)
-                        RegisterChildItem(value); // since the ModList is a child directly nested into the ServerPresetItem, we want to direclty track it and update the IsDirty accordingly
-                }
-            }
+	        RegisterChildItemCollection(ModSelections);
         }
 
         public ServerParamsPresetItem ServerParamsPreset
@@ -53,12 +46,6 @@ namespace VULauncher.ViewModels.Items
         {
             get => _banListPreset;
             set => SetField(ref _banListPreset, value, setDirty: true);
-        }
-
-        public bool SendRuntimeErrorDumps
-        {
-            get => _sendRuntimeErrorDumps;
-            set => SetField(ref _sendRuntimeErrorDumps, value, setDirty: true);
         }
 
         public bool OpenConsole
@@ -89,7 +76,7 @@ namespace VULauncher.ViewModels.Items
                 validationErrors.Add(new ValidationError($"Startup Preset must be set on Server Preset '{Name}'"));
 
             if (BanListPreset == null)
-                validationErrors.Add(new ValidationError($"ModList Preset must be set on Server Preset '{Name}'"));
+                validationErrors.Add(new ValidationError($"BanList Preset must be set on Server Preset '{Name}'"));
 
             return validationErrors;
         }

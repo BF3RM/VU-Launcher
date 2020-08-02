@@ -15,8 +15,8 @@ namespace VULauncher.Models.Setup
 				Configuration.Bf3DocumentsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Battlefield 3");
 
 			if (string.IsNullOrEmpty(Configuration.VUInstallationDirectory))
-				Configuration.VUInstallationDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Venice Unleashed");
-				//Configuration.VUInstallationDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VeniceUnleashed");
+				//Configuration.VUInstallationDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Venice Unleashed");
+				Configuration.VUInstallationDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VeniceUnleashed");
 
 			if (!Directory.Exists(Configuration.Bf3DocumentsDirectory))
 				Directory.CreateDirectory(Configuration.Bf3DocumentsDirectory);

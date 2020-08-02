@@ -76,19 +76,6 @@ namespace VULauncher.ViewModels
                 CurrentTabViewModel.SetSelectedPreset(e.SelectedPresetId.Value);
         }
 
-        public void SaveTab()
-        {
-            var validationErrors = CurrentTabViewModel.GetValidationErrors().ToList();
-
-            if (HasValidationErrors(validationErrors, out string errorMessage))
-            {
-                MessageBox.Show(errorMessage);
-                return;
-            }
-
-            CurrentTabViewModel.Save();
-        }
-
         public void SaveAllTabs()
         {
             var validationErrors = TabViewModels.SelectMany(t => t.GetValidationErrors()).ToList();
@@ -99,7 +86,21 @@ namespace VULauncher.ViewModels
                 return;
             }
 
-            TabViewModels.ForEach(t => t.Save());
+            ClientParamsViewModel.Save();
+            ServerParamsViewModel.Save();
+            MapListsViewModel.Save();
+            StartupsViewModel.Save();
+            BanListsViewModel.Save();
+            ClientPresetsViewModel.Save();
+            ServerPresetsViewModel.Save();
+
+            ClientParamsViewModel.ReloadItems();
+            ServerParamsViewModel.ReloadItems();
+            MapListsViewModel.ReloadItems();
+            StartupsViewModel.ReloadItems();
+            BanListsViewModel.ReloadItems();
+            ClientPresetsViewModel.ReloadItems();
+            ServerPresetsViewModel.ReloadItems();
         }
 
         public void DiscardChangesTab()

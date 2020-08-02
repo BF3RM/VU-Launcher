@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Microsoft.Win32;
 using VULauncher.Commands;
+using VULauncher.Models.Config;
 using VULauncher.Models.Setup;
 using VULauncher.ViewModels;
 using VULauncher.ViewModels.Common;
@@ -19,11 +22,43 @@ namespace VULauncher
 
         public RelayCommand StartClientPresetCommand { get; }
         public RelayCommand StartServerPresetCommand { get; }
-       
-        //public RelayCommand SaveTabCommand { get; }
         public RelayCommand SaveAllTabsCommand { get; }
-        //public RelayCommand DiscardChangesTabCommand { get; }
         public RelayCommand DiscardChangesAllTabsCommand { get; }
+        public RelayCommand OpenGitHubCommand { get; }
+
+        private bool CanSaveAllTabs => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
+        private bool CanDiscardChangesAllTabs => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
+
+        private bool CanStartClientPreset =>
+	        SettingsViewModel.ClientPresetsViewModel.SelectedPreset?.ClientParamsPreset != null && (!ConsolesViewModel.IsClientRunning ||
+	                                                                                                ConsolesViewModel.IsClientRunning && SettingsViewModel.ClientPresetsViewModel.SelectedPreset.HasMultiParameterSelected);
+
+        private bool CanStartServerPreset => SettingsViewModel.ServerPresetsViewModel.SelectedPreset?.ServerParamsPreset != null && !ConsolesViewModel.IsServerRunning;
+
+        public ActiveViewType ActiveViewType
+        {
+	        get => _activeViewType;
+
+	        set
+	        {
+		        if (SetField(ref _activeViewType, value))
+		        {
+			        CurrentViewModel = value switch
+			        {
+				        ActiveViewType.Console => ConsolesViewModel,
+				        ActiveViewType.Settings => SettingsViewModel,
+				        ActiveViewType.Config => ConfigViewModel,
+				        _ => CurrentViewModel
+			        };
+		        }
+	        }
+        }
+
+        public ViewModel CurrentViewModel
+        {
+	        get => _currentViewModel;
+	        set => SetField(ref _currentViewModel, value);
+        }
 
         public MainViewModel()
         {
@@ -33,13 +68,13 @@ namespace VULauncher
             SettingsViewModel = new SettingsViewModel();
             ConfigViewModel = new ConfigViewModel();
 
-            //SaveTabCommand = new RelayCommand(x => SaveTab(), x => CanSaveTab);
             SaveAllTabsCommand = new RelayCommand(x => SaveAllTabs(), x => CanSaveAllTabs);
-            //DiscardChangesTabCommand = new RelayCommand(x => DiscardChangesTab(), x => CanDiscardChangesTab);
             DiscardChangesAllTabsCommand = new RelayCommand(x => DiscardChangesAllTabs(), x => CanDiscardChangesAllTabs);
 
             StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
             StartServerPresetCommand = new RelayCommand(x => StartServerPreset(), x => CanStartServerPreset);
+
+            OpenGitHubCommand = new RelayCommand(x => OpenGitHub(), x => true);
 
             ActiveViewType = ActiveViewType.Console;
         }
@@ -53,68 +88,22 @@ namespace VULauncher
         private void StartServerPreset()
         {
             ActiveViewType = ActiveViewType.Console;
-	        ConsolesViewModel.StartVuConsole(SettingsViewModel.ServerPresetsViewModel.SelectedPreset, StartupType.Server);
+            ConsolesViewModel.StartVuConsole(SettingsViewModel.ServerPresetsViewModel.SelectedPreset, StartupType.Server);
         }
-
-        //private void SaveTab()
-        //{
-        //    SettingsViewModel.SaveTab();
-        //}
 
         private void SaveAllTabs()
         {
             SettingsViewModel.SaveAllTabs();
         }
 
-        //private void DiscardChangesTab()
-        //{
-        //    SettingsViewModel.DiscardChangesTab();
-        //}
-
         private void DiscardChangesAllTabs()
         {
             SettingsViewModel.DiscardChangesAllTabs();
         }
 
-        private bool CanSaveTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.CurrentTabViewModel.IsDirty;
-        private bool CanSaveAllTabs => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
-        private bool CanDiscardChangesTab => CurrentViewModel == SettingsViewModel && SettingsViewModel.CurrentTabViewModel.IsDirty;
-        private bool CanDiscardChangesAllTabs => CurrentViewModel == SettingsViewModel && SettingsViewModel.IsDirty;
-
-        private bool CanStartClientPreset
+        private void OpenGitHub()
         {
-            get => SettingsViewModel.ClientPresetsViewModel.SelectedPreset?.ClientParamsPreset != null && (!ConsolesViewModel.IsClientRunning || 
-                                                                                                           ConsolesViewModel.IsClientRunning && SettingsViewModel.ClientPresetsViewModel.SelectedPreset.HasMultiParameterSelected);
-        }
-
-        private bool CanStartServerPreset
-        {
-            get => SettingsViewModel.ServerPresetsViewModel.SelectedPreset?.ServerParamsPreset != null && !ConsolesViewModel.IsServerRunning;
-        } 
-
-        public ActiveViewType ActiveViewType
-        {
-            get => _activeViewType;
-            
-            set
-            {
-                if (SetField(ref _activeViewType, value))
-                {
-                    CurrentViewModel = value switch
-                    {
-                        ActiveViewType.Console => ConsolesViewModel,
-                        ActiveViewType.Settings => SettingsViewModel,
-                        ActiveViewType.Config => ConfigViewModel,
-                        _ => CurrentViewModel
-                    };
-                }
-            } 
-        }
-
-        public ViewModel CurrentViewModel
-        {
-            get => _currentViewModel;
-            set => SetField(ref _currentViewModel, value);
+            WebsiteUtil.OpenWebSite(Configuration.GitHubPath);
         }
     }
 }
