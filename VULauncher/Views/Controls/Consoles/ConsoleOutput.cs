@@ -131,20 +131,13 @@ namespace VULauncher.Views.Controls.Consoles
 
         private void AddItems(Inline[] items)
         {
-            if (CheckAccess())
+            if (items.Length > 0 && CheckAccess())
             {
                 Dispatcher.Invoke(() =>
                 {
                     CaretPosition = CaretPosition.DocumentEnd;
-
-                    var inlines = new List<Inline>();
-
-                    foreach (var item in items)
-                    {
-                        inlines.Add(item);
-                    }
-
-                    _paragraph.Inlines.AddRange(inlines);
+                    if (items.Length > 0) 
+                        _paragraph.Inlines.AddRange(items);
 
                     CaretPosition = Document.ContentEnd;
                 });
