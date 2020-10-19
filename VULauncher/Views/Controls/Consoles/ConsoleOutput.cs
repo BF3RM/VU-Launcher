@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
@@ -13,9 +14,9 @@ namespace VULauncher.Views.Controls.Consoles
     public sealed class ConsoleOutput : RichTextBox
     {
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource",
-            typeof(IEnumerable),
+            typeof(ObservableCollection<Inline>),
             typeof(ConsoleOutput),
-            new PropertyMetadata(default(IEnumerable), OnItemsSourceChanged));
+            new PropertyMetadata(default(ObservableCollection<Inline>), OnItemsSourceChanged));
 
         private Paragraph _paragraph;
 
@@ -45,9 +46,9 @@ namespace VULauncher.Views.Controls.Consoles
             }
         }
 
-        public IEnumerable ItemsSource
+        public ObservableCollection<Inline> ItemsSource
         {
-            get => (IEnumerable)GetValue(ItemsSourceProperty);
+            get => (ObservableCollection<Inline>)GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
@@ -71,7 +72,7 @@ namespace VULauncher.Views.Controls.Consoles
             if (args.NewValue == args.OldValue) return;
 
             var terminal = (ConsoleOutput)d;
-            terminal.HandleItemsSourceChanged((IEnumerable)args.NewValue);
+            terminal.HandleItemsSourceChanged((ObservableCollection<Inline>)args.NewValue);
             terminal.ScrollToEnd();
         }
 
@@ -82,7 +83,7 @@ namespace VULauncher.Views.Controls.Consoles
             args.Handled = true;
         }
 
-        private void HandleItemsSourceChanged(IEnumerable items)
+        private void HandleItemsSourceChanged(ObservableCollection<Inline> items)
         {
             using (DeclareChangeBlock())
             {
@@ -136,7 +137,7 @@ namespace VULauncher.Views.Controls.Consoles
                 Dispatcher.Invoke(() =>
                 {
                     CaretPosition = CaretPosition.DocumentEnd;
-                    if (items.Length > 0) 
+                    if (items.Length > 0)
                         _paragraph.Inlines.AddRange(items);
 
                     CaretPosition = Document.ContentEnd;

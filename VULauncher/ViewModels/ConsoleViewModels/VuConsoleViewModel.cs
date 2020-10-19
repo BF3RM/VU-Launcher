@@ -30,9 +30,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
 
         private static readonly Dictionary<string, Color> ModColors = new Dictionary<string, Color>();
 
-        public ObservableCollection<Inline> _customInlines = new ObservableCollection<Inline>();
-
-        public IEnumerable<Inline> CustomInlines => _customInlines;
+        public ObservableCollection<Inline> CustomInlines { get; set; } = new ObservableCollection<Inline>();
 
         private const string TimeStampRegex = @"^\[\d+:\d+:\d+\]";
         private const string InfoRegex = @"^\[info\]";
@@ -71,7 +69,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
             {
                 foreach (Match match in new Regex(styleSheet.Key).Matches(text))
                 {
-                    _customInlines.Add(
+                    CustomInlines.Add(
                         new Run
                         {
                             Text = match.Value,
@@ -109,14 +107,14 @@ namespace VULauncher.ViewModels.ConsoleViewModels
 
             if (messageInfo.Groups.Count < 3)
             {
-                _customInlines.Add(
+                CustomInlines.Add(
                     new Run
                     {
                         Text = input,
                         Foreground = Brushes.White
                     }
                 );
-                _customInlines.Add(new LineBreak());
+                CustomInlines.Add(new LineBreak());
                 return;
             }
 
@@ -131,7 +129,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
             {
                 if (type == "error")
                 {
-                    _customInlines.Add(
+                    CustomInlines.Add(
                         new Run
                         {
                             Text = "[" + type + "] " + messageRaw,
@@ -141,7 +139,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
                 }
                 else
                 {
-                    _customInlines.Add(
+                    CustomInlines.Add(
                         new Run
                         {
                             Text = "[" + type + "] " + messageRaw,
@@ -162,21 +160,21 @@ namespace VULauncher.ViewModels.ConsoleViewModels
                 else
                 {
                     FindRegExPatternColor("[" + type + "]");
-                    _customInlines.Add(
+                    CustomInlines.Add(
                         new Run
                         {
                             Text = "[",
                             Foreground = Brushes.AliceBlue
                         }
                     );
-                    _customInlines.Add(
+                    CustomInlines.Add(
                         new Run
                         {
                             Text = modName,
                             Foreground = new SolidColorBrush(FindModColor(modName))
                         }
                     );
-                    _customInlines.Add(
+                    CustomInlines.Add(
                         new Run
                         {
                             Text = "] ",
@@ -191,7 +189,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
                     {
                         if (message.Contains("Compiling"))
                         {
-                            _customInlines.Add(
+                            CustomInlines.Add(
                                 new Run
                                 {
                                     Text = message,
@@ -201,7 +199,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
                         }
                         else if (message.Contains("Error: "))
                         {
-                            _customInlines.Add(
+                            CustomInlines.Add(
                                 new Run
                                 {
                                     Text = message,
@@ -211,7 +209,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
                         }
                         else
                         {
-                            _customInlines.Add(
+                            CustomInlines.Add(
                                 new Run
                                 {
                                     Text = message,
@@ -223,28 +221,28 @@ namespace VULauncher.ViewModels.ConsoleViewModels
                     else
                     {
                         message = message.Replace("[" + moduleName + "] ", "");
-                        _customInlines.Add(
+                        CustomInlines.Add(
                             new Run
                             {
                                 Text = "[",
                                 Foreground = Brushes.AliceBlue
                             }
                         );
-                        _customInlines.Add(
+                        CustomInlines.Add(
                             new Run
                             {
                                 Text = moduleName,
                                 Foreground = new SolidColorBrush(FindModColor(moduleName))
                             }
                         );
-                        _customInlines.Add(
+                        CustomInlines.Add(
                             new Run
                             {
                                 Text = "] ",
                                 Foreground = Brushes.AliceBlue
                             }
                         );
-                        _customInlines.Add(
+                        CustomInlines.Add(
                             new Run
                             {
                                 Text = message,
@@ -255,7 +253,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
                 }
             }
 
-            _customInlines.Add(new LineBreak());
+            CustomInlines.Add(new LineBreak());
         }
 
         public void WriteLog(string text)
