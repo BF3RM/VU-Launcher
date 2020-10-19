@@ -12,20 +12,6 @@ using VULauncher.ViewModels.Enums;
 
 namespace VULauncher.ViewModels.ConsoleViewModels
 {
-    public class CustomRun
-    {
-        public string TheText { get; set; }
-
-        public SolidColorBrush TheForeground { get; set; } = Brushes.White;
-    }
-    public class TextLine
-    {
-        public ObservableCollection<CustomRun> CustomRuns { get; set; }
-
-        public ObservableCollection<Inline> CustomInlines { get; set; }
-        public SolidColorBrush TheColour { get; set; } = Brushes.White;
-    }
-
     public class VuConsoleViewModel : DockableDocumentViewModel
     {
         public StartupType StartupType { get; set; }
@@ -47,7 +33,6 @@ namespace VULauncher.ViewModels.ConsoleViewModels
         public ObservableCollection<Inline> _customInlines = new ObservableCollection<Inline>();
 
         public IEnumerable<Inline> CustomInlines => _customInlines;
-
 
         private const string TimeStampRegex = @"^\[\d+:\d+:\d+\]";
         private const string InfoRegex = @"^\[info\]";
