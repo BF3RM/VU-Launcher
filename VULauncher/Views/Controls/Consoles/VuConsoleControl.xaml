@@ -13,6 +13,5 @@
                     Foreground="White" FontFamily="Consolas" Background="Black"
                     ItemsSource="{Binding Path=CustomInlines, Mode=OneWay}">
         </vc:ConsoleOutput>
-        <!--<TextBox x:Name="textBox" Foreground="White" Background="Black" FontFamily="Consolas" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding TextBoxContent}" TextChanged="textBox_TextChanged" Margin="0,0,0,286"/>-->
     </Grid>
 </UserControl>

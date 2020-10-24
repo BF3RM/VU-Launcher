@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows;
 using VULauncher.Util;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.Enums;
@@ -17,15 +19,17 @@ namespace VULauncher.ViewModels.ConsoleViewModels
         public StartupType StartupType { get; set; }
         public ProcessUtils GameProcess { get; set; }
 
-        private static readonly Dictionary<string, Color> styleSheets = new Dictionary<string, Color>
+        private readonly int ConsoleOutputMaxLines = 1000;
+
+        private static readonly Dictionary<Regex, Color> styleSheets = new Dictionary<Regex, Color>
         {
-            { PathRegex, Color.FromRgb(246, 185, 59) },
-            { GuidRegex, Color.FromRgb(255, 103, 51) },
-            { TimeStampRegex, Color.FromRgb(96, 96, 96) },
-            { InfoRegex, Color.FromRgb(255, 255, 255) },
-            { ErrorRegex, Color.FromRgb(200, 25, 25) },
-            { SuccessRegex, Color.FromRgb(25, 200, 25) },
-            { CompilingRegex, Color.FromRgb(25, 200, 25) },
+            { new Regex(PathRegex), Color.FromRgb(246, 185, 59) },
+            { new Regex(GuidRegex), Color.FromRgb(255, 103, 51) },
+            { new Regex(TimeStampRegex), Color.FromRgb(96, 96, 96) },
+            { new Regex(InfoRegex), Color.FromRgb(255, 255, 255) },
+            { new Regex(ErrorRegex), Color.FromRgb(200, 25, 25) },
+            { new Regex(SuccessRegex), Color.FromRgb(25, 200, 25) },
+            { new Regex(CompilingRegex), Color.FromRgb(25, 200, 25) },
         };
 
         private static readonly Dictionary<string, Color> ModColors = new Dictionary<string, Color>();
@@ -33,12 +37,12 @@ namespace VULauncher.ViewModels.ConsoleViewModels
         public ObservableCollection<Inline> CustomInlines { get; set; } = new ObservableCollection<Inline>();
 
         private const string TimeStampRegex = @"^\[\d+:\d+:\d+\]";
-        private const string InfoRegex = @"^\[info\]";
+        private const string InfoRegex = @"^\[info\].(?![Ss]uccess\w+).+";
         private const string ErrorRegex = @"^\[error\].+";
         private const string SuccessRegex = @".+[Ss]uccess\w+.+";
         private const string CompilingRegex = @"Compiling .+\.\.\.";
 
-        private const string GuidRegex = @"[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}";
+        private const string GuidRegex = @"[0-9a-f]{32}";
         private const string PathRegex = @"(\w+/)+\w+";
 
         public VuConsoleViewModel(string consoleName, StartupType startupType)
@@ -48,26 +52,11 @@ namespace VULauncher.ViewModels.ConsoleViewModels
             GameProcess = new ProcessUtils();
         }
 
-        public string _textBoxContent = "";
-        public string TextBoxContent
-        {
-            get => _textBoxContent;
-            set => SetField(ref _textBoxContent, value);
-        }
-
-        private static readonly Random rand = new Random();
-
-        // TODO: REMOVE
-        private Color GetRandomColour()
-        {
-            return Color.FromArgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
-        }
-
         private void FindRegExPatternColor(string text)
         {
             foreach (var styleSheet in styleSheets)
             {
-                foreach (Match match in new Regex(styleSheet.Key).Matches(text))
+                foreach (Match match in styleSheet.Key.Matches(text))
                 {
                     CustomInlines.Add(
                         new Run
@@ -80,6 +69,20 @@ namespace VULauncher.ViewModels.ConsoleViewModels
             }
         }
 
+        private static Color GenerateColor(string text)
+        {
+            MD5 md5 = MD5.Create();
+            byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(text));
+            Color color = Color.FromRgb(hash[0], hash[1], hash[2]);
+            if (color.R * 0.2126 + color.G * 0.7152 + color.B * 0.0722 > 255 / 2)
+            {
+                return GenerateColor(text + text);
+            } else
+            {
+                return color;
+            }
+        }
+
         private static Color FindModColor(string modName)
         {
             if (ModColors.ContainsKey(modName))
@@ -88,9 +91,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
             }
             else
             {
-                MD5 md5 = MD5.Create();
-                byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(modName));
-                Color color = Color.FromRgb(hash[0], hash[1], hash[2]);
+                Color color = GenerateColor(modName);
                 ModColors.Add(modName, color);
                 return color;
             }
@@ -193,7 +194,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
                                 new Run
                                 {
                                     Text = message,
-                                    Foreground = new SolidColorBrush(Color.FromRgb(50, 50, 50))
+                                    Foreground = new SolidColorBrush(Color.FromRgb(100, 100, 100))
                                 }
                             );
                         }
@@ -256,11 +257,23 @@ namespace VULauncher.ViewModels.ConsoleViewModels
             CustomInlines.Add(new LineBreak());
         }
 
+        private void CheckLinesLimits()
+        {
+            if (CustomInlines.Where(x => x is LineBreak).Count() > ConsoleOutputMaxLines)
+            {
+                CustomInlines
+                    .Where(x => CustomInlines.IndexOf(x) <= CustomInlines.IndexOf(CustomInlines.First(x => x is LineBreak)))
+                    .ToList()
+                    .All(x => CustomInlines.Remove(x));
+            }
+        }
+
         public void WriteLog(string text)
         {
             if (text.Length > 0)
             {
                 FormatAndClean(text);
+                CheckLinesLimits();
             }
         }
     }

@@ -18,7 +18,7 @@ namespace VULauncher.Views.Controls.Consoles
             typeof(ConsoleOutput),
             new PropertyMetadata(default(ObservableCollection<Inline>), OnItemsSourceChanged));
 
-        private Paragraph _paragraph;
+        private readonly Paragraph _paragraph;
 
         private INotifyCollectionChanged _notifyChanged;
 
@@ -30,20 +30,7 @@ namespace VULauncher.Views.Controls.Consoles
 
             Document = new FlowDocument(_paragraph);
 
-            TextChanged += (s, e) =>
-            {
-                CheckLinesLimits();
-            };
-
             DataObject.AddCopyingHandler(this, CopyCommand);
-        }
-
-        private void CheckLinesLimits()
-        {
-            if (_paragraph.Inlines.Where(x => x is LineBreak).Count() >= 500)
-            {
-                _paragraph.Inlines.Remove(_paragraph.Inlines.FirstInline);
-            }
         }
 
         public ObservableCollection<Inline> ItemsSource
@@ -62,7 +49,7 @@ namespace VULauncher.Views.Controls.Consoles
                     args.Handled = HandleSelectAllKeys();
                     break;
                 case Key.C:
-                    args.Handled = HandleCopyKeys(args);
+                    args.Handled = HandleCopyKeys();
                     break;
             }
         }
@@ -71,14 +58,17 @@ namespace VULauncher.Views.Controls.Consoles
         {
             if (args.NewValue == args.OldValue) return;
 
-            var terminal = (ConsoleOutput)d;
-            terminal.HandleItemsSourceChanged((ObservableCollection<Inline>)args.NewValue);
-            terminal.ScrollToEnd();
+            ConsoleOutput consoleOutput = (ConsoleOutput)d;
+            consoleOutput.HandleItemsSourceChanged((ObservableCollection<Inline>)args.NewValue);
+            consoleOutput.ScrollToEnd();
         }
 
         private void CopyCommand(object sender, DataObjectCopyingEventArgs args)
         {
-            if (!string.IsNullOrEmpty(Selection.Text)) args.DataObject.SetData(typeof(string), Selection.Text);
+            if (!string.IsNullOrEmpty(Selection.Text))
+            {
+                args.DataObject.SetData(typeof(string), Selection.Text);
+            }
 
             args.Handled = true;
         }
@@ -115,17 +105,30 @@ namespace VULauncher.Views.Controls.Consoles
                 case NotifyCollectionChangedAction.Add:
                     AddItems(args.NewItems.Cast<Inline>().ToArray());
                     break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemoveItems(args.OldItems.Cast<Inline>().ToArray());
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    ReplaceItems(((IEnumerable)sender).Cast<Inline>().ToArray());
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    RemoveItems(args.OldItems.Cast<Inline>().ToArray());
+                    AddItems(args.NewItems.Cast<Inline>().ToArray());
+                    break;
             }
         }
 
         private void ClearItems()
         {
-            _paragraph.Inlines.Clear();
+            if (CheckAccess())
+            {
+                _paragraph.Inlines.Clear();
+            }
         }
 
         private void ReplaceItems(Inline[] items)
         {
-            _paragraph.Inlines.Clear();
+            ClearItems();
 
             AddItems(items);
         }
@@ -137,29 +140,36 @@ namespace VULauncher.Views.Controls.Consoles
                 Dispatcher.Invoke(() =>
                 {
                     CaretPosition = CaretPosition.DocumentEnd;
-                    if (items.Length > 0)
-                        _paragraph.Inlines.AddRange(items);
+
+                    _paragraph.Inlines.AddRange(items);
 
                     CaretPosition = Document.ContentEnd;
                 });
             }
         }
 
-        private bool HandleCopyKeys(KeyEventArgs args)
+        private void RemoveItems(Inline[] items)
         {
-            if (args.Key == Key.C)
+            if (CheckAccess())
             {
-                if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) return false;
+                foreach (var item in items)
+                {
+                    var inline = _paragraph.Inlines
+                        .First(x => x == item);
 
-                var promptEnd = Document.ContentEnd;
-
-                var pos = CaretPosition.CompareTo(promptEnd);
-                var selectionPos = Selection.Start.CompareTo(CaretPosition);
-
-                return pos < 0 || selectionPos < 0;
+                    if (inline != null)
+                    {
+                        _paragraph.Inlines.Remove(inline);
+                    }
+                }
             }
+        }
 
-            return false;
+        private bool HandleCopyKeys()
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) return false;
+
+            return CaretPosition.CompareTo(Document.ContentEnd) < 0 || Selection.Start.CompareTo(CaretPosition) < 0;
         }
 
         private bool HandleSelectAllKeys()
@@ -177,9 +187,7 @@ namespace VULauncher.Views.Controls.Consoles
         private bool HandleAnyOtherKey()
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) return false;
-
-            var pos = CaretPosition.CompareTo(Document.ContentEnd);
-            return pos < 0;
+            return CaretPosition.CompareTo(Document.ContentEnd) < 0;
         }
     }
 }
