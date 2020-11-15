@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Views\Icons\VULauncher.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +13,6 @@
     <None Remove="Views\Icons\Cancel_16x.png" />
     <None Remove="Views\Icons\Console.ico" />
     <None Remove="Views\Icons\GitLogo.ico" />
-    <None Remove="Views\Icons\Logo-v3.ico" />
     <None Remove="Views\Icons\OpenFolder.ico" />
     <None Remove="Views\Icons\Restart_16x.png" />
     <None Remove="Views\Icons\Run.ico" />
@@ -22,6 +22,7 @@
     <None Remove="Views\Icons\SketchflowNewNavScreen_16x.png" />
     <None Remove="Views\Icons\Stop.ico" />
     <None Remove="Views\Icons\Undo_grey.ico" />
+    <None Remove="Views\Icons\VULauncher.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,9 +31,9 @@
     <Resource Include="Views\Icons\Cancel_16x.png" />
     <Resource Include="Views\Icons\Console.ico" />
     <Resource Include="Views\Icons\GitLogo.ico" />
-    <Resource Include="Views\Icons\Logo-v3.ico" />
     <Resource Include="Views\Icons\OpenFolder.ico" />
     <Resource Include="Views\Icons\Restart_16x.png" />
+    <Resource Include="Views\Icons\VULauncher.ico" />
     <Resource Include="Views\Icons\Run.ico" />
     <Resource Include="Views\Icons\Save.ico" />
     <Resource Include="Views\Icons\SaveAll.ico" />
