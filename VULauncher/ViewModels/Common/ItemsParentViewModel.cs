@@ -65,7 +65,8 @@ namespace VULauncher.ViewModels.Common
 
         protected virtual void Collection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            NotifyPropertyChanged(nameof(IsDirty));
+            if (e.Action != NotifyCollectionChangedAction.Reset)
+                IsDirty = true;
         }
 
         // This can be used by the derived class to track any specific child item property changing
