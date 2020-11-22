@@ -55,8 +55,8 @@ namespace VULauncher.ViewModels.Common
 
 	        PresetsProvider = presetsProvider;
 
-	        LoadPresetItems(clearBeforeLoading: false, updateIsDirty: false);
 	        RegisterChildItemCollection(Presets);
+	        LoadPresetItems();
         }
 
         public void SetSelectedPreset(int selectedPresetId)
@@ -74,7 +74,7 @@ namespace VULauncher.ViewModels.Common
 
         public void ReloadItems()
         {
-	        LoadPresetItems(clearBeforeLoading: true, updateIsDirty: true);
+	        LoadPresetItems();
         }
 
         public void DiscardChanges()
@@ -82,7 +82,7 @@ namespace VULauncher.ViewModels.Common
 	        if (!IsDirty)
 		        return;
 
-            LoadPresetItems(clearBeforeLoading: true, updateIsDirty: true);
+            LoadPresetItems();
         }
 
         public virtual IEnumerable<ValidationError> GetValidationErrors()
@@ -90,22 +90,15 @@ namespace VULauncher.ViewModels.Common
             return Presets.GetValidationErrors();
         }
 
-        private void LoadPresetItems(bool clearBeforeLoading = true, bool updateIsDirty = true)
+        private void LoadPresetItems(bool clearBeforeLoading = true)
         {
-	        if (clearBeforeLoading)
-	        {
-				Presets.Clear();
-				SelectedPreset = null;
-            }
-
+			Presets.Clear();
+			SelectedPreset = null;
             PresetsProvider.ReloadPresetItems();
 	        Presets.AddRange(PresetsProvider.PresetItems);
 	        Presets.IsDirty = false;
+            IsDirty = false;
 	        SelectedPreset = Presets.FirstOrDefault();
-	        //IsDirty = false;
-
-            if (updateIsDirty)
-				NotifyPropertyChanged(nameof(IsDirty));
         }
 
         public TPresetItem SelectedPreset

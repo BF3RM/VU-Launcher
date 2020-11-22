@@ -8,7 +8,7 @@
         xmlns:viewModels="clr-namespace:VULauncher.ViewModels"
         xmlns:components="clr-namespace:VULauncher.Views.Components"
         xmlns:enums="clr-namespace:VULauncher.ViewModels.Enums"
-        mc:Ignorable="d" Title="VU Launcher" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Icon="Views/Icons/Logo-v3.ico">
+        mc:Ignorable="d" Title="VU Launcher" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Icon="Views/Icons/VULauncher.ico">
 
     <Window.DataContext>
         <local:MainViewModel/>
