@@ -28,11 +28,15 @@ namespace VULauncher.Models.Entities.Extensions
 
         public static MapListPreset ToEntity(this MapListPresetItem item)
         {
-            return new MapListPreset()
+            var entity = new MapListPreset()
             {
                 Id = item.Id,
                 Name = item.Name,
             };
+
+            entity.MapSelections.AddRange(item.MapSelections.ToEntityList());
+
+            return entity;
         }
 
         public static List<MapListPresetItem> ToItemList(this IEnumerable<MapListPreset> entities)
