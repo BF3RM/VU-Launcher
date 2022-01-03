@@ -27,8 +27,15 @@ namespace VULauncher.Models.Repositories.UserData
 
             foreach (var modFile in files)
             {
-                var mod = JsonConvert.DeserializeObject<Mod>(File.ReadAllText(modFile));
-                Mods.Add(mod);
+                try
+                {
+                    var mod = JsonConvert.DeserializeObject<Mod>(File.ReadAllText(modFile));
+                    Mods.Add(mod);
+                }
+                catch (Exception ex)
+                {
+                    // todo: process invalid mod.jsons?
+                }
             }
         }
     }
