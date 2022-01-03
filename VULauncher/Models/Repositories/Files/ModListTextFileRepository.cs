@@ -21,6 +21,10 @@ namespace VULauncher.Models.Repositories.UserData
 		{
 			string modList = string.Empty;
 
+			modList += "# This file has been modified by VU Launcher";
+			modList += Environment.NewLine;
+            modList += Environment.NewLine;
+
 			foreach (var modSelection in modSelections)
 			{
 				if (modSelection.IsChecked)
@@ -28,12 +32,18 @@ namespace VULauncher.Models.Repositories.UserData
 					modList += modSelection.ModName;
 					modList += Environment.NewLine;
 				}
-				else
-				{
-					modList += $"#{modSelection.ModName}";
-					modList += Environment.NewLine;
-				}
 			}
+
+            modList += Environment.NewLine;
+
+			foreach (var modSelection in modSelections)
+            {
+                if (!modSelection.IsChecked)
+                {
+                    modList += $"#{modSelection.ModName}";
+                    modList += Environment.NewLine;
+                }
+            }
 
 			OverwriteFile(modList);
 		}
