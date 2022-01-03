@@ -21,7 +21,6 @@ namespace VULauncher
         public ConfigViewModel ConfigViewModel { get; set; }
 
         public RelayCommand CloseAllConsolesCommand { get; }
-        public RelayCommand StopAllProcessesCommand { get; }
         public RelayCommand StartClientPresetCommand { get; }
         public RelayCommand StartServerPresetCommand { get; }
         public RelayCommand SaveAllTabsCommand { get; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,20 @@ namespace VULauncher
         {
             var viewModel = (MainViewModel)DataContext;
             viewModel.CloseAllConsolesCommand.Execute(null);
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Are you sure you want to close the VU Launcher? This will close all open game processes.", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                CloseAllConsoles();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
