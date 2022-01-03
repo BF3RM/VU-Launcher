@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using VULauncher.Models.Config;
 using VULauncher.Models.Repositories.Common;
 using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories.ServerFilesManagers
+namespace VULauncher.Models.Repositories.UserData
 {
-	public class MapListManager : ServerFilesManager
+	public class MapListTextFileRepository : TextFileRepository
 	{
-		private static readonly Lazy<MapListManager> _lazy = new Lazy<MapListManager>(() => new MapListManager());
-		public static MapListManager Instance => _lazy.Value;
+		private static readonly Lazy<MapListTextFileRepository> _lazy = new Lazy<MapListTextFileRepository>(() => new MapListTextFileRepository());
+		public static MapListTextFileRepository Instance => _lazy.Value;
+
+        public MapListTextFileRepository()
+            : base(Configuration.MapListFilePath)
+        {
+        }
 
 		public void WriteMapListFile(IEnumerable<MapSelectionItem> mapSelections)
 		{
@@ -27,7 +31,7 @@ namespace VULauncher.Models.Repositories.ServerFilesManagers
 				mapList += Environment.NewLine;
 			}
 
-			File.WriteAllText(Configuration.MapListFilePath, mapList);
+			OverwriteFile(mapList);
 		}
 
 		private string GetMapName(MapType mapType)
@@ -39,5 +43,5 @@ namespace VULauncher.Models.Repositories.ServerFilesManagers
 		{
 			return Enum.GetName(typeof(GameModeType), gameModeType);
 		}
-	}
+    }
 }

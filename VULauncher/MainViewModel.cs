@@ -20,6 +20,8 @@ namespace VULauncher
         public SettingsViewModel SettingsViewModel { get; set; }
         public ConfigViewModel ConfigViewModel { get; set; }
 
+        public RelayCommand CloseAllConsolesCommand { get; }
+        public RelayCommand StopAllProcessesCommand { get; }
         public RelayCommand StartClientPresetCommand { get; }
         public RelayCommand StartServerPresetCommand { get; }
         public RelayCommand SaveAllTabsCommand { get; }
@@ -73,6 +75,8 @@ namespace VULauncher
 
             StartClientPresetCommand = new RelayCommand(x => StartClientPreset(), x => CanStartClientPreset);
             StartServerPresetCommand = new RelayCommand(x => StartServerPreset(), x => CanStartServerPreset);
+
+            CloseAllConsolesCommand = new RelayCommand(x => ConsolesViewModel.CloseAllConsoles(), x => ConsolesViewModel.IsAnyRunning);
 
             OpenGitHubCommand = new RelayCommand(x => OpenGitHub(), x => true);
 

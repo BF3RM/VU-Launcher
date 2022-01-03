@@ -62,7 +62,7 @@ namespace VULauncher.Models.PresetProviders
 			return presetEntities.ToItemList();
 		}
 
-		protected override ServerPresetItem CreateEmptyPresetItem(ServerPresetItem newPresetItem)
+		protected override ServerPresetItem CreateNewPresetItem(ServerPresetItem newPresetItem)
 		{
 			newPresetItem.OpenConsole = true;
 			newPresetItem.BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(1);

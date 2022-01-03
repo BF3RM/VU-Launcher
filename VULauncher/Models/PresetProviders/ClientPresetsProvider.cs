@@ -27,7 +27,7 @@ namespace VULauncher.Models.PresetProviders
             return presetEntities.ToItemList();
         }
 
-        protected override ClientPresetItem CreateEmptyPresetItem(ClientPresetItem newPresetItem)
+        protected override ClientPresetItem CreateNewPresetItem(ClientPresetItem newPresetItem)
         {
             newPresetItem.OpenConsole = true;
             newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(1);

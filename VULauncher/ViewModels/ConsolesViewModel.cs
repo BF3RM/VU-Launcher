@@ -8,8 +8,9 @@ using System.Threading;
 using System.Windows;
 using VULauncher.Commands;
 using VULauncher.Models.Config;
-using VULauncher.Models.Repositories.ServerFilesManagers;
+using VULauncher.Models.Repositories.UserData;
 using VULauncher.Util;
+using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.ConsoleViewModels;
 using VULauncher.ViewModels.Enums;
@@ -27,8 +28,9 @@ namespace VULauncher.ViewModels
 	    private static readonly string _vuServer = "Server";
         private VuConsoleViewModel _activeConsoleViewModel;
 
-        public ObservableCollection<DockableDocumentViewModel> DockingViewModels { get; set; } = new ObservableCollection<DockableDocumentViewModel>();
+        public ObservableRangeCollection<DockableDocumentViewModel> DockingViewModels { get; set; } = new ObservableRangeCollection<DockableDocumentViewModel>();
 
+        public bool IsAnyRunning => IsClientRunning || IsServerRunning;
         public bool IsClientRunning => DockingViewModels.Any(d => (d as VuConsoleViewModel)?.StartupType == StartupType.Client);
         public bool IsServerRunning => DockingViewModels.Any(d => (d as VuConsoleViewModel)?.StartupType == StartupType.Server);
 
@@ -71,10 +73,10 @@ namespace VULauncher.ViewModels
 
         private void OverwriteTxtFiles(ServerPresetItem serverPresetItem)
         {
-            ModListManager.Instance.WriteModListFile(serverPresetItem.ModSelections);
-            //MapListManager.Instance.WriteMapListFile(serverPresetItem.MapListPreset.MapSelections);
-            StartupManager.Instance.WriteStartupFile(serverPresetItem.StartupPreset.StartupFileContent);
-            BanListManager.Instance.WriteBanListFile(serverPresetItem.BanListPreset.BannedPlayers);
+            ModListTextFileRepository.Instance.WriteModListFile(serverPresetItem.ModSelections);
+            MapListTextFileRepository.Instance.WriteMapListFile(serverPresetItem.MapListPreset.MapSelections);
+            StartupTextFileRepository.Instance.WriteStartupFile(serverPresetItem.StartupPreset.StartupFileContent);
+            BanListTextFileRepository.Instance.WriteBanListFile(serverPresetItem.BanListPreset.BannedPlayers);
         }
 
         private void CreateVuConsoleViewModelAndGameProcess(StartupType startupType, string presetName, string[] launchParameters, bool attach = false)
@@ -168,6 +170,16 @@ namespace VULauncher.ViewModels
                 Remove(vuConsoleViewModel);
 				vuConsoleViewModel.GameProcess.Kill();
             }
+        }
+
+        public void CloseAllConsoles()
+        {
+            foreach (var viewModel in DockingViewModels)
+            {
+                ((VuConsoleViewModel)viewModel).GameProcess.Kill();
+            }
+
+            DockingViewModels.RemoveAll(d => true);
         }
     }
 }

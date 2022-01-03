@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using VULauncher.Models.Config;
 using VULauncher.Models.Repositories.Common;
 using VULauncher.ViewModels.Items;
 
-namespace VULauncher.Models.Repositories.ServerFilesManagers
+namespace VULauncher.Models.Repositories.UserData
 {
-	public class ModListManager : ServerFilesManager
+	public class ModListTextFileRepository : TextFileRepository
 	{
-		private static readonly Lazy<ModListManager> _lazy = new Lazy<ModListManager>(() => new ModListManager());
-		public static ModListManager Instance => _lazy.Value;
+		private static readonly Lazy<ModListTextFileRepository> _lazy = new Lazy<ModListTextFileRepository>(() => new ModListTextFileRepository());
+		public static ModListTextFileRepository Instance => _lazy.Value;
+
+		public ModListTextFileRepository() 
+            : base(Configuration.ModListFilePath)
+        {
+        }
 
 		public void WriteModListFile(IEnumerable<ModSelectionItem> modSelections)
 		{
@@ -31,7 +35,7 @@ namespace VULauncher.Models.Repositories.ServerFilesManagers
 				}
 			}
 
-			File.WriteAllText(Configuration.ModListFilePath, modList);
+			OverwriteFile(modList);
 		}
-	}
+    }
 }

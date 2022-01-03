@@ -8,7 +8,7 @@
         xmlns:viewModels="clr-namespace:VULauncher.ViewModels"
         xmlns:components="clr-namespace:VULauncher.Views.Components"
         xmlns:enums="clr-namespace:VULauncher.ViewModels.Enums"
-        mc:Ignorable="d" Title="VU Launcher" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Icon="Views/Icons/VULauncher.ico">
+        mc:Ignorable="d" Title="VU Launcher" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Icon="Views/Icons/VULauncher.ico" Closed="MainWindow_OnClosed">
 
     <Window.DataContext>
         <local:MainViewModel/>
@@ -98,6 +98,23 @@
                                         StartPresetCommand="{Binding StartServerPresetCommand}" 
                                         ComboBoxItemsSource="{Binding SettingsViewModel.ServerPresetsViewModel.Presets, UpdateSourceTrigger=PropertyChanged}"
                                         ComboBoxSelectedItem="{Binding SettingsViewModel.ServerPresetsViewModel.SelectedPreset, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+            <Separator ></Separator>
+
+            <Button Command="{Binding CloseAllConsolesCommand}">
+                <Image Source="Views/Icons/Stop.ico" HorizontalAlignment="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Button>
+
         </ToolBar>
         <ToolBar DockPanel.Dock="Top" AllowDrop="False" Grid.Row="0" Height="32" Grid.Column="1" Background="White">
             <Button Command="{Binding OpenGitHubCommand}">

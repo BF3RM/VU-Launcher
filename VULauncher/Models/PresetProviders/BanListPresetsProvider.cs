@@ -26,5 +26,33 @@ namespace VULauncher.Models.PresetProviders
         {
             return presetEntities.ToItemList();
         }
+
+        protected override BanListPresetItem CreateNewPresetItem(BanListPresetItem newPresetItem)
+        {
+            var banListTextFileLines = MapListTextFileRepository.Instance.FileContentLines;
+
+            if (banListTextFileLines.Any())
+            {
+                for (int i = 0; i < banListTextFileLines.Length; i = i + 4)
+                {
+                    var identifierType = banListTextFileLines[i];
+                    var identifierString = banListTextFileLines[i + 1];
+                    var durationType = banListTextFileLines[i + 2]; 
+                    var durationAmount = banListTextFileLines[i + 3];
+
+                    newPresetItem.BannedPlayers.Add(new BannedPlayerItem()
+                    {
+                        Index = i,
+                        //PlayerName = playerName,
+                        //PlayerIp = playerIp,
+                        //BanDate = banDate,
+                        //UnbanDate = unbanDate,
+                        //BanReason = banReason,
+                    });
+                }
+            }
+
+            return newPresetItem;
+        }
     }
 }

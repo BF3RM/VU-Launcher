@@ -9,17 +9,12 @@ using VULauncher.Models.Repositories.Common;
 
 namespace VULauncher.Models.Repositories.UserData
 {
-    public class ModsRepository : FileRepository
+    public class ModsRepository : FilesRepository
     {
         private static readonly Lazy<ModsRepository> _lazy = new Lazy<ModsRepository>(() => new ModsRepository());
         public static ModsRepository Instance => _lazy.Value;
 
         public List<Mod> Mods = new List<Mod>();
-
-        public ModsRepository()
-        {
-            base.Initialize();
-        }
 
         protected override void Load() //TODO: DUMMY
         {

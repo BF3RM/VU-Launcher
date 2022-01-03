@@ -79,10 +79,10 @@ namespace VULauncher.Models.PresetProviders.Common
         public TPresetItem CreateEmptyPresetItem(string presetName)
         {
             var newPresetItem = new TPresetItem { Id = GetNewPresetId(), Name = presetName };
-            return CreateEmptyPresetItem(newPresetItem);
+            return CreateNewPresetItem(newPresetItem);
         }
 
-        protected virtual TPresetItem CreateEmptyPresetItem(TPresetItem newPresetItem)
+        protected virtual TPresetItem CreateNewPresetItem(TPresetItem newPresetItem)
         {
             return newPresetItem;
         }

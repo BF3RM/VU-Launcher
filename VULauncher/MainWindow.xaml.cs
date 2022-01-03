@@ -24,5 +24,16 @@ namespace VULauncher
         {
             InitializeComponent();
         }
+
+        private void MainWindow_OnClosed(object? sender, EventArgs e)
+        {
+            CloseAllConsoles();
+        }
+
+        private void CloseAllConsoles()
+        {
+            var viewModel = (MainViewModel)DataContext;
+            viewModel.CloseAllConsolesCommand.Execute(null);
+        }
     }
 }

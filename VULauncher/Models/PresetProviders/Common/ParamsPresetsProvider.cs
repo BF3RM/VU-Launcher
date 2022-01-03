@@ -61,7 +61,7 @@ namespace VULauncher.Models.PresetProviders.Common
             return presetEntities.ToItemList<TPresetEntity, TPresetItem>();
         }
 
-        protected override TPresetItem CreateEmptyPresetItem(TPresetItem newPresetItem)
+        protected override TPresetItem CreateNewPresetItem(TPresetItem newPresetItem)
         {
             var parameterSelections = Parameters.Select(n => new ParameterSelection() { IsChecked = false, ParameterString = n.ParameterString }).ToList();
             newPresetItem.ParameterSelections.AddRange(CompleteParameterSelectionContent(parameterSelections).ToItemList());
