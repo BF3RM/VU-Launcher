@@ -32,7 +32,7 @@ namespace VULauncher.ViewModels.SettingsViewModels
         {
             foreach (var presetItem in Presets)
             {
-                if (presetItem.ServerParamsPreset.Id == e.DeletedPresetId)
+                if (presetItem.ServerParamsPreset?.Id == e.DeletedPresetId)
                     presetItem.ServerParamsPreset = null;
             }
         }
@@ -41,7 +41,7 @@ namespace VULauncher.ViewModels.SettingsViewModels
         {
             foreach (var presetItem in Presets)
             {
-                if (presetItem.MapListPreset.Id == e.DeletedPresetId)
+                if (presetItem.MapListPreset?.Id == e.DeletedPresetId)
                     presetItem.MapListPreset = null;
             }
         }
@@ -50,7 +50,7 @@ namespace VULauncher.ViewModels.SettingsViewModels
         {
             foreach (var presetItem in Presets)
             {
-                if (presetItem.StartupPreset.Id == e.DeletedPresetId)
+                if (presetItem.StartupPreset?.Id == e.DeletedPresetId)
                     presetItem.StartupPreset = null;
             }
         }
@@ -59,7 +59,7 @@ namespace VULauncher.ViewModels.SettingsViewModels
         {
             foreach (var presetItem in Presets)
             {
-                if (presetItem.BanListPreset.Id == e.DeletedPresetId)
+                if (presetItem.BanListPreset?.Id == e.DeletedPresetId)
                     presetItem.BanListPreset = null;
             }
         }

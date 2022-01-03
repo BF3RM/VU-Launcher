@@ -12,7 +12,7 @@ namespace VULauncher.Util
         private Process Process { get; set; }
         private ProcessStartInfo ProcessStartInfo { get; set; }
 
-        public Process Start(string workingDirectory, string command, params object[] args)
+        public Process Start(string workingDirectory, string command, string[] args)
         {
             if (CreateProcessStartInfo(workingDirectory, command, args))
             {
@@ -51,7 +51,7 @@ namespace VULauncher.Util
             }
         }
 
-        public bool CreateProcessStartInfo(string workingDirectory, string command, params object[] args)
+        public bool CreateProcessStartInfo(string workingDirectory, string command, string[] args)
         {
             ProcessStartInfo = new ProcessStartInfo();
 
@@ -68,7 +68,7 @@ namespace VULauncher.Util
 
             ProcessStartInfo.FileName = command;
             ProcessStartInfo.WorkingDirectory = workingDirectory;
-            ProcessStartInfo.Arguments = GetArguments(args);
+            ProcessStartInfo.Arguments = string.Join(" ", args.Select(a => a));
             ProcessStartInfo.UseShellExecute = false;
             ProcessStartInfo.CreateNoWindow = true;
             ProcessStartInfo.RedirectStandardError = true;
@@ -124,30 +124,6 @@ namespace VULauncher.Util
             }
 
             return null;
-        }
-
-        public static string GetArguments(params object[] arguments)
-        {
-            return string.Join(" ", arguments.Select(x =>
-            {
-                if (x is CommandLineNamedArgument) 
-                    return x.ToString();
-
-                if (x is RawCommandLineArgument) 
-                    return x.ToString();
-
-                var str = Convert.ToString(x, CultureInfo.InvariantCulture);
-
-                if (ContainsSpecialCharacters(str) || string.IsNullOrEmpty(str)) 
-                    return "\"" + str + "\"";
-
-                return str;
-            }).ToArray());
-        }
-
-        public static string GetCommandLine(string file, params object[] arguments)
-        {
-            return "\"" + file + "\" " + GetArguments(arguments);
         }
 
         public bool IsAlive()

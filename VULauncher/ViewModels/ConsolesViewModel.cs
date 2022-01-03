@@ -58,7 +58,7 @@ namespace VULauncher.ViewModels
         {
             if (launchPresetItem == null) throw new ArgumentNullException(nameof(launchPresetItem));
 
-            var concatenatedLaunchParameters = launchPresetItem.GetSelectedParameters().ConcatStartupStrings();
+            var launchParameters = launchPresetItem.GetSelectedParameters().Select(l => l.ConcatStartupStrings()).ToArray();
             var openConsoleInsideLauncher = launchPresetItem.OpenConsole;
 
             if (startupType == StartupType.Server)
@@ -66,7 +66,7 @@ namespace VULauncher.ViewModels
 	            OverwriteTxtFiles((ServerPresetItem)launchPresetItem);
             }
 
-            new Thread(() => CreateVuConsoleViewModelAndGameProcess(startupType, launchPresetItem.Name, concatenatedLaunchParameters, openConsoleInsideLauncher)).Start();
+            new Thread(() => CreateVuConsoleViewModelAndGameProcess(startupType, launchPresetItem.Name, launchParameters, openConsoleInsideLauncher)).Start();
         }
 
         private void OverwriteTxtFiles(ServerPresetItem serverPresetItem)
@@ -77,7 +77,7 @@ namespace VULauncher.ViewModels
             BanListManager.Instance.WriteBanListFile(serverPresetItem.BanListPreset.BannedPlayers);
         }
 
-        private void CreateVuConsoleViewModelAndGameProcess(StartupType startupType, string presetName, string concatenatedLaunchParameters, bool attach = false)
+        private void CreateVuConsoleViewModelAndGameProcess(StartupType startupType, string presetName, string[] launchParameters, bool attach = false)
         {
             string environmentName = (startupType == StartupType.Client) ? _vuClient : _vuServer;
             string appName = (startupType == StartupType.Client) ? _vuExe : _vuCom;
@@ -94,7 +94,7 @@ namespace VULauncher.ViewModels
                     }
                     else
                     {
-                        MessageBoxResult result = MessageBox.Show($"Are you sure you want to close '{presetName}'?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show($"Are you sure you want to close '{presetName}'? This will close the game process.", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                         if (result == MessageBoxResult.Yes)
                         {
@@ -114,7 +114,7 @@ namespace VULauncher.ViewModels
 
             try
             {
-                using (vuConsoleViewModel.GameProcess.Start(Configuration.VUInstallationDirectory, Path.Combine(Configuration.VUBinariesDirectory, appName), concatenatedLaunchParameters))
+                using (vuConsoleViewModel.GameProcess.Start(Configuration.VUInstallationDirectory, Path.Combine(Configuration.VUBinariesDirectory, appName), launchParameters))
                 {
                     if (attach)
                     {

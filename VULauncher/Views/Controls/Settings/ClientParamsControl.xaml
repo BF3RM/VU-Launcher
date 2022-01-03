@@ -43,8 +43,14 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 						<GridViewColumn DisplayMemberBinding="{Binding ParameterString}" Header="Parameter" Width="150"/>
-						<GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" Width="150"/>
-						<GridViewColumn DisplayMemberBinding="{Binding ExpectedValue}" Header="ExpectedValue" Width="150"/>
+                        <GridViewColumn Header="Value" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Value}" Width="135" Visibility="{Binding RequiresValue, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding ExpectedValue}" Header="ExpectedValue" Width="150"/>
 						<GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" Width="Auto"/>
                     </GridView.Columns>
                 </GridView>
