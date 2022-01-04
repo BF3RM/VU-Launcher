@@ -18,13 +18,15 @@ namespace VULauncher.Models.Repositories.UserData
 
         protected override void Load() //TODO: DUMMY
         {
-            var files = Directory.EnumerateDirectories(Configuration.ModsDirectory).SelectMany(directory => Directory.EnumerateFiles(directory, "mod.json"));
+            var modFolders = Directory.EnumerateDirectories(Configuration.ModsDirectory); //.SelectMany(directory => Directory.EnumerateFiles(directory, "mod.json"));
 
-            foreach (var modFile in files)
+            foreach (var modFolder in modFolders)
             {
                 try
                 {
-                    var mod = JsonConvert.DeserializeObject<Mod>(File.ReadAllText(modFile));
+                    var modJsonFilePath = Path.Combine(modFolder, "mod.json");
+                    var mod = JsonConvert.DeserializeObject<Mod>(File.ReadAllText(modJsonFilePath));
+                    mod.Name = Directory.GetParent(modJsonFilePath).Name;
                     Mods.Add(mod);
                 }
                 catch (Exception ex)
