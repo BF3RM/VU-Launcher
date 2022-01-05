@@ -30,7 +30,7 @@ namespace VULauncher.Models.PresetProviders
         protected override ClientPresetItem CreateNewPresetItem(ClientPresetItem newPresetItem)
         {
             newPresetItem.OpenConsole = true;
-            newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindPresetItemById(1);
+            newPresetItem.ClientParamsPreset = ClientParamsPresetsProvider.Instance.FindFirstPreset();
             return newPresetItem;
         }
     }

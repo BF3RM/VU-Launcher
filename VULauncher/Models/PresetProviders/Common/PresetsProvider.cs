@@ -71,6 +71,11 @@ namespace VULauncher.Models.PresetProviders.Common
             Load(resetPresetLists: true);
         }
 
+        public TPresetItem FindFirstPreset()
+        {
+            return PresetItems.FirstOrDefault();
+        }
+
         public TPresetItem FindPresetItemById(int id)
         {
             return PresetItems.FirstOrDefault(e => e.Id == id);

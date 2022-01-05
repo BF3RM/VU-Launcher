@@ -65,10 +65,10 @@ namespace VULauncher.Models.PresetProviders
 		protected override ServerPresetItem CreateNewPresetItem(ServerPresetItem newPresetItem)
 		{
 			newPresetItem.OpenConsole = true;
-			newPresetItem.BanListPreset = BanListPresetsProvider.Instance.FindPresetItemById(1);
-			newPresetItem.MapListPreset = MapListPresetsProvider.Instance.FindPresetItemById(1);
-			newPresetItem.ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindPresetItemById(1);
-			newPresetItem.StartupPreset = StartupPresetsProvider.Instance.FindPresetItemById(1);
+			newPresetItem.BanListPreset = BanListPresetsProvider.Instance.FindFirstPreset();
+			newPresetItem.MapListPreset = MapListPresetsProvider.Instance.FindFirstPreset();
+			newPresetItem.ServerParamsPreset = ServerParamsPresetsProvider.Instance.FindFirstPreset();
+			newPresetItem.StartupPreset = StartupPresetsProvider.Instance.FindFirstPreset();
 			newPresetItem.ModSelections.AddRange(GetNewModSelection());
 			return newPresetItem;
 		}
