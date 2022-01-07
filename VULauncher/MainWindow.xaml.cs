@@ -39,6 +39,12 @@ namespace VULauncher
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
+            var viewModel = (MainViewModel)DataContext;
+            if (!viewModel.ConsolesViewModel.IsAnyRunning)
+            {
+                return;
+            }
+
             MessageBoxResult result = MessageBox.Show($"Are you sure you want to close the VU Launcher? This will close all open game processes.", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
