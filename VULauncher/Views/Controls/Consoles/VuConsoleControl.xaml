@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VULauncher.Views.Controls.Consoles"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:data="clr-namespace:System.Data;assembly=System.Data.Common"
+             xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Black">
     <Grid>
-        <TextBox x:Name="textBox" Foreground="White" Background="Black" FontFamily="Consolas" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding TextBoxContent}" TextChanged="textBox_TextChanged"/>
+        <local:BindableAvalonTextEditor x:Name="textEditor" Foreground="White" Background="Black" FontFamily="Consolas Bold" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding TextBoxContent}" TextChanged="TextBox_OnTextChanged">
+
+        </local:BindableAvalonTextEditor>
     </Grid>
 </UserControl>

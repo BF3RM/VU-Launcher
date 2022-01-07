@@ -28,7 +28,7 @@ namespace VULauncher.ViewModels.ConsoleViewModels
             set => SetField(ref _textBoxContent, value);
         }
 
-        public void WriteLog(string text)
+        public void WriteLine(string text)
         {
             if (text.Length > 0)
             {

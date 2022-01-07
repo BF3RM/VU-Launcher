@@ -19,8 +19,7 @@
 
     <Grid>
         <xcad:DockingManager Grid.Row="1"
-                             DocumentsSource="{Binding DockingViewModels}"
-                             AnchorablesSource="{Binding Anchorables}">
+                             DocumentsSource="{Binding DockingViewModels}">
 
             <xcad:DockingManager.Resources>
 

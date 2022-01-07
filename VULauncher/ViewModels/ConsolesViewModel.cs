@@ -129,7 +129,7 @@ namespace VULauncher.ViewModels
                             {
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    vuConsoleViewModel.WriteLog(output);
+                                    vuConsoleViewModel.WriteLine(output);
                                 });
                             }
                         }
@@ -142,8 +142,8 @@ namespace VULauncher.ViewModels
             {
                 if (attach)
                 {
-                    vuConsoleViewModel.WriteLog("The following exception was raised: ");
-                    vuConsoleViewModel.WriteLog(e.Message);
+                    vuConsoleViewModel.WriteLine("The following exception was raised: ");
+                    vuConsoleViewModel.WriteLine(e.Message);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace VULauncher.ViewModels
             {
                 if (attach)
                 {
-                    vuConsoleViewModel.WriteLog("Process is closed!");
+                    vuConsoleViewModel.WriteLine("Process is closed!");
                 }
                 else
                 {

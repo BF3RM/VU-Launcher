@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
 namespace VULauncher.Views.Controls.Consoles
 {
@@ -21,18 +25,22 @@ namespace VULauncher.Views.Controls.Consoles
         public VuConsoleControl()
         {
             InitializeComponent();
+
+            using (StreamReader s = new StreamReader(@"C:\Repos\VULauncher\VULauncher\Views\Controls\Consoles\ConsoleOutputHighlighting.xshd"))
+            {
+                using (XmlTextReader reader = new XmlTextReader(s))
+                {
+                    textEditor.SyntaxHighlighting = HighlightingLoader.Load(
+                            reader,
+                            HighlightingManager.Instance);
+                }
+            }
         }
 
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_OnTextChanged(object? sender, EventArgs e)
         {
-            int max_lines = 1000;
-            if (textBox.LineCount > max_lines)
-            {
-                textBox.Text = textBox.Text.Remove(0, textBox.GetLineLength(500));
-            }
-
-            textBox.SelectionStart = textBox.Text.Length;
-            textBox.ScrollToEnd();
+            textEditor.SelectionStart = textEditor.Text.Length;
+            textEditor.ScrollToEnd();
         }
     }
 }
