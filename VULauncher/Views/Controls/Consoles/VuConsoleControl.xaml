@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Black">
     <Grid>
-        <local:BindableAvalonTextEditor x:Name="textEditor" Foreground="White" Background="Black" FontFamily="Consolas Bold" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding TextBoxContent}" TextChanged="TextBox_OnTextChanged">
+        <local:BindableAvalonTextEditor x:Name="textEditor" Foreground="Gray" Background="Black" FontFamily="Consolas Bold" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding TextBoxContent}" TextChanged="TextBox_OnTextChanged">
 
         </local:BindableAvalonTextEditor>
     </Grid>

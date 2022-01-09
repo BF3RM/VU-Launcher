@@ -1,4 +1,4 @@
-﻿<SyntaxDefinition name="C#"
+﻿<SyntaxDefinition name="VuConsoleOutput"
         xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
     <Color name="Error" foreground="Red" />
     <Color name="String" foreground="Blue" />
@@ -9,18 +9,54 @@
             <Word>error</Word>
         </Keywords>-->
 
-	    <Rule foreground="Gray">
-		    .\[info\]
+	    <Rule foreground="DarkSeaGreen">
+		    .*Successfully\ loaded\ VeniceEXT\ module.*
+	    </Rule>
+
+	    <Rule foreground="GreenYellow">
+		    .*Game\ successfully\ registered.*
+	    </Rule>
+
+        <Rule foreground="Orange">
+			.*\[warning\].*
 		</Rule>
 
 	    <Rule foreground="Red">
-			.\[error\]
+		    .*\[error\].*
+		</Rule>
+
+	    <Rule foreground="Gray">
+		    .\[info\]
+	    </Rule>
+
+	    <Rule foreground="DarkRed">
+			.*process\ was\ closed\ from\ outside\ VULauncher.*
+		</Rule>
+
+	    <Rule foreground="DarkRed">
+			.*The\ following\ exception\ was\ raised\ on\ the.*
+		</Rule>
+
+	    <Rule foreground="White">
+		    \[\w+\].*
+	    </Rule>
+
+	    <Rule foreground="Aquamarine">
+		    Build\s\d+
+	    </Rule>
+
+	    <Rule foreground="Aquamarine">
+		    Server\sGUID:\s[a-z0-9]+
+	    </Rule>
+
+		<Rule foreground="LightGray">
+		    .\[VeniceEXT\]
 		</Rule>
 
 		<Rule foreground="Gray">
 		    ^\[\d+\-\d+\-\d+\ \d+:\d+:\d+\+\d+:\d+\]
 		</Rule>
-	    
+
 	    <!--<Rule foreground="Gray"> --><!--Date time--><!--
 		    ^.*?\]
 		</Rule>-->

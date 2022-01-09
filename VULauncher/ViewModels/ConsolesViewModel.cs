@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Xml;
 using VULauncher.Commands;
 using VULauncher.Models.Config;
 using VULauncher.Models.Repositories.UserData;
@@ -17,6 +18,7 @@ using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items;
 using VULauncher.ViewModels.Items.Common;
 using VULauncher.ViewModels.Items.Extensions;
+using VULauncher.Views.Common;
 
 namespace VULauncher.ViewModels
 {
@@ -125,7 +127,7 @@ namespace VULauncher.ViewModels
                         {
                             string output = streamReader.ReadLine();
 
-                            if (output != string.Empty)
+                            if (!string.IsNullOrWhiteSpace(output))
                             {
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
@@ -142,7 +144,7 @@ namespace VULauncher.ViewModels
             {
                 if (attach)
                 {
-                    vuConsoleViewModel.WriteLine("The following exception was raised: ");
+                    vuConsoleViewModel.WriteLine($"--- The following exception was raised on the {environmentName}: ---");
                     vuConsoleViewModel.WriteLine(e.Message);
                 }
                 else
@@ -154,7 +156,7 @@ namespace VULauncher.ViewModels
             {
                 if (attach)
                 {
-                    vuConsoleViewModel.WriteLine("Process is closed!");
+                    vuConsoleViewModel.WriteLine($"--- The Venice Unleashed {environmentName} process was closed from outside VULauncher ---");
                 }
                 else
                 {

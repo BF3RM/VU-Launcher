@@ -26,7 +26,7 @@ namespace VULauncher.Views.Controls.Consoles
         {
             InitializeComponent();
 
-            using (StreamReader s = new StreamReader(@"C:\Repos\VULauncher\VULauncher\Views\Controls\Consoles\ConsoleOutputHighlighting.xshd"))
+            using (StreamReader s = new StreamReader(@"Views/Controls/Consoles/ConsoleOutputHighlighting.xshd"))
             {
                 using (XmlTextReader reader = new XmlTextReader(s))
                 {

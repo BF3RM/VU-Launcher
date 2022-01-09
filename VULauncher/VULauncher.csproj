@@ -27,7 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Views\Controls\Consoles\ConsoleOutputHighlighting.xshd" />
+    <EmbeddedResource Include="Views\Controls\Consoles\ConsoleOutputHighlighting.xshd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Views\Icons\ApplicationBehaviorSettings_16x.png" />
     <Resource Include="Views\Icons\ApplicationClass.ico" />
     <Resource Include="Views\Icons\Cancel_16x.png" />
