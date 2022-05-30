@@ -138,7 +138,7 @@ namespace VULauncher.ViewModels
                             {
                                 lastLog = logList.Keys.Max();
                             }
-                        }, null, 0, 3000);
+                        }, null, 0, 1000);
 
                         while (vuConsoleViewModel.GameProcess.IsAlive() && !streamReader.EndOfStream)
                         {
@@ -148,7 +148,7 @@ namespace VULauncher.ViewModels
                             {
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    if (id > 5000) {
+                                    if (id > 1000) {
                                         logList.Clear();
 
                                         vuConsoleViewModel.TextBoxContent = "";
