@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -112,26 +113,30 @@ namespace VULauncher.ViewModels
                 ActiveConsoleViewModel = vuConsoleViewModel;
             }
 
+            //Timer timer = new Timer((t) => { }, null, 0, 0);
+
             try
             {
                 using (vuConsoleViewModel.GameProcess.Start(Configuration.VUInstallationDirectory, Path.Combine(Configuration.VUBinariesDirectory, appName), launchParameters))
                 {
                     if (attach)
                     {
-                        int line = 0;
                         StreamReader streamReader = vuConsoleViewModel.GameProcess.ReadData();
                         ConcurrentDictionary<int, string> logList = new ConcurrentDictionary<int, string>();
-
-                        Timer t = new Timer((t) =>
+                        int id = 0;
+                        int lastLog = 0;
+                        Timer timer = new Timer((t) =>
                         {
-                            foreach (var log in logList)
+                            foreach(var log in logList)
                             {
-                                vuConsoleViewModel.WriteLine(log.Value);
-                                if (logList.Count > 2000)
+                                if (log.Key > lastLog)
                                 {
-                                    vuConsoleViewModel.TextBoxContent = "";
-                                    logList.Clear();
+                                    vuConsoleViewModel.WriteLine(log.Value);
                                 }
+                            }
+                            if (logList.Count > 0)
+                            {
+                                lastLog = logList.Keys.Max();
                             }
                         }, null, 0, 3000);
 
@@ -143,12 +148,20 @@ namespace VULauncher.ViewModels
                             {
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    line++;
-                                    logList.TryAdd(line, output);
+                                    if (id > 5000) {
+                                        logList.Clear();
+
+                                        vuConsoleViewModel.TextBoxContent = "";
+                                        vuConsoleViewModel.Dispose();
+
+                                        id = 0;
+                                    }
+
+                                    logList.TryAdd(id, output);
+                                    id++;
                                 });
                             }
                         }
-
                         vuConsoleViewModel.GameProcess.Exception();
                     }
                 }
