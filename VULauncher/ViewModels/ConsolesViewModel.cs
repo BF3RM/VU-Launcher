@@ -191,14 +191,6 @@ namespace VULauncher.ViewModels
             }
         }
 
-        private void WriteLogs(List<string> logList, VuConsoleViewModel vuConsoleViewModel)
-        {
-            foreach (var log in logList)
-            {
-                vuConsoleViewModel.WriteLine(log);
-            }
-        }
-
         public void Kill(VuConsoleViewModel vuConsoleViewModel)
         {
             if (vuConsoleViewModel != null)
