@@ -1,16 +1,14 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
-using System.Xml;
 using VULauncher.Commands;
 using VULauncher.Models.Config;
 using VULauncher.Models.Repositories.UserData;
-using VULauncher.Util;
 using VULauncher.ViewModels.Collections;
 using VULauncher.ViewModels.Common;
 using VULauncher.ViewModels.ConsoleViewModels;
@@ -18,16 +16,15 @@ using VULauncher.ViewModels.Enums;
 using VULauncher.ViewModels.Items;
 using VULauncher.ViewModels.Items.Common;
 using VULauncher.ViewModels.Items.Extensions;
-using VULauncher.Views.Common;
 
 namespace VULauncher.ViewModels
 {
     public class ConsolesViewModel : ViewModel
     {
-	    private static readonly string _vuExe = "vu.exe";
-	    private static readonly string _vuCom = "vu.com";
-	    private static readonly string _vuClient = "Client";
-	    private static readonly string _vuServer = "Server";
+        private static readonly string _vuExe = "vu.exe";
+        private static readonly string _vuCom = "vu.com";
+        private static readonly string _vuClient = "Client";
+        private static readonly string _vuServer = "Server";
         private VuConsoleViewModel _activeConsoleViewModel;
 
         public ObservableRangeCollection<DockableDocumentViewModel> DockingViewModels { get; set; } = new ObservableRangeCollection<DockableDocumentViewModel>();
@@ -67,7 +64,7 @@ namespace VULauncher.ViewModels
 
             if (startupType == StartupType.Server)
             {
-	            OverwriteTxtFiles((ServerPresetItem)launchPresetItem);
+                OverwriteTxtFiles((ServerPresetItem)launchPresetItem);
             }
 
             new Thread(() => CreateVuConsoleViewModelAndGameProcess(startupType, launchPresetItem.Name, launchParameters, openConsoleInsideLauncher)).Start();
@@ -76,7 +73,7 @@ namespace VULauncher.ViewModels
         private void OverwriteTxtFiles(ServerPresetItem serverPresetItem)
         {
             ModListTextFileRepository.Instance.WriteModListFile(serverPresetItem.ModSelections);
-            MapListTextFileRepository.Instance.WriteMapListFile(serverPresetItem.MapListPreset.MapSelections);
+            //MapListTextFileRepository.Instance.WriteMapListFile(serverPresetItem.MapListPreset.MapSelections);
             StartupTextFileRepository.Instance.WriteStartupFile(serverPresetItem.StartupPreset.StartupFileContent);
             BanListTextFileRepository.Instance.WriteBanListFile(serverPresetItem.BanListPreset.BannedPlayers);
         }
@@ -90,7 +87,7 @@ namespace VULauncher.ViewModels
 
             if (attach)
             {
-	            vuConsoleViewModel.CloseCommand = new RelayCommand(x =>
+                vuConsoleViewModel.CloseCommand = new RelayCommand(x =>
                 {
                     if (vuConsoleViewModel.GameProcess != null && !vuConsoleViewModel.GameProcess.IsAlive())
                     {
@@ -116,6 +113,8 @@ namespace VULauncher.ViewModels
                 ActiveConsoleViewModel = vuConsoleViewModel;
             }
 
+            //Timer timer = new Timer((t) => { }, null, 0, 0);
+
             try
             {
                 using (vuConsoleViewModel.GameProcess.Start(Configuration.VUInstallationDirectory, Path.Combine(Configuration.VUBinariesDirectory, appName), launchParameters))
@@ -123,6 +122,24 @@ namespace VULauncher.ViewModels
                     if (attach)
                     {
                         StreamReader streamReader = vuConsoleViewModel.GameProcess.ReadData();
+                        ConcurrentDictionary<int, string> logList = new ConcurrentDictionary<int, string>();
+                        int id = 0;
+                        int lastLog = 0;
+                        Timer timer = new Timer((t) =>
+                        {
+                            foreach(var log in logList)
+                            {
+                                if (log.Key > lastLog)
+                                {
+                                    vuConsoleViewModel.WriteLine(log.Value);
+                                }
+                            }
+                            if (logList.Count > 0)
+                            {
+                                lastLog = logList.Keys.Max();
+                            }
+                        }, null, 0, 1000);
+
                         while (vuConsoleViewModel.GameProcess.IsAlive() && !streamReader.EndOfStream)
                         {
                             string output = streamReader.ReadLine();
@@ -131,11 +148,20 @@ namespace VULauncher.ViewModels
                             {
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    vuConsoleViewModel.WriteLine(output);
+                                    if (id > 1000) {
+                                        logList.Clear();
+
+                                        vuConsoleViewModel.TextBoxContent = "";
+                                        vuConsoleViewModel.Dispose();
+
+                                        id = 0;
+                                    }
+
+                                    logList.TryAdd(id, output);
+                                    id++;
                                 });
                             }
                         }
-
                         vuConsoleViewModel.GameProcess.Exception();
                     }
                 }
@@ -170,7 +196,7 @@ namespace VULauncher.ViewModels
             if (vuConsoleViewModel != null)
             {
                 Remove(vuConsoleViewModel);
-				vuConsoleViewModel.GameProcess.Kill();
+                vuConsoleViewModel.GameProcess.Kill();
             }
         }
 
