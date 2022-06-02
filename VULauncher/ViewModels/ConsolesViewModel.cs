@@ -73,7 +73,7 @@ namespace VULauncher.ViewModels
         private void OverwriteTxtFiles(ServerPresetItem serverPresetItem)
         {
             ModListTextFileRepository.Instance.WriteModListFile(serverPresetItem.ModSelections);
-            MapListTextFileRepository.Instance.WriteMapListFile(serverPresetItem.MapListPreset.MapSelections);
+            //MapListTextFileRepository.Instance.WriteMapListFile(serverPresetItem.MapListPreset.MapSelections);
             StartupTextFileRepository.Instance.WriteStartupFile(serverPresetItem.StartupPreset.StartupFileContent);
             BanListTextFileRepository.Instance.WriteBanListFile(serverPresetItem.BanListPreset.BannedPlayers);
         }
