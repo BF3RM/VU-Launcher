@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Microsoft.Win32;
-using VULauncher.Commands;
+﻿using VULauncher.Commands;
 using VULauncher.Models.Config;
 using VULauncher.Models.Setup;
 using VULauncher.ViewModels;

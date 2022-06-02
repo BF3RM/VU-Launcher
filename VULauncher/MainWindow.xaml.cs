@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -54,6 +55,36 @@ namespace VULauncher
             else
             {
                 e.Cancel = true;
+            }
+        }
+
+        private void toggleThemeButton_Initialized(object sender, EventArgs e)
+        {
+            var toggleThemeButton = sender as ToggleButton;
+            if (Properties.Settings.Default.UserTheme == "Light")
+            {
+                toggleThemeButton.Content = "use Dark-Theme";
+            }
+            else
+            {
+                toggleThemeButton.Content = "use Light-Theme";
+            }
+        }
+
+        private void toggleThemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var toggleThemeButton = sender as ToggleButton;
+            if (Properties.Settings.Default.UserTheme == "Light")
+            {
+                Properties.Settings.Default.UserTheme = "Dark";
+                Properties.Settings.Default.Save();
+                toggleThemeButton.Content = "use Light-Theme";
+            }
+            else
+            {
+                Properties.Settings.Default.UserTheme = "Light";
+                Properties.Settings.Default.Save();
+                toggleThemeButton.Content = "use Dark-Theme";
             }
         }
     }

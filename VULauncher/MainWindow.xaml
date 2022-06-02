@@ -21,16 +21,16 @@
         <DataTemplate DataType="{x:Type viewModels:ConsolesViewModel}">
             <controls:ConsolesControl/>
         </DataTemplate>
-		<DataTemplate DataType="{x:Type viewModels:ConfigViewModel}">
-			<controls:ConfigControl />
-		</DataTemplate>
-	</Window.Resources>
+        <DataTemplate DataType="{x:Type viewModels:ConfigViewModel}">
+            <controls:ConfigControl />
+        </DataTemplate>
+    </Window.Resources>
 
     <Window.InputBindings>
-	    <KeyBinding Modifiers="Control"
+        <KeyBinding Modifiers="Control"
 	                Key="S"
 	                Command="{Binding SaveAllTabsCommand}" />
-	</Window.InputBindings>
+    </Window.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -41,25 +41,26 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90*"/>
             <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
 
-        <ToolBar DockPanel.Dock="Top" AllowDrop="False" Grid.Row="0" Height="32" Background="White" >
+        <StatusBar DockPanel.Dock="Top" AllowDrop="False" Grid.Row="0" Height="32" Background="Transparent" >
             <ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Console}}">
                 <Image Source="Views/Icons/Console.ico" HorizontalAlignment="Center"/>
             </ToggleButton>
 
-			<ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Settings}}">
-				<Image Source="Views/Icons/ApplicationClass.ico" HorizontalAlignment="Center"/>
-			</ToggleButton>
+            <ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Settings}}">
+                <Image Source="Views/Icons/ApplicationClass.ico" HorizontalAlignment="Center"/>
+            </ToggleButton>
 
-			<ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Config}}">
+            <ToggleButton IsChecked="{Binding ActiveViewType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static enums:ActiveViewType.Config}}">
                 <Image Source="Views/Icons/Settings.ico" HorizontalAlignment="Center"/>
             </ToggleButton>
 
             <Separator></Separator>
 
             <Button Command="{Binding SaveAllTabsCommand}">
-				<Image Source="Views/Icons/Save.ico" HorizontalAlignment="Center">
+                <Image Source="Views/Icons/Save.ico" HorizontalAlignment="Center">
                     <Image.Style>
                         <Style TargetType="Image">
                             <Style.Triggers>
@@ -72,21 +73,21 @@
                 </Image>
             </Button>
 
-	        <Button Command="{Binding DiscardChangesAllTabsCommand}">
-		        <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">
-			        <Image.Style>
-				        <Style TargetType="Image">
-					        <Style.Triggers>
-						        <Trigger Property="IsEnabled" Value="False">
-							        <Setter Property="Opacity" Value="0.5" />
-						        </Trigger>
-					        </Style.Triggers>
-				        </Style>
-			        </Image.Style>
-		        </Image>
-	        </Button>
+            <Button Command="{Binding DiscardChangesAllTabsCommand}">
+                <Image Source="Views/Icons/Undo_grey.ico" HorizontalAlignment="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Button>
 
-			<Separator></Separator>
+            <Separator></Separator>
             <components:LaunchComponent HorizontalAlignment="Left" 
                                         StartPresetCommand="{Binding StartClientPresetCommand}" 
                                         ComboBoxItemsSource="{Binding SettingsViewModel.ClientPresetsViewModel.Presets, UpdateSourceTrigger=PropertyChanged}"
@@ -115,8 +116,8 @@
                 </Image>
             </Button>
 
-        </ToolBar>
-        <ToolBar DockPanel.Dock="Top" AllowDrop="False" Grid.Row="0" Height="32" Grid.Column="1" Background="White">
+        </StatusBar>
+        <StatusBar DockPanel.Dock="Top" AllowDrop="False" Grid.Row="0" Height="32" Grid.Column="1" Background="Transparent">
             <Button Command="{Binding OpenGitHubCommand}">
                 <Image Source="Views/Icons/GitLogo.ico" HorizontalAlignment="Center">
                     <Image.Style>
@@ -130,8 +131,11 @@
                     </Image.Style>
                 </Image>
             </Button>
-        </ToolBar>
+        </StatusBar>
+        <StatusBar DockPanel.Dock="Top" AllowDrop="False" Grid.Row="0" Height="32" Grid.Column="2" Background="Transparent">
+            <ToggleButton x:Name="toggleThemeButton" Content="use Dark-Theme" Initialized="toggleThemeButton_Initialized" Click="toggleThemeButton_Click"/>
+        </StatusBar>
 
-		<ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Grid.Column="0" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
